@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MusicControllerWeb.Data.Migrations
+namespace MusicController.Identity.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class customizedidentitywithdata : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +39,9 @@ namespace MusicControllerWeb.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    IsAuthorized = table.Column<bool>(nullable: false),
+                    ApprovedBy = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,7 +53,7 @@ namespace MusicControllerWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +74,7 @@ namespace MusicControllerWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -152,6 +153,34 @@ namespace MusicControllerWeb.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", "e2931f6f-aba7-4a2b-9903-0e99317adf5e", "Admin", "ADMIN" },
+                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", "48ceb18e-ec62-4d46-bb61-f026b8b50c86", "DJ", "DJ" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ApprovedBy", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsAuthorized", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", 0, null, "158bf2d6-0109-46ed-8ba6-6388ca12a364", "admin@musiccontoller.com", true, true, false, null, "ADMIN@MUSICCONTOLLER.COM", "ADMIN@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAENDYgzxIMhhegitTRNwku7n1gFKYzcAZiDmkCGP+S4gSpisTOpl1poABdOSTQBKhmQ==", null, false, "6736a862-1541-46d1-b43a-2bad27829214", false, "admin@musiccontoller.com" },
+                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", 0, null, "da084a4f-ff0c-4af0-9789-7d9551fff68a", "dj@musiccontoller.com", true, true, false, null, "DJ@MUSICCONTOLLER.COM", "DJ@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAEEbCH5BxxCQA9OV4kaYTaKMzdmRSqUyPbIEBCN31bv4T1THHI/vZnFZQjA/oeM2KLA==", null, false, "8ce45f70-af54-46ba-808a-05740f802799", false, "dj@musiccontoller.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "12bf9f07-c559-4544-9b6f-080e2a1d6549", "12bf9f07-c559-4544-9b6f-080e2a1d6549" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "f410b8f9-c76f-49ac-a674-c2a6994eabda", "12bf9f07-c559-4544-9b6f-080e2a1d6549" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
