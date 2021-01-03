@@ -14,9 +14,10 @@
             </div>
         </div>
         <div class="p-2">
-            <a href="Outlet/create">
-    <button type="button" class="btn btn-primary float-right">+ Add New Outlet</button>
-</a>
+         
+        <a href="Outlet/Create">
+            <button type="button"  class="btn btn-primary float-right">+ Add New Outlet</button>
+        </a>
         </div>
     </div>
     <br>
@@ -32,7 +33,13 @@
                     </div>
                     <div class="col-sm-8 align-content-center h-100">
                         <h4>@outlet</h4>
-                        <p>4 Playlists</p>
+                        <small>4 Playlists</small><br />
+                        <small>3 Registered Devices</small>
+                    </div>
+                    <div class="col-sm-2">
+
+                        <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Outlet")'" > Edit </button>
+                        <button class="btn btn-outline-primary btn-sm"> Schedule </button>
                     </div>
                 </div>
             </a>
