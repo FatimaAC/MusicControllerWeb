@@ -13,11 +13,10 @@
                 </span>
             </div>
         </div>
-        <div class="p-2">
-         
-        <a href="Outlet/Create">
-            <button type="button"  class="btn btn-primary float-right">+ Add New Outlet</button>
-        </a>
+        <div class="p-2">      
+        
+            <button type="button" onclick="location.href='@Url.Action("Create", "Outlet")'" class="btn btn-primary float-right">+ Add New Outlet</button>
+        
         </div>
     </div>
     <br>
@@ -26,20 +25,19 @@
         @foreach (var outlet in outlets)
         {
             var url = "/Images/" + outlet + ".png";
-            <a href="#" class="list-group-item text-body text-decoration-none">
+            <a href ="#" class="list-group-item text-body text-decoration-none">
                 <div class="row">
                     <div class="col-sm-2">
                         <img class="img-fluid" src="@url" alt="" />
                     </div>
-                    <div class="col-sm-8 align-content-center h-100">
+                    <div class="col-sm-7 align-content-center h-100">
                         <h4>@outlet</h4>
                         <small>4 Playlists</small><br />
                         <small>3 Registered Devices</small>
                     </div>
-                    <div class="col-sm-2">
-
-                        <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Outlet")'" > Edit </button>
-                        <button class="btn btn-outline-primary btn-sm"> Schedule </button>
+                    <div class="col-sm-3 align-content-end">
+                        <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Outlet")'" > Manage </button> &nbsp;
+                        <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Schedule", "Outlet")'"> Schedule </button>
                     </div>
                 </div>
             </a>

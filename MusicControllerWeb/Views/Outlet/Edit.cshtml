@@ -3,9 +3,9 @@
 *@
 @{
 }
-<div class="container">
+<div class="container row">
     <div class="col-sm-6 border p-5">
-        <h4 class="">Create New Outlet</h4>
+        <h4 class="">Edit Outlet</h4><br />
         <form action="#">
             <div class="form-group">
                 <label for="name">Outlet Name:</label>
@@ -14,16 +14,65 @@
             <div class="form-group">
                 <label for="logo">Outlet Logo:</label><br />
                 <input type="file" class="" placeholder="Choose logo" id="logo">
-            </div>
-            <div class="form-group">
-                <label for="pwd">Password:</label>
-                <input type="password" class="form-control" placeholder="Enter password" id="pwd">
-            </div>
-            <div class="form-group">
-                <label for="pwd">Confirm Password:</label>
-                <input type="password" class="form-control" placeholder="Enter password" id="pwd">
-            </div>
-            <button type="submit" class="btn btn-success">Create Outlet</button>
+            </div><br />
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
+    </div>
+
+    <div class="col-sm-6 border p-5">
+        <h4 class="">Change Password</h4><br />
+        <form action="#">
+            <div class="form-group">
+                <label for="pwd">New Password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Confirm New Password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+            </div><br />
+            <button type="submit" class="btn btn-primary">Change</button>
+        </form>
+    </div>
+</div>
+<div class="container row">
+    <div class="col-sm-12 border p-5">
+        <h4>Devices</h4><br />
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Device Id</th>
+                    <th>Device Details</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ABCD1234567890</td>
+                    <td>Samsung Tab S7</td>
+                    <td><small class="text-primary">Waiting Approval</small></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm"> Approve </button> &nbsp;
+                        <button class="btn btn-danger btn-sm"> Remove </button> &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>IDLA1234567890</td>
+                    <td>iPad Pro</td>
+                    <td><small>Playing Tract 1</small></td>
+                    <td>                        
+                        <button class="btn btn-danger btn-sm"> Remove </button> &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>DLAD1234567890</td>
+                    <td>Samsung Tab A10</td>
+                    <td><small>Music Paused</small></td>
+                    <td>
+                        <button class="btn btn-danger btn-sm"> Remove </button> &nbsp;
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
