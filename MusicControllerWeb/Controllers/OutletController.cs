@@ -22,5 +22,9 @@ namespace MusicControllerWeb.Controllers
         {
             return View();
         }
+        public IActionResult Schedule()
+        {
+            return View();
+        }
     }
 }
