@@ -10,8 +10,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MusicController.BL\MusicController.BL.csproj" />
     <ProjectReference Include="..\MusicController.DTO\MusicController.DTO.csproj" />
+    <ProjectReference Include="..\MusicController.Entites\MusicController.Entites.csproj" />
     <ProjectReference Include="..\MusicController.Identity\MusicController.Identity.csproj" />
+    <ProjectReference Include="..\MusicController.Repository\MusicController.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="FileServices\" />
   </ItemGroup>
 
 </Project>

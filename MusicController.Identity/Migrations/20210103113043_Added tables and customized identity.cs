@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MusicController.Identity.Migrations
 {
-    public partial class customizedidentitywithdata : Migration
+    public partial class Addedtablesandcustomizedidentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,12 @@ namespace MusicController.Identity.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_AspNetUsers_ApprovedBy",
+                        column: x => x.ApprovedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,8 +165,8 @@ namespace MusicController.Identity.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", "e2931f6f-aba7-4a2b-9903-0e99317adf5e", "Admin", "ADMIN" },
-                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", "48ceb18e-ec62-4d46-bb61-f026b8b50c86", "DJ", "DJ" }
+                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", "42e6f6d2-9bf8-41f7-b94d-5cbc53773a87", "Admin", "ADMIN" },
+                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", "209a8d2f-3ac9-450d-807d-7cb5b3bf563a", "DJ", "DJ" }
                 });
 
             migrationBuilder.InsertData(
@@ -168,8 +174,8 @@ namespace MusicController.Identity.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ApprovedBy", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsAuthorized", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", 0, null, "158bf2d6-0109-46ed-8ba6-6388ca12a364", "admin@musiccontoller.com", true, true, false, null, "ADMIN@MUSICCONTOLLER.COM", "ADMIN@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAENDYgzxIMhhegitTRNwku7n1gFKYzcAZiDmkCGP+S4gSpisTOpl1poABdOSTQBKhmQ==", null, false, "6736a862-1541-46d1-b43a-2bad27829214", false, "admin@musiccontoller.com" },
-                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", 0, null, "da084a4f-ff0c-4af0-9789-7d9551fff68a", "dj@musiccontoller.com", true, true, false, null, "DJ@MUSICCONTOLLER.COM", "DJ@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAEEbCH5BxxCQA9OV4kaYTaKMzdmRSqUyPbIEBCN31bv4T1THHI/vZnFZQjA/oeM2KLA==", null, false, "8ce45f70-af54-46ba-808a-05740f802799", false, "dj@musiccontoller.com" }
+                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", 0, null, "9f59cdab-8f24-48e0-babd-7582a9784f37", "admin@musiccontoller.com", true, true, false, null, "ADMIN@MUSICCONTOLLER.COM", "ADMIN@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAEJvGP5PU5Cj0hDR1Uyy2G/zzVcCjZeG6UrGH7LzEzGpxE0EZU45A4iHv1/en3YqD/g==", null, false, "e2443f1e-1319-410a-8303-d9e347037397", false, "admin@musiccontoller.com" },
+                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", 0, null, "cd039500-bee2-4e3f-80e8-2ae40e203a57", "dj@musiccontoller.com", true, true, false, null, "DJ@MUSICCONTOLLER.COM", "DJ@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAEPIpVf5fzVS4RAkvgZlxewGjnj+2L5qP5cug3jPUl2p8RkSUjonawrQPX2TfPwu2gw==", null, false, "d301296f-111e-448c-9cc0-7a96ccd00a20", false, "dj@musiccontoller.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -208,6 +214,11 @@ namespace MusicController.Identity.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ApprovedBy",
+                table: "AspNetUsers",
+                column: "ApprovedBy");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",

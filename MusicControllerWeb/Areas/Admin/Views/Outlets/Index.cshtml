@@ -1,0 +1,64 @@
+﻿@model IEnumerable<OutletViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container mt-3">
+    <h2>Outlets</h2>
+    <div class="d-flex">
+        <div class="p-2 flex-grow-1 mr-1">
+            <div class="input-group">
+                <input class="form-control py-2 border-right-0 border " type="search" placeholder="search" id="example-search-input">
+                <span class="input-group-append">
+                    <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+                </span>
+            </div>
+        </div>
+        <div class="p-2">
+
+                <a asp-action="Create" asp-controller="Outlets" class="btn btn-primary float-right">+ Add New Outlet</a>
+            </a>
+        </div>
+    </div>
+    <br>
+    <div class="list-group" id="myList">
+        @foreach (var item in Model)
+        {
+            var url = item.LogoUrl;
+            <a href="#" class="list-group-item text-body text-decoration-none">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img class="img-fluid" src="/@url" alt="" />
+                    </div>
+                    <div class="col-sm-8 align-content-center h-100">
+                        <h4>@item.Name</h4>
+                        <small>@item.TotalPalylist Playlists</small><br />
+                        <small>@item.TotalDevices Registered Devices</small>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Outlets" ,new { id = item.Id })'"> Edit </button>
+                        <button class="btn btn-outline-primary btn-sm"> Schedule </button>
+                    </div>
+                </div>
+            </a>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myList li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}
+
+

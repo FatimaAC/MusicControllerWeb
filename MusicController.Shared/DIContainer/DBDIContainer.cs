@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MusicController.Entites.Context;
 using MusicController.Identity.IdentityContext;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ namespace MusicController.Shared.DIContainer
         {
             services.AddDbContext<ApplicationDbContext>(options =>
           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+
+            services.AddDbContext<MusicDBContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
         }
     }
 }

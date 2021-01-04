@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MusicController.DTO\MusicController.DTO.csproj" />
+    <ProjectReference Include="..\MusicController.Entites\MusicController.Entites.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -10,8 +10,8 @@ using MusicController.Identity.IdentityContext;
 namespace MusicController.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201229154320_customized identity with data")]
-    partial class customizedidentitywithdata
+    [Migration("20210103113043_Added tables and customized identity")]
+    partial class Addedtablesandcustomizedidentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,14 +51,14 @@ namespace MusicController.Identity.Migrations
                         new
                         {
                             Id = "12bf9f07-c559-4544-9b6f-080e2a1d6549",
-                            ConcurrencyStamp = "e2931f6f-aba7-4a2b-9903-0e99317adf5e",
+                            ConcurrencyStamp = "42e6f6d2-9bf8-41f7-b94d-5cbc53773a87",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "f410b8f9-c76f-49ac-a674-c2a6994eabda",
-                            ConcurrencyStamp = "48ceb18e-ec62-4d46-bb61-f026b8b50c86",
+                            ConcurrencyStamp = "209a8d2f-3ac9-450d-807d-7cb5b3bf563a",
                             Name = "DJ",
                             NormalizedName = "DJ"
                         });
@@ -193,7 +193,7 @@ namespace MusicController.Identity.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApprovedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -244,6 +244,8 @@ namespace MusicController.Identity.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApprovedBy");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -259,16 +261,16 @@ namespace MusicController.Identity.Migrations
                         {
                             Id = "12bf9f07-c559-4544-9b6f-080e2a1d6549",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "158bf2d6-0109-46ed-8ba6-6388ca12a364",
+                            ConcurrencyStamp = "9f59cdab-8f24-48e0-babd-7582a9784f37",
                             Email = "admin@musiccontoller.com",
                             EmailConfirmed = true,
                             IsAuthorized = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MUSICCONTOLLER.COM",
                             NormalizedUserName = "ADMIN@MUSICCONTOLLER.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENDYgzxIMhhegitTRNwku7n1gFKYzcAZiDmkCGP+S4gSpisTOpl1poABdOSTQBKhmQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJvGP5PU5Cj0hDR1Uyy2G/zzVcCjZeG6UrGH7LzEzGpxE0EZU45A4iHv1/en3YqD/g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6736a862-1541-46d1-b43a-2bad27829214",
+                            SecurityStamp = "e2443f1e-1319-410a-8303-d9e347037397",
                             TwoFactorEnabled = false,
                             UserName = "admin@musiccontoller.com"
                         },
@@ -276,16 +278,16 @@ namespace MusicController.Identity.Migrations
                         {
                             Id = "f410b8f9-c76f-49ac-a674-c2a6994eabda",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "da084a4f-ff0c-4af0-9789-7d9551fff68a",
+                            ConcurrencyStamp = "cd039500-bee2-4e3f-80e8-2ae40e203a57",
                             Email = "dj@musiccontoller.com",
                             EmailConfirmed = true,
                             IsAuthorized = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "DJ@MUSICCONTOLLER.COM",
                             NormalizedUserName = "DJ@MUSICCONTOLLER.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEbCH5BxxCQA9OV4kaYTaKMzdmRSqUyPbIEBCN31bv4T1THHI/vZnFZQjA/oeM2KLA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPIpVf5fzVS4RAkvgZlxewGjnj+2L5qP5cug3jPUl2p8RkSUjonawrQPX2TfPwu2gw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8ce45f70-af54-46ba-808a-05740f802799",
+                            SecurityStamp = "d301296f-111e-448c-9cc0-7a96ccd00a20",
                             TwoFactorEnabled = false,
                             UserName = "dj@musiccontoller.com"
                         });
@@ -340,6 +342,14 @@ namespace MusicController.Identity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MusicController.Identity.Model.ApplicationUser", b =>
+                {
+                    b.HasOne("MusicController.Identity.Model.ApplicationUser", "ApprovedByUser")
+                        .WithMany()
+                        .HasForeignKey("ApprovedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }
