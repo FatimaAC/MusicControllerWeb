@@ -1,9 +1,9 @@
 ﻿using MusicController.Entites.Models;
+using MusicController.Identity.UserService;
 using MusicController.Repository.UnitofWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicController.BL.DevicesServices
@@ -11,9 +11,11 @@ namespace MusicController.BL.DevicesServices
     public class DevicesServices : IDevicesServices
     {
         private readonly IUnitofWork _unitofWork;
-        public DevicesServices(IUnitofWork unitofWork)
+        private readonly ICurrentUserService _currentUserService;
+        public DevicesServices(IUnitofWork unitofWork, ICurrentUserService currentUserService)
         {
             _unitofWork = unitofWork;
+            _currentUserService = currentUserService;
         }
 
         public async Task AddDevice(Device device)
@@ -59,6 +61,15 @@ namespace MusicController.BL.DevicesServices
             devices.DeviceId = outlet.DeviceId;
             devices.OutletId = outlet.OutletId;
             _unitofWork.DeviceRepository.UpdateEntity(devices);
+            _unitofWork.Complete();
+        }
+
+        public async Task ApproveDevice(long id)
+        {
+            var device = await GetDevice(id);
+            device.IsApproved = true;
+            device.ApprovedBy = _currentUserService.UserId;
+            _unitofWork.DeviceRepository.UpdateEntity(device);
             _unitofWork.Complete();
         }
     }

@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using MusicController.Identity.Model;
 using MusicController.Identity.IdentityUserManagement;
+using MusicController.Identity.Model;
+using MusicController.Shared.ExtensionMethod;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Identity.Pages.Account
 {
@@ -22,14 +19,17 @@ namespace MusicControllerWeb.Areas.Identity.Pages.Account
         private readonly IApplicationUserServices _applicationUserServices;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly CustomUrlHelper _customUrlHelper;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
+             CustomUrlHelper customUrlHelper,
             IApplicationUserServices applicationUserServices)
 
         {
             _applicationUserServices = applicationUserServices;
             _signInManager = signInManager;
+            _customUrlHelper = customUrlHelper;
             _logger = logger;
         }
 
@@ -88,8 +88,11 @@ namespace MusicControllerWeb.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var role = await _applicationUserServices.GetUserRoles(user);
-                        returnUrl = ReturnURl(role.FirstOrDefault());
+                    //var role = await _applicationUserServices.GetUserRoles(user);
+                    if (returnUrl == "/")
+                    {
+                        returnUrl = _customUrlHelper.ReturnURL();
+                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
@@ -109,18 +112,6 @@ namespace MusicControllerWeb.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private string ReturnURl(string role)
-        {
-            string url = Url.Action("Index", "Home" , new { Area="" });
-            switch (role)
-            {
-                case "Admin":
-                    url = Url.Action("Index", "AspNetUserRole" , new { Area = "Admin" });
-                    break;
-                default:
-                    break;
-            }
-            return url;
-        }
+
     }
 }

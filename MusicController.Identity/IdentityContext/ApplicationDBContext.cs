@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MusicController.Identity.IdentityConfirgration;
 using MusicController.Identity.Model;
 using MusicController.Identity.SeedData;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Identity.IdentityContext
 {
@@ -32,11 +28,11 @@ namespace MusicController.Identity.IdentityContext
             if (!optionsBuilder.IsConfigured)
             {
                 var connection = "Server=ISBLT-6586\\SQLEXPRESS;Database=MusicControllerDB;Trusted_Connection=True;ConnectRetryCount=0";
-               // var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                // var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
                 var connectionString = connection;
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
     }
-   
+
 }

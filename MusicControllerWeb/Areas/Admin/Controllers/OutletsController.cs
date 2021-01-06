@@ -1,59 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using MusicController.BL.DevicesServices;
 using MusicController.BL.FileServices;
 using MusicController.BL.OutletServices;
 using MusicController.DTO.ViewModel;
-using MusicController.Entites.Context;
 using MusicController.Entites.Models;
 using MusicController.Shared.Constant;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers
 {
     [Area(UserRolesConstant.Admin)]
-    [Authorize(Roles = UserRolesConstant.Admin)]
+    [Authorize(Roles = UserRolesConstant.AdminorDJ)]
     public class OutletsController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IOutletService _outletService;
+        private readonly IDevicesServices _devicesServices;
         private readonly IFileServices _fileServices;
-        public OutletsController( IFileServices fileServices, IMapper mapper ,IOutletService outletService)
+        public OutletsController(IFileServices fileServices, IMapper mapper, IOutletService outletService)
         {
             _outletService = outletService;
             _fileServices = fileServices;
             _mapper = mapper;
         }
-
         // GET: Admin/Outlets
         public async Task<IActionResult> Index()
         {
             var outletsViewModel = await _outletService.GetAllOutletsWithDevicesAndPlaylist();
             return View(outletsViewModel);
         }
-
-        // GET: Admin/Outlets/Details/5
-        public async Task<IActionResult> Details(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var outlet = await _outletService.GetOutlet(id.Value);
-            if (outlet == null)
-            {
-                return NotFound();
-            }
-            var outletiewModel = _mapper.Map<List<OutletCreateViewModel>>(outlet);
-            return View(outletiewModel);
-        }
-
         // GET: Admin/Outlets/Create
         public IActionResult Create()
         {
@@ -63,12 +42,17 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         // POST: Admin/Outlets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,ImageUrl,Description ,File")] OutletCreateViewModel outletViewModel)
         {
             try
             {
+                if (outletViewModel.File == null || outletViewModel.File.Length <= 0)
+                {
+                    ModelState.AddModelError("", "Outlet logo requried");
+                }
                 if (ModelState.IsValid)
                 {
                     outletViewModel.ImageUrl = await _fileServices.SaveFile(outletViewModel.File);
@@ -79,10 +63,10 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message.ToString();
+                ModelState.AddModelError(string.Empty, ex.Message.ToString());
                 return View(outletViewModel);
             }
-           
+
             return View(outletViewModel);
         }
 
@@ -93,44 +77,49 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            var outlet = await _outletService.GetOutlet(id.Value);
-            if (outlet == null)
+            try
             {
-                return NotFound();
+                var manageOutlet = await _outletService.ManageOutletsWithDevicesandPassword(id.Value);
+                if (manageOutlet == null)
+                {
+                    return NotFound();
+                }
+                return View(manageOutlet);
             }
-            var outletiewModel = _mapper.Map<OutletCreateViewModel>(outlet);
-            return View(outletiewModel);
+            catch (Exception)
+            {
+                throw;
+            }
         }
-
-        // POST: Admin/Outlets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Name,ImageUrl,Description ,File")] OutletCreateViewModel outletViewModel)
+        public async Task<IActionResult> Edit(long id, OutletCreateViewModel Outlet)
         {
+            var outletViewModel = Outlet;
             if (id != outletViewModel.Id)
             {
                 return NotFound();
             }
-
+            if (string.IsNullOrEmpty(outletViewModel.ImageUrl) && (outletViewModel.File == null || outletViewModel.File.Length <= 0))
+            {
+                ModelState.AddModelError("", "Outlet logo requried");
+            }
             if (ModelState.IsValid)
             {
-                if (outletViewModel.File.Length>0)
+                if (string.IsNullOrEmpty(outletViewModel.ImageUrl) && outletViewModel.File != null && outletViewModel.File.Length > 0)
                 {
                     outletViewModel.ImageUrl = await _fileServices.SaveFile(outletViewModel.File);
                 }
-                
                 var outlet = _mapper.Map<Outlet>(outletViewModel);
                 await _outletService.UpdateOutlet(id, outlet);
                 return RedirectToAction(nameof(Index));
             }
-            return View(outletViewModel);
+            var manageOutlet = await _outletService.ManageOutletsWithDevicesandPassword(id);
+            return View(manageOutlet);
         }
 
         // GET: Admin/Outlets/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public async Task<IActionResult> Schedule(long? id)
         {
             if (id == null)
             {
@@ -146,13 +135,22 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             return View(outletiewModel);
         }
 
-        // POST: Admin/Outlets/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        public async Task<IActionResult> ManagePassword(long id, OutletPasswordsViewModel OutletPasswords)
         {
-            await _outletService.DeleteOutlet(id);
-            return RedirectToAction(nameof(Index));
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                await _outletService.UpdatePasswordOutlet(id, OutletPasswords.Password);
+                return RedirectToAction(nameof(Index));
+            }
+            var manageOutlet = await _outletService.ManageOutletsWithDevicesandPassword(id);
+            return View("Edit", manageOutlet);
         }
+
     }
 }

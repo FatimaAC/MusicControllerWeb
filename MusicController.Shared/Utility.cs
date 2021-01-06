@@ -1,7 +1,5 @@
 ﻿using MusicController.Shared.Constant;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Shared
 {
@@ -12,7 +10,7 @@ namespace MusicController.Shared
             var environment = Environment.GetEnvironmentVariable(AspNetCoreEnvironment.EnvironmentName);
             return environment;
         }
-        
+
         public static string EnvironmentFile()
         {
             string filename = EnvironmentType.Production;

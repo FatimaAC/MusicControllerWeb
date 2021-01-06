@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<OutletViewModel>
 
+@inject CustomUrlHelper _urlHelper
 @{
     ViewData["Title"] = "Index";
 }
@@ -17,34 +18,44 @@
             </div>
         </div>
         <div class="p-2">
-
+            @if (_urlHelper.IsRoleAdmin())
+            {
                 <a asp-action="Create" asp-controller="Outlets" class="btn btn-primary float-right">+ Add New Outlet</a>
-            </a>
+            }
         </div>
     </div>
     <br>
     <div class="list-group" id="myList">
         @foreach (var item in Model)
         {
-            var url = item.LogoUrl;
-            <a href="#" class="list-group-item text-body text-decoration-none">
+            <a href="@_urlHelper.RolebaseOutletUrl(item.Id)" class="list-group-item text-body text-decoration-none">
                 <div class="row">
                     <div class="col-sm-2">
-                        <img class="img-fluid" src="/@url" alt="" />
+                        <img class="img-fluid" src="/@item.LogoUrl" alt="" />
                     </div>
-                    <div class="col-sm-8 align-content-center h-100">
+                    <div class="col-sm-7 align-content-center ">
                         <h4>@item.Name</h4>
                         <small>@item.TotalPalylist Playlists</small><br />
                         <small>@item.TotalDevices Registered Devices</small>
                     </div>
-                    <div class="col-sm-2">
-                        <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Outlets" ,new { id = item.Id })'"> Edit </button>
-                        <button class="btn btn-outline-primary btn-sm"> Schedule </button>
-                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-inline">
+                            @if (_urlHelper.IsRoleAdmin())
+                            {
+                                <button class="btn btn-outline-primary btn-sm mr-2" onclick="location.href='@Url.Action("Edit", "Outlets", new { id = item.Id })'"> Manage </button>
+                            }
+                            @{
+                                // TODO: Remove in || _urlHelper.IsRoleAdmin()
+                            }
+                            @if (_urlHelper.IsRoleDj() || _urlHelper.IsRoleAdmin())
+                            {
+                                <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Schedule", "Outlets", new { id = item.Id })'"> Schedule </button>
+                            }
+                        </div>
+                        </div>
                 </div>
             </a>
         }
-
     </div>
 </div>
 

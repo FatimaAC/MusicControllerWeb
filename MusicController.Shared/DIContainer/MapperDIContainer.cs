@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using MusicController.DTOs.AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Shared.DIContainer
 {

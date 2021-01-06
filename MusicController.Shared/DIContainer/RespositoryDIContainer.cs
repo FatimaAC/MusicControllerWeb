@@ -2,9 +2,6 @@
 using MusicController.Repository.DeviceRepository;
 using MusicController.Repository.OutletsRepository;
 using MusicController.Repository.UnitofWork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Shared.DIContainer
 {

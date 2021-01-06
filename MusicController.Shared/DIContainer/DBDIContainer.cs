@@ -3,9 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MusicController.Entites.Context;
 using MusicController.Identity.IdentityContext;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Shared.DIContainer
 {
@@ -18,6 +15,9 @@ namespace MusicController.Shared.DIContainer
 
             services.AddDbContext<MusicDBContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+
+
+
         }
     }
 }

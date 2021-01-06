@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MusicController.Identity.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Identity.IdentityConfirgration
 {

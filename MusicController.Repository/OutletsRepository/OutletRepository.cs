@@ -1,17 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MusicController.DTO.ViewModel;
 using MusicController.Entites.Context;
 using MusicController.Entites.Models;
 using MusicController.Repository.GenericRepository;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
-using MusicController.DTO.ViewModel;
+using System.Threading.Tasks;
 
 namespace MusicController.Repository.OutletsRepository
 {
-   public class OutletRepository :  GenericRepository<Outlet>, IOutletRepository
+    public class OutletRepository : GenericRepository<Outlet>, IOutletRepository
     {
         private readonly MusicDBContext _musicDbContext;
 
@@ -20,11 +19,13 @@ namespace MusicController.Repository.OutletsRepository
             _musicDbContext = musicDbContext;
         }
 
-        public async Task<IEnumerable<OutletViewModel>> GetAllWithDevices(){
+        public async Task<IEnumerable<OutletViewModel>> GetAllWithDevices()
+        {
             var outlets = await _musicDbContext.Outlets
                                 .Include(e => e.Devices)
-                                .Include(e => e.Playlist).Select(s=>new OutletViewModel {
-                                    Id =s.Id,
+                                .Include(e => e.Playlist).Select(s => new OutletViewModel
+                                {
+                                    Id = s.Id,
                                     Name = s.Name,
                                     LogoUrl = s.ImageUrl,
                                     TotalDevices = s.Devices.Count(),

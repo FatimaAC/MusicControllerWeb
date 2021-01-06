@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Entites.Models
 {
-   public class Track :BaseId
+    public class Track : BaseId
     {
         public long PlaylistId { get; set; }
         public string TrackURL { get; set; }

@@ -1,5 +1,3 @@
-using System;
-
 namespace MusicControllerWeb.Models
 {
     public class ErrorViewModel

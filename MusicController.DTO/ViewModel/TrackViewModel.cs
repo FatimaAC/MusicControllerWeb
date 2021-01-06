@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.DTO.ViewModel
 {
-   public class TrackViewModel : BaseIdViewModel
+    public class TrackViewModel : BaseIdViewModel
     {
         public long PlaylistId { get; set; }
         public string TrackURL { get; set; }

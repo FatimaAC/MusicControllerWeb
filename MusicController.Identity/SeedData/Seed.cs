@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MusicController.Identity.Model;
-using System;
 
 namespace MusicController.Identity.SeedData
 
@@ -50,7 +49,7 @@ namespace MusicController.Identity.SeedData
                      Email = "dj@musiccontoller.com",
                      NormalizedEmail = "dj@musiccontoller.com".ToUpper(),
                      NormalizedUserName = "dj@musiccontoller.com".ToUpper(),
-                    IsAuthorized = true,
+                     IsAuthorized = true,
                      EmailConfirmed = true,
                      PasswordHash = hasher.HashPassword(null, "Admin@123")
                  }
@@ -59,12 +58,12 @@ namespace MusicController.Identity.SeedData
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
                 {
-                   RoleId = AdminId,
-                   UserId = AdminId
+                    RoleId = AdminId,
+                    UserId = AdminId
                 },
                 new IdentityUserRole<string>
                 {
-                    RoleId = AdminId,
+                    RoleId = DJId,
                     UserId = DJId
                 }
             );

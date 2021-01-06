@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MusicController.Shared.Constant
+﻿namespace MusicController.Shared.Constant
 {
-   public static class UserRolesConstant
+    public static class UserRolesConstant
     {
         public const string Admin = "Admin";
-        public const string DJ = "Dj";
+        public const string Dj = "Dj";
+        public const string AdminorDJ = Admin + "," + Dj;
     }
 }

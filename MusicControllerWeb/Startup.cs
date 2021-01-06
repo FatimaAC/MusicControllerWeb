@@ -1,19 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MusicController.DTOs.AutoMapper;
 using MusicController.Identity.IdentityContext;
 using MusicController.Identity.Model;
 using MusicController.Shared;
@@ -48,11 +39,12 @@ namespace MusicControllerWeb
             services.ServicesContainer();
             services.MapperContainer();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()
+                .AddDefaultUI()
+               .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddRazorPages();
         }
 
@@ -63,7 +55,7 @@ namespace MusicControllerWeb
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-               // applicationDbContext.Database.Migrate();
+                // applicationDbContext.Database.Migrate();
             }
             else
             {
@@ -71,7 +63,7 @@ namespace MusicControllerWeb
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-           
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -82,13 +74,16 @@ namespace MusicControllerWeb
 
             app.UseEndpoints(endpoints =>
             {
+                //todo: set area to the Admin outlets 
                 endpoints.MapControllerRoute(
             name: "areas",
             pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
           );
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                  //  pattern: "{area=Admin}/{controller=Outlets}/{action=Index}/{id?}"
+                   );
                 endpoints.MapRazorPages();
             });
         }

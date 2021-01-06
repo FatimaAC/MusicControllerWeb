@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MusicController.Identity.IdentityContext;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Identity.ApplicationFactoryContext
 {

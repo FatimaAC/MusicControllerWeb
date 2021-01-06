@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MusicController.DTO.ViewModel
+﻿namespace MusicController.DTO.ViewModel
 {
     public class PlaylistViewModel : AuditableEntityViewModel
     {

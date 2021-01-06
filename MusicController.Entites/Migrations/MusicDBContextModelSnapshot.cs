@@ -21,11 +21,10 @@ namespace MusicController.Entites.Migrations
 
             modelBuilder.Entity("MusicController.Entites.Models.Device", b =>
                 {
-                    b.Property<long>("OutletId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("DeviceId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApprovedAt")
                         .HasColumnType("nvarchar(max)");
@@ -36,16 +35,14 @@ namespace MusicController.Entites.Migrations
                     b.Property<string>("DeviceDetail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("DeviceId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("OutletId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("RequestedAt")
                         .HasColumnType("datetime2");
@@ -56,7 +53,9 @@ namespace MusicController.Entites.Migrations
                     b.Property<string>("StatusPostedAt")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("OutletId", "DeviceId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("OutletId");
 
                     b.ToTable("Device");
                 });
@@ -67,12 +66,6 @@ namespace MusicController.Entites.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("ApprovedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ApprovedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -88,6 +81,12 @@ namespace MusicController.Entites.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Salt")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -210,12 +209,6 @@ namespace MusicController.Entites.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("ApprovedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ApprovedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");

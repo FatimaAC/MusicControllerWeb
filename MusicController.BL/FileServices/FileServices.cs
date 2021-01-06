@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using MusicController.Shared;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicController.BL.FileServices
@@ -15,9 +13,9 @@ namespace MusicController.BL.FileServices
 
         public FileServices(IWebHostEnvironment hostEnvironment)
         {
-        _hostEnvironment = hostEnvironment;
+            _hostEnvironment = hostEnvironment;
         }
-        
+
         public async Task<string> SaveFile(IFormFile file)
         {
             FileMetaInformation fileMetaInformation = new FileMetaInformation
@@ -29,7 +27,7 @@ namespace MusicController.BL.FileServices
             {
                 throw new Exception("Bad Format");
             }
-            string path = Path.Combine(_hostEnvironment.WebRootPath , fileMetaInformation.RelivtivePath);
+            string path = Path.Combine(_hostEnvironment.WebRootPath, fileMetaInformation.RelivtivePath);
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(fileStream);

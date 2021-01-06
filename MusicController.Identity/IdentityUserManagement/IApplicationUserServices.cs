@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using MusicController.Identity.Model;
-using System;
+﻿using MusicController.Identity.Model;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicController.Identity.IdentityUserManagement
@@ -16,6 +13,6 @@ namespace MusicController.Identity.IdentityUserManagement
         Task<string> Delete(string userId);
         Task<ApplicationUser> GetByEmail(string email);
         Task<IList<string>> GetUserRoles(ApplicationUser user);
-        Task AuthorizedUser(string id,bool isAuthroized,string authroizedBy);
+        Task AuthorizedUser(string id, bool isAuthroized, string authroizedBy);
     }
 }

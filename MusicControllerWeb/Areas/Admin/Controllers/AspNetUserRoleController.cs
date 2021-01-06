@@ -3,11 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicController.DTO.ViewModel;
 using MusicController.Identity.IdentityUserManagement;
-using MusicController.Identity.Model;
 using MusicController.Shared.Constant;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -64,7 +61,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 var applicationUser = _mapper.Map<UserViewModel>(userViewModel);
-               await _applicationUserServices.AuthorizedUser(id ,userViewModel.IsAuthorized,  userId);
+                await _applicationUserServices.AuthorizedUser(id, userViewModel.IsAuthorized, userId);
                 return RedirectToAction("Index");
             }
             return View(userViewModel);

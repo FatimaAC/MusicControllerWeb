@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using MusicController.Identity.Model;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicController.Identity.IdentityUserManagement
@@ -53,7 +52,7 @@ namespace MusicController.Identity.IdentityUserManagement
             if (result.Succeeded)
             {
                 return "Ok";
-              //  throw new Exception("Id Cannot be n null");
+                //  throw new Exception("Id Cannot be n null");
             }
             else
             {
@@ -67,7 +66,7 @@ namespace MusicController.Identity.IdentityUserManagement
         }
         public async Task AuthorizedUser(string id, bool isAuthroized, string authroizedBy)
         {
-            var user =await GetById(id);
+            var user = await GetById(id);
             user.IsAuthorized = true;
             user.ApprovedBy = authroizedBy;
             user.IsAuthorized = isAuthroized;

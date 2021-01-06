@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MusicController.Entites.Models
+﻿namespace MusicController.Entites.Models
 {
     public class Playlist : AuditableEntity
     {
@@ -10,8 +6,8 @@ namespace MusicController.Entites.Models
         public string Name { get; set; }
         public string Schedule { get; set; }
         public byte Frequency { get; set; }
-        public  Outlet Outlet { get; set; }
-        public  Track Track { get; set; }
+        public Outlet Outlet { get; set; }
+        public Track Track { get; set; }
 
     }
 }

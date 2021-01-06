@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MusicController.Entites.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Entites.SeedData
 {
@@ -23,7 +20,7 @@ namespace MusicController.Entites.SeedData
                 new Outlet { Id = 10, Name = "Meatsmith", ImageUrl = "Images/Meatsmith.png" },
                 new Outlet { Id = 11, Name = "Mokarabia", ImageUrl = "Images/Mokarabia.png" },
                 new Outlet { Id = 12, Name = "Orient Pearl", ImageUrl = "Images/Orient Pearl.png" },
-                new Outlet { Id =13 , Name = "Palma", ImageUrl = "Images/Palma.png" },
+                new Outlet { Id = 13, Name = "Palma", ImageUrl = "Images/Palma.png" },
                 new Outlet { Id = 14, Name = "Remman Cafe", ImageUrl = "Images/Remman Cafe.png" },
                 new Outlet { Id = 15, Name = "Sazeli Logo", ImageUrl = "Images/Sazeli Logo.png" },
                 new Outlet { Id = 16, Name = "SMAT", ImageUrl = "Images/SMAT.png" },

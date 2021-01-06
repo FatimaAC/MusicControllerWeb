@@ -1,25 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MusicController.Entites.EntityConfigration;
 using MusicController.Entites.Models;
 using MusicController.Entites.SeedData;
+using MusicController.Identity.UserService;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicController.Entites.Context
 {
-   public class MusicDBContext : DbContext
+    public class MusicDBContext : DbContext
     {
-        public MusicDBContext(DbContextOptions<MusicDBContext> options)
+        private readonly ICurrentUserService _currentUserService;
+        public MusicDBContext(DbContextOptions<MusicDBContext> options, ICurrentUserService currentUserService)
             : base(options)
         {
-         //   Database.EnsureCreated();
-        }
-
-        public MusicDBContext()
-        {
+            _currentUserService = currentUserService;
         }
 
         public virtual DbSet<Outlet> Outlets { get; set; }
@@ -30,10 +26,10 @@ namespace MusicController.Entites.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Seed();
-           modelBuilder.ApplyConfiguration(new OutletConfiguration());
-           modelBuilder.ApplyConfiguration(new DeviceConfiguration());
-           modelBuilder.ApplyConfiguration(new PlaylistEntityConfigration());
-           modelBuilder.ApplyConfiguration(new TrackEntityConfigration());
+            modelBuilder.ApplyConfiguration(new OutletConfiguration());
+            modelBuilder.ApplyConfiguration(new DeviceConfiguration());
+            modelBuilder.ApplyConfiguration(new PlaylistEntityConfigration());
+            modelBuilder.ApplyConfiguration(new TrackEntityConfigration());
         }
         public Task<int> SaveChangesAsync()
         {
@@ -48,34 +44,21 @@ namespace MusicController.Entites.Context
 
         private void CallBefore()
         {
-            var user = GetUserName();
-            var AddedEntities = ChangeTracker.Entries()
-                               .Where(E => E.State == EntityState.Added)
-                               .ToList();
-            if(AddedEntities.GetType().GetProperty("CreatedAt")!=null && AddedEntities.GetType().GetProperty("CreatedAt") != null){
-                AddedEntities.ForEach(E =>
-                {
-                                E.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
-                    E.Property("CreatedBy").CurrentValue = user;
-                });
-            }
-            
-            var EditedEntities = ChangeTracker.Entries()
-                                    .Where(E => E.State == EntityState.Modified).ToList();
-
-            if (AddedEntities.GetType().GetProperty("UpdatedAt") != null && AddedEntities.GetType().GetProperty("UpdatedBy") != null)
+            foreach (EntityEntry<AuditableEntity> entry in ChangeTracker.Entries<AuditableEntity>())
             {
-                                    
-                EditedEntities.ForEach(E =>
+                switch (entry.State)
                 {
-                    E.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
-                    E.Property("UpdatedBy").CurrentValue = user;
-                });
+                    case EntityState.Added:
+                        entry.Entity.CreatedBy = _currentUserService.UserId;
+                        entry.Entity.CreatedAt = DateTime.UtcNow;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.UpdatedBy = _currentUserService.UserId;
+                        entry.Entity.UpdatedAt = DateTime.UtcNow;
+                        break;
+                }
             }
-        }
-        private string GetUserName()
-        {
-            return "Aqeel";
         }
     }
 }

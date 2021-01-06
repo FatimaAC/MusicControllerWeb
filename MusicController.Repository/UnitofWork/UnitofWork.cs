@@ -1,15 +1,10 @@
 ﻿using MusicController.Entites.Context;
-using MusicController.Entites.Models;
 using MusicController.Repository.DeviceRepository;
-using MusicController.Repository.GenericRepository;
 using MusicController.Repository.OutletsRepository;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Repository.UnitofWork
 {
-   public class UnitofWork : IUnitofWork
+    public class UnitofWork : IUnitofWork
     {
         private readonly MusicDBContext _musicDBContext;
 
@@ -19,8 +14,8 @@ namespace MusicController.Repository.UnitofWork
             OutletRepository = new OutletRepository(_musicDBContext);
             DeviceRepository = new DevicesRepository(_musicDBContext);
         }
-       public IDevicesRepository DeviceRepository { get; private set; }
-       public IOutletRepository OutletRepository { get; private set; }
+        public IDevicesRepository DeviceRepository { get; private set; }
+        public IOutletRepository OutletRepository { get; private set; }
         public int Complete()
         {
             return _musicDBContext.SaveChanges();

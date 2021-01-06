@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MusicController.Shared.Constant
+﻿namespace MusicController.Shared.Constant
 {
     public static class AspNetCoreEnvironment
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MusicController.Shared.Enumerration
+﻿namespace MusicController.Shared.Enumerration
 {
     public enum Schedule
     {
