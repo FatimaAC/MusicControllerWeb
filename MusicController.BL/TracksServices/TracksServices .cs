@@ -29,6 +29,7 @@ namespace MusicController.BL.TrackServices
         public async Task UpdateTrack(long id, Track track)
         {
             var trackEdit = await GetTrack(id);
+
             trackEdit.EndTime = track.EndTime;
             trackEdit.StartTime = track.StartTime;
             trackEdit.TrackURL = track.TrackURL;

@@ -43,7 +43,6 @@ namespace MusicControllerWeb
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
-                .AddDefaultUI()
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
@@ -63,7 +62,6 @@ namespace MusicControllerWeb
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -84,8 +82,8 @@ namespace MusicControllerWeb
           );
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
-                  //  pattern: "{area=Admin}/{controller=Outlets}/{action=Index}/{id?}"
+                   // pattern: "{controller=Home}/{action=Index}/{id?}"
+                   pattern: "{area=Admin}/{controller=Outlets}/{action=Index}/{id?}"
                    );
                 endpoints.MapRazorPages();
             });

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace MusicControllerWeb.Areas.Admin.Controllers
 {
     [Area(UserRolesConstant.Admin)]
-    [Authorize(Roles = UserRolesConstant.Admin)]
+    [Authorize(Roles = UserRolesConstant.Dj)]
     public class TracksController : Controller
     {
 

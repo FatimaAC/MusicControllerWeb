@@ -98,13 +98,13 @@ namespace MusicController.Entites.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256)
-                        .HasDefaultValue("7/RtJd/PCGumB+aHCyKRfhgnwHuiXnUdI7g7NpF/n/c=");
+                        .HasDefaultValue("tzKstRjR2pcrrmES5pp6I0GM+Ipq4CPQLfrSpyy+kqY=");
 
                     b.Property<byte[]>("Salt")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("varbinary(max)")
-                        .HasDefaultValue(new byte[] { 73, 78, 104, 236, 225, 25, 27, 122, 194, 231, 29, 216, 120, 123, 54, 82 });
+                        .HasDefaultValue(new byte[] { 254, 232, 178, 252, 185, 218, 129, 193, 118, 110, 173, 241, 81, 158, 88, 218 });
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -123,144 +123,136 @@ namespace MusicController.Entites.Migrations
                             Id = 1L,
                             ImageUrl = "Images/Baladna.png",
                             Name = "Baladna",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 2L,
                             ImageUrl = "Images/Basta.png",
                             Name = "Basta",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 3L,
                             ImageUrl = "Images/Build It Burger.png",
                             Name = "Build It Burger",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 4L,
                             ImageUrl = "Images/Debs w Remman.png",
                             Name = "Debs w Remman",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 5L,
                             ImageUrl = "Images/Gahwetna.png",
                             Name = "Gahwetna",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 6L,
                             ImageUrl = "Images/Jwala.png",
                             Name = "Jwala",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 7L,
                             ImageUrl = "Images/Karaki.png",
                             Name = "Karaki",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 8L,
                             ImageUrl = "Images/La Casa.png",
                             Name = "La Casa",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 9L,
                             ImageUrl = "Images/Maia.png",
                             Name = "Maia",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 10L,
                             ImageUrl = "Images/Meatsmith.png",
                             Name = "Meatsmith",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 11L,
                             ImageUrl = "Images/Mokarabia.png",
                             Name = "Mokarabia",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 12L,
                             ImageUrl = "Images/Orient Pearl.png",
                             Name = "Orient Pearl",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
-                        },
-                        new
-                        {
-                            Id = 13L,
-                            ImageUrl = "Images/Palma.png",
-                            Name = "Palma",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 14L,
                             ImageUrl = "Images/Remman Cafe.png",
                             Name = "Remman Cafe",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 15L,
                             ImageUrl = "Images/Sazeli Logo.png",
                             Name = "Sazeli Logo",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 16L,
                             ImageUrl = "Images/SMAT.png",
                             Name = "SMAT",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 17L,
                             ImageUrl = "Images/USTA.png",
                             Name = "USTA",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         },
                         new
                         {
                             Id = 18L,
                             ImageUrl = "Images/USTA.png",
                             Name = "USTA Remove",
-                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
-                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                            Password = "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=",
+                            Salt = new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }
                         });
                 });
 
