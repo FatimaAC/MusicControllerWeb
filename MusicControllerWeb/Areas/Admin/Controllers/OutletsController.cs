@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MusicController.BL.DevicesServices;
 using MusicController.BL.FileServices;
 using MusicController.BL.OutletServices;
+using MusicController.Common.Constants;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using MusicController.Shared.Constant;
@@ -13,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers
 {
+    //todo: action level roles implementation remaining  Create and Manage = Admin , Schudle =Dj
     [Area(UserRolesConstant.Admin)]
     [Authorize(Roles = UserRolesConstant.AdminorDJ)]
     public class OutletsController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IOutletService _outletService;
-        private readonly IDevicesServices _devicesServices;
         private readonly IFileServices _fileServices;
         public OutletsController(IFileServices fileServices, IMapper mapper, IOutletService outletService)
         {

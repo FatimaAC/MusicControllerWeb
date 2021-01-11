@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using MusicController.Shared;
+using MusicController.Common.HelperClasses;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace MusicController.BL.FileServices
             };
             if (!fileMetaInformation.IsImage)
             {
-                throw new Exception("Bad Format");
+                throw new Exception("File is not an image");
             }
             string path = Path.Combine(_hostEnvironment.WebRootPath, fileMetaInformation.RelivtivePath);
             using (var fileStream = new FileStream(path, FileMode.Create))

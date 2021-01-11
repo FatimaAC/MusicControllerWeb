@@ -8,7 +8,7 @@ namespace MusicController.Identity.IdentityUserRoleManagement
 {
     public class UserRoleServices : IUserRoleServices
     {
-        private UserManager<IdentityUserRole<string>> _UserManager;
+        private readonly UserManager<IdentityUserRole<string>> _UserManager;
         public UserRoleServices(UserManager<IdentityUserRole<string>> userManager)
         {
             _UserManager = userManager;

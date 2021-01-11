@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using MusicController.Common.Constants;
+using MusicController.Common.HelperClasses;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using MusicController.Repository.UnitofWork;
@@ -22,7 +24,10 @@ namespace MusicController.BL.OutletServices
         }
         public async Task AddOutlet(Outlet outlet)
         {
-            outlet.Password = "Welcome123$";
+              
+            //var passwordandSalt =  outlet.Password.EncryptPassword();
+            //outlet.Password = passwordandSalt.Item1;
+            //outlet.Salt = passwordandSalt.Item2;
             await _unitofWork.OutletRepository.AddAsync(outlet);
             _unitofWork.Complete();
         }
@@ -94,39 +99,13 @@ namespace MusicController.BL.OutletServices
             {
                 throw new Exception("Id not Found");
             }
-            outlet.Password = Password;
-            outlet = EncryptPassword(outlet);
+            var passwordandSalt = outlet.Password.EncryptPassword();
+            outlet.Password = passwordandSalt.Item1;
+            outlet.Salt = passwordandSalt.Item2;
             _unitofWork.OutletRepository.UpdateEntity(outlet);
             _unitofWork.Complete();
         }
 
-        private Outlet EncryptPassword(Outlet outlet)
-        {
-            outlet.Salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(outlet.Salt);
-            }
-            // derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: outlet.Password,
-                salt: outlet.Salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-            outlet.Password = hashed;
-            return outlet;
-        }
-        private bool VerifyPassword(string enteredPassword, byte[] salt, string storedPassword)
-        {
-            string encryptedPassw = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: enteredPassword,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA1,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8
-            ));
-            return encryptedPassw == storedPassword;
-        }
+        
     }
 }

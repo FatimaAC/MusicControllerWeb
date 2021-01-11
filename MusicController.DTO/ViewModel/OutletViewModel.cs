@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using MusicController.Common.Constants;
+using MusicController.Common.EntityHelper;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,7 +28,7 @@ namespace MusicController.DTO.ViewModel
         [Display(Name = "Logo")]
         public string LogoUrl { get; set; }
         [Display(Name = "Total Palylist")]
-        public int TotalPalylist { get; set; }
+        public int TotalPlaylists { get; set; }
         [Display(Name = "Total Devices")]
         public int TotalDevices { get; set; }
     }
@@ -43,7 +45,7 @@ namespace MusicController.DTO.ViewModel
         public OutletPasswordsViewModel OutletPasswords { get; set; }
         public List<DeviceViewModel> Devices { get; set; }
     }
-    public class OutletPasswordsViewModel :BaseIdViewModel
+    public class OutletPasswordsViewModel : BaseId
     {
         [Required]
         [StringLength(12, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

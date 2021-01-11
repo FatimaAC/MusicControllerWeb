@@ -33,12 +33,12 @@
             <input asp-for="OutletPasswords.Id"  type="hidden" />
             <div class="form-group">
                 <label asp-for="OutletPasswords.Password"></label>
-                <input asp-for="OutletPasswords.Password"  class="form-control" placeholder="Enter password" >
+                <input asp-for="OutletPasswords.Password"  class="form-control" placeholder="***********" >
                 <span asp-validation-for="OutletPasswords.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="OutletPasswords.ConfirmPassword"></label>
-                <input asp-for="OutletPasswords.ConfirmPassword" class="form-control" placeholder="Enter password">
+                <input asp-for="OutletPasswords.ConfirmPassword" class="form-control" placeholder="**********">
                 <span asp-validation-for="OutletPasswords.ConfirmPassword" class="text-danger"></span>
                 </div><br />
             <button type="submit" class="btn btn-primary">Change</button>
@@ -104,3 +104,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+    

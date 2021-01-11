@@ -9,5 +9,8 @@ namespace MusicController.DTO.ViewModel
         [Display(Name = "Status")]
         [Required]
         public bool IsAuthorized { get; set; }
+        [Display(Name = "User Role")]
+        [Required]
+        public string Role { get; set; }
     }
 }

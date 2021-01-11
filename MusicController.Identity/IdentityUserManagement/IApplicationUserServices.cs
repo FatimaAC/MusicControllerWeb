@@ -13,6 +13,6 @@ namespace MusicController.Identity.IdentityUserManagement
         Task<string> Delete(string userId);
         Task<ApplicationUser> GetByEmail(string email);
         Task<IList<string>> GetUserRoles(ApplicationUser user);
-        Task AuthorizedUser(string id, bool isAuthroized, string authroizedBy);
+        Task AuthorizedUser(string id, bool isAuthroized, string role);
     }
 }

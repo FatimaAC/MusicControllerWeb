@@ -1,4 +1,4 @@
-﻿namespace MusicController.Shared.Constant
+﻿namespace MusicController.Common.Constants
 {
     public static class UserRolesConstant
     {

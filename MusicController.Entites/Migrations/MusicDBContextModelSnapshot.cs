@@ -26,17 +26,21 @@ namespace MusicController.Entites.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApprovedAt")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("ApprovedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ApprovedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.Property<string>("DeviceDetail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("DeviceId")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(16)")
+                        .HasMaxLength(16);
 
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
@@ -48,10 +52,11 @@ namespace MusicController.Entites.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StatusMessage")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
-                    b.Property<string>("StatusPostedAt")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("StatusPostedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -71,28 +76,42 @@ namespace MusicController.Entites.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256)
+                        .HasDefaultValue("7/RtJd/PCGumB+aHCyKRfhgnwHuiXnUdI7g7NpF/n/c=");
 
                     b.Property<byte[]>("Salt")
-                        .HasColumnType("varbinary(max)");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varbinary(max)")
+                        .HasDefaultValue(new byte[] { 73, 78, 104, 236, 225, 25, 27, 122, 194, 231, 29, 216, 120, 123, 54, 82 });
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.HasKey("Id");
 
@@ -103,103 +122,145 @@ namespace MusicController.Entites.Migrations
                         {
                             Id = 1L,
                             ImageUrl = "Images/Baladna.png",
-                            Name = "Baladna"
+                            Name = "Baladna",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 2L,
                             ImageUrl = "Images/Basta.png",
-                            Name = "Basta"
+                            Name = "Basta",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 3L,
                             ImageUrl = "Images/Build It Burger.png",
-                            Name = "Build It Burger"
+                            Name = "Build It Burger",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 4L,
                             ImageUrl = "Images/Debs w Remman.png",
-                            Name = "Debs w Remman"
+                            Name = "Debs w Remman",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 5L,
                             ImageUrl = "Images/Gahwetna.png",
-                            Name = "Gahwetna"
+                            Name = "Gahwetna",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 6L,
                             ImageUrl = "Images/Jwala.png",
-                            Name = "Jwala"
+                            Name = "Jwala",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 7L,
                             ImageUrl = "Images/Karaki.png",
-                            Name = "Karaki"
+                            Name = "Karaki",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 8L,
                             ImageUrl = "Images/La Casa.png",
-                            Name = "La Casa"
+                            Name = "La Casa",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 9L,
                             ImageUrl = "Images/Maia.png",
-                            Name = "Maia"
+                            Name = "Maia",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 10L,
                             ImageUrl = "Images/Meatsmith.png",
-                            Name = "Meatsmith"
+                            Name = "Meatsmith",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 11L,
                             ImageUrl = "Images/Mokarabia.png",
-                            Name = "Mokarabia"
+                            Name = "Mokarabia",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 12L,
                             ImageUrl = "Images/Orient Pearl.png",
-                            Name = "Orient Pearl"
+                            Name = "Orient Pearl",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 13L,
                             ImageUrl = "Images/Palma.png",
-                            Name = "Palma"
+                            Name = "Palma",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 14L,
                             ImageUrl = "Images/Remman Cafe.png",
-                            Name = "Remman Cafe"
+                            Name = "Remman Cafe",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 15L,
                             ImageUrl = "Images/Sazeli Logo.png",
-                            Name = "Sazeli Logo"
+                            Name = "Sazeli Logo",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 16L,
                             ImageUrl = "Images/SMAT.png",
-                            Name = "SMAT"
+                            Name = "SMAT",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         },
                         new
                         {
                             Id = 17L,
                             ImageUrl = "Images/USTA.png",
-                            Name = "USTA"
+                            Name = "USTA",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            ImageUrl = "Images/USTA.png",
+                            Name = "USTA Remove",
+                            Password = "x+kOqbFjljRCK7jCmSBxXnpNbisaCD3iJ46hlfHNgWo=",
+                            Salt = new byte[] { 22, 120, 101, 60, 209, 154, 171, 122, 46, 2, 166, 225, 6, 45, 147, 214 }
                         });
                 });
 
@@ -214,25 +275,31 @@ namespace MusicController.Entites.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
-                    b.Property<byte>("Frequency")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("Frequency")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
 
                     b.Property<long>("OutletId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Schedule")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.HasKey("Id");
 
@@ -248,22 +315,23 @@ namespace MusicController.Entites.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
 
                     b.Property<long>("PlaylistId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
 
                     b.Property<string>("TrackURL")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlaylistId")
-                        .IsUnique();
+                    b.HasIndex("PlaylistId");
 
                     b.ToTable("Tracks");
                 });
@@ -281,14 +349,18 @@ namespace MusicController.Entites.Migrations
                 {
                     b.HasOne("MusicController.Entites.Models.Outlet", "Outlet")
                         .WithMany("Playlist")
-                        .HasForeignKey("OutletId");
+                        .HasForeignKey("OutletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MusicController.Entites.Models.Track", b =>
                 {
                     b.HasOne("MusicController.Entites.Models.Playlist", "Playlist")
-                        .WithOne("Track")
-                        .HasForeignKey("MusicController.Entites.Models.Track", "PlaylistId");
+                        .WithMany("Tracks")
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

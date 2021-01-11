@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace MusicController.Shared
+namespace MusicController.Common.HelperClasses
 {
     public class FileMetaInformation
     {

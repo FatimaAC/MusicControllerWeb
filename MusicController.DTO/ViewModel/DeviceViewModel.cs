@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MusicController.Common.EntityHelper;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MusicController.DTO.ViewModel
 {
-    public class DeviceViewModel : BaseIdViewModel
+    public class DeviceViewModel : BaseId
     {
         public long OutletId { get; set; }
         [Display(Name = "Device Id")]
@@ -20,7 +21,7 @@ namespace MusicController.DTO.ViewModel
         public virtual OutletCreateViewModel Outlet { get; set; }
     }
 
-    public class DeviceDeleteViewModel : BaseIdViewModel
+    public class DeviceDeleteViewModel : BaseId
     {
         public long OutletId { get; set; }
     }

@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MusicController.Entites.Context;
 using MusicController.Identity.IdentityContext;
 using MusicController.Identity.Model;
 using MusicController.Shared;
@@ -49,13 +51,14 @@ namespace MusicControllerWeb
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env ,MusicDBContext musicDBContext ,ApplicationDbContext applicationDbContext)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                // applicationDbContext.Database.Migrate();
+                applicationDbContext.Database.Migrate();
+                musicDBContext.Database.Migrate();
             }
             else
             {
@@ -74,7 +77,7 @@ namespace MusicControllerWeb
 
             app.UseEndpoints(endpoints =>
             {
-                //todo: set area to the Admin outlets 
+                //todo: set Defualt route to the Admin outlets 
                 endpoints.MapControllerRoute(
             name: "areas",
             pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

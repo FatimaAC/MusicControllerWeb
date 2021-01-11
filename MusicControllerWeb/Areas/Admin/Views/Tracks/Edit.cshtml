@@ -1,0 +1,33 @@
+﻿@model   TrackViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container row">
+    <div class="col-sm-6 border p-5">
+        <h4>Add Track</h4><br />
+        <form asp-action="Edit" asp-route-id="@Model.Id">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+            </div>
+            <input asp-for="PlaylistId" value="@Model.PlaylistId" type="hidden" />
+            <div class="form-group">
+                <label asp-for="TrackURL"></label>
+                <input asp-for="TrackURL" class="form-control" placeholder="Enter TrackUrl">
+                <span asp-validation-for="TrackURL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartTime"></label>
+                <input asp-for="StartTime" class="form-control" placeholder="Enter password">
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndTime"></label>
+                <input asp-for="EndTime" class="form-control" placeholder="Enter password">
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Change</button>
+        </form>
+    </div>
+</div>
+

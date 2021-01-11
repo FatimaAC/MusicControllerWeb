@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MusicController.Identity.Model;
+using MusicController.Identity.UserService;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,9 +11,12 @@ namespace MusicController.Identity.IdentityUserManagement
     public class ApplicationUserServices : IApplicationUserServices
     {
         private readonly UserManager<ApplicationUser> _UserManager;
-        public ApplicationUserServices(UserManager<ApplicationUser> userManager)
+        private readonly ICurrentUserService _currentUserService;
+
+        public ApplicationUserServices(UserManager<ApplicationUser> userManager , ICurrentUserService currentUserService)
         {
             _UserManager = userManager;
+            _currentUserService = currentUserService;
         }
         public async Task<List<ApplicationUser>> GetAll()
         {
@@ -64,13 +68,14 @@ namespace MusicController.Identity.IdentityUserManagement
             var test = await _UserManager.GetRolesAsync(user);
             return test;
         }
-        public async Task AuthorizedUser(string id, bool isAuthroized, string authroizedBy)
+        public async Task AuthorizedUser(string id, bool isAuthroized, string role)
         {
             var user = await GetById(id);
             user.IsAuthorized = true;
-            user.ApprovedBy = authroizedBy;
+            user.ApprovedBy = _currentUserService.UserId;
             user.IsAuthorized = isAuthroized;
             await _UserManager.UpdateAsync(user);
+            await _UserManager.AddToRoleAsync(user ,role);
         }
     }
 }

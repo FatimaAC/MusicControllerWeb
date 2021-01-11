@@ -5,23 +5,25 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicControllerWeb", "MusicControllerWeb\MusicControllerWeb.csproj", "{8C43EB99-87CD-4842-8260-51E192700423}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicController.Shared", "MusicController.Shared\MusicController.Shared.csproj", "{E2070D9F-79AE-4E99-8FEA-172F363C46BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicController.Shared", "MusicController.Shared\MusicController.Shared.csproj", "{E2070D9F-79AE-4E99-8FEA-172F363C46BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicController.Identity", "MusicController.Identity\MusicController.Identity.csproj", "{82477FC5-0B25-471E-9695-84EF7DDACD1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicController.Identity", "MusicController.Identity\MusicController.Identity.csproj", "{82477FC5-0B25-471E-9695-84EF7DDACD1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicController.DTO", "MusicController.DTO\MusicController.DTO.csproj", "{7F7E82C1-31F4-4C15-AA74-00A6FE675F4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicController.DTO", "MusicController.DTO\MusicController.DTO.csproj", "{7F7E82C1-31F4-4C15-AA74-00A6FE675F4A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. DAL", "1. DAL", "{715E9568-88EF-4871-8D55-B7AB981C7FDF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Common", "3.Common", "{41E36BAA-5B98-44B4-AF60-7AAA509B9CF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicController.Entites", "MusicController.Entites\MusicController.Entites.csproj", "{86476821-6CC6-41D3-A386-2D7FE6845516}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicController.Entites", "MusicController.Entites\MusicController.Entites.csproj", "{86476821-6CC6-41D3-A386-2D7FE6845516}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. BL", "2. BL", "{9F8B7AAB-D6F6-4CFE-9F0D-3439D79DCABB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicController.Repository", "MusicController.Repository\MusicController.Repository.csproj", "{CC277D23-606B-4EF0-B61F-6EFE4A14C4D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicController.Repository", "MusicController.Repository\MusicController.Repository.csproj", "{CC277D23-606B-4EF0-B61F-6EFE4A14C4D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicController.BL", "MusicController.BL\MusicController.BL.csproj", "{09E21550-EAC5-4E18-A896-BC89090A3EDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicController.BL", "MusicController.BL\MusicController.BL.csproj", "{09E21550-EAC5-4E18-A896-BC89090A3EDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicController.Common", "MusicController.Common\MusicController.Common.csproj", "{070E4172-631F-4D65-890C-DAE54BEFBBA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{09E21550-EAC5-4E18-A896-BC89090A3EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09E21550-EAC5-4E18-A896-BC89090A3EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09E21550-EAC5-4E18-A896-BC89090A3EDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{070E4172-631F-4D65-890C-DAE54BEFBBA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{070E4172-631F-4D65-890C-DAE54BEFBBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{070E4172-631F-4D65-890C-DAE54BEFBBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{070E4172-631F-4D65-890C-DAE54BEFBBA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{86476821-6CC6-41D3-A386-2D7FE6845516} = {715E9568-88EF-4871-8D55-B7AB981C7FDF}
 		{CC277D23-606B-4EF0-B61F-6EFE4A14C4D6} = {715E9568-88EF-4871-8D55-B7AB981C7FDF}
 		{09E21550-EAC5-4E18-A896-BC89090A3EDA} = {9F8B7AAB-D6F6-4CFE-9F0D-3439D79DCABB}
+		{070E4172-631F-4D65-890C-DAE54BEFBBA1} = {41E36BAA-5B98-44B4-AF60-7AAA509B9CF0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1BB9AE98-3191-4548-8D47-DE96323A44D9}

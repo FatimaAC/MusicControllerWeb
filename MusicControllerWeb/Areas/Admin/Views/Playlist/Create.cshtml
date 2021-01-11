@@ -1,0 +1,109 @@
+﻿@model PlaylistIndexModel
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container row mt-3">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10 border p-5">
+        <h4 class="">Create Playlist</h4>
+        <br />
+        <form asp-action="Create" onsubmit="return onSubmitClick(this);" asp-route-id="@Model.OutletId">
+            <input type="hidden" asp-for="Id" value="0" />
+            <input type="hidden" asp-for="OutletId" />
+            <div class="form-group">
+                <label asp-for="Name" for="name"></label>
+                <input type="text" asp-for="Name" class="form-control" placeholder="Enter name" id="name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="schedule">Playlist Schedule:</label><br />
+                <select class="form-control" asp-for="Schedule" id="schedule">
+                    <option disabled selected>Please Select</option>
+                    <option value="@Schedule.Daily">Daily</option>
+                    <option value="@Schedule.AlternativeDay">Alternate Days</option>
+                    <option value="@Schedule.Weekly">Weekly</option>
+                    <option value="@Schedule.Monthly">Monthly</option>
+                    <option value="@Schedule.Yearly">Yearly</option>
+                </select>
+                <span asp-validation-for="Schedule" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="evenOrdays" style="display:none;">
+                <label for="sel3">Even or Odd Days?</label>
+                <select class="form-control" asp-for="Frequency" id="evenOrday">
+                    <option disabled selected>Please Select</option>
+                    <option>Even Days</option>
+                    <option>Odd Days</option>
+                </select>
+                <span id="errevenOrday" class="text-danger" style="display:none;">Please select Frequency</span>
+            </div>
+
+            <div class="form-group" id="weekdays" style="display:none;">
+                <label for="sel1">Which day?</label>
+                <select class="form-control" asp-for="Frequency" id="weekday">
+                    <option disabled selected>Please Select</option>
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                    <option>Sunday</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="specificDates" style="display:none;">
+                <label for="sel2">Which Date?</label>
+                <input type="date" asp-for="Frequency" class="form-control" id="specificDate">
+            </div><br />
+
+            <button type="submit" class="btn btn-success">Create playlist</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+        // todo: dailt no frequncy
+        $("#schedule").change(function () {
+            switch (this.value) {
+                case "@Schedule.Daily":
+                    $("#specificDates").hide();
+                    $("#weekdays").hide();
+                    $("#evenOrdays").hide();
+                    $("#weekday").prop('required', false);
+                    break;
+                case "@Schedule.AlternativeDay":
+                    $("#specificDates").hide();
+                    $("#weekdays").hide();
+                    $("#evenOrdays").show();
+                    $("#evenOrday").prop('required', true);
+                    break;
+                case "@Schedule.Monthly":
+                    $("#specificDates").hide();
+                    $("#weekdays").hide();
+                    $("#evenOrdays").hide();
+                    $("#evenOrday").prop('required', false);
+                    break;
+                case "@Schedule.Weekly":
+                    $("#specificDates").hide();
+                    $("weekday").prop('required', true);
+                    $("#weekdays").show();
+                    $("#evenOrdays").hide();
+                    break;
+                default:
+            }
+        });
+
+        function onSubmitClick(item) {
+            console.log(item);
+            var schedule = item.schedule.value
+            debugger;
+            if (item.schedule.value == "@Schedule.AlternativeDay" && item.evenOrday.value=="" ) {
+                $("#errevenOrday").show();
+                return false;
+            }
+            return true;
+        }
+</script>
+}

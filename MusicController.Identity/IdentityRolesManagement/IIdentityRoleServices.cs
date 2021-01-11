@@ -1,6 +1,11 @@
-﻿namespace MusicController.Identity.IdentityRolesManagement
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace MusicController.Identity.IdentityRolesManagement
 {
-    class IIdentityRoleServices
+   public interface IIdentityRoleServices 
     {
+        Task<List<IdentityRole>> GetAllRoles();
     }
 }

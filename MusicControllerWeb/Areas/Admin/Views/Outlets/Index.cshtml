@@ -1,17 +1,15 @@
 ﻿@model IEnumerable<OutletViewModel>
 
-@inject CustomUrlHelper _urlHelper
 @{
     ViewData["Title"] = "Index";
 }
-
 
 <div class="container mt-3">
     <h2>Outlets</h2>
     <div class="d-flex">
         <div class="p-2 flex-grow-1 mr-1">
             <div class="input-group">
-                <input class="form-control py-2 border-right-0 border " type="search" placeholder="search" id="example-search-input">
+                <input class="form-control py-2 border-right-0  " type="search" placeholder="search" id="example-search-input">
                 <span class="input-group-append">
                     <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
                 </span>
@@ -28,31 +26,36 @@
     <div class="list-group" id="myList">
         @foreach (var item in Model)
         {
-            <a href="@_urlHelper.RolebaseOutletUrl(item.Id)" class="list-group-item text-body text-decoration-none">
+            <a class="list-group-item text-body text-decoration-none">
                 <div class="row">
-                    <div class="col-sm-2">
-                        <img class="img-fluid" src="/@item.LogoUrl" alt="" />
-                    </div>
-                    <div class="col-sm-7 align-content-center ">
-                        <h4>@item.Name</h4>
-                        <small>@item.TotalPalylist Playlists</small><br />
-                        <small>@item.TotalDevices Registered Devices</small>
-                    </div>
+                   @* <a href="@_urlHelper.RolebaseOutletUrl(item.Id)">*@
+                        <div class="col-sm-2">
+                            <img class="img-fluid" src="/@item.LogoUrl" alt="" />
+                        </div>
+                        <div class="col-sm-7 align-content-center ">
+                            <h4>@item.Name</h4>
+                            <small>@item.TotalPlaylists Playlists</small><br />
+                            <small>@item.TotalDevices Registered Devices</small>
+                        </div>
                     <div class="col-sm-3">
                         <div class="form-inline">
                             @if (_urlHelper.IsRoleAdmin())
                             {
-                                <button class="btn btn-outline-primary btn-sm mr-2" onclick="location.href='@Url.Action("Edit", "Outlets", new { id = item.Id })'"> Manage </button>
+                                <div>
+                                    <button class="btn btn-outline-primary btn-sm mr-2" onclick="location.href='@Url.Action("Edit", "Outlets", new { id = item.Id })'"> Manage </button>
+                                </div>
                             }
                             @{
-                                // TODO: Remove in || _urlHelper.IsRoleAdmin()
+                                // TODO: Remove this only for dj Role || _urlHelper.IsRoleAdmin()
                             }
                             @if (_urlHelper.IsRoleDj() || _urlHelper.IsRoleAdmin())
                             {
-                                <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Schedule", "Outlets", new { id = item.Id })'"> Schedule </button>
+                                <div>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Index", "Playlist", new { id = item.Id })'"> Schedule </button>
+                                </div>
                             }
                         </div>
-                        </div>
+                    </div>
                 </div>
             </a>
         }

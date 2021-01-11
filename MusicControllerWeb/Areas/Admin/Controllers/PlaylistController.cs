@@ -1,7 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MusicController.BL.PlaylistsServices;
+using MusicController.BL.TrackServices;
+using MusicController.Common.Constants;
+using MusicController.DTO.ViewModel;
+using MusicController.Entites.Models;
 using MusicController.Shared.Constant;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers
 {
@@ -9,79 +18,130 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
     [Authorize(Roles = UserRolesConstant.Admin)]
     public class PlaylistController : Controller
     {
-        // GET: PlaylistController
-        public ActionResult Index()
+        private readonly IPlaylistServices _playlistServices;
+        private readonly ITracksServices _tracksServices;
+        private readonly IMapper _mapper;
+        public PlaylistController(IPlaylistServices playlistServices, IMapper mapper , ITracksServices tracksServices)
         {
-            return View();
+            _playlistServices = playlistServices;
+            _mapper = mapper;
+            _tracksServices = tracksServices;
         }
-
-        // GET: PlaylistController/Details/5
-        public ActionResult Details(int id)
+        // GET: PlaylistController
+        public async Task<ActionResult> Index(long id)
         {
-            return View();
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+            ViewBag.OutletId = id;
+            var playlists = await _playlistServices.GetAllPlaylistswithTrackByOutlet(id);
+            PlaylistViewModel playlistViewModel = new PlaylistViewModel
+            {
+                Playlists = _mapper.Map<List<PlaylistIndexModel>>(playlists)
+            };
+            return View(playlistViewModel);
         }
 
         // GET: PlaylistController/Create
-        public ActionResult Create()
+        public ActionResult Create(long id)
         {
-            return View();
+            PlaylistIndexModel playlist = new PlaylistIndexModel()
+            {
+                OutletId = id
+            };
+            return View(playlist);
         }
 
         // POST: PlaylistController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(PlaylistIndexModel playlist)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var outlet = _mapper.Map<Playlist>(playlist);
+                    await _playlistServices.AddPlaylist(outlet);
+                    return RedirectToAction("Index", "Playlist", new { id = playlist.OutletId, Area = UserRolesConstant.Admin });
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError(string.Empty, ex.Message.ToString());
+                return View(playlist);
             }
+            return View(playlist);
         }
 
         // GET: PlaylistController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(long id)
         {
-            return View();
+            var playlist = await _playlistServices.GetAllPlaylistswithTrack(id);
+            if (playlist == null)
+            {
+                return NotFound();
+            }
+            PlaylistwithTrackViewModel playlistwithTrackViewModel = new PlaylistwithTrackViewModel()
+            {
+                Playlist = _mapper.Map<PlaylistIndexModel>(playlist)
+            };
+            return View(playlistwithTrackViewModel);
         }
 
-        // POST: PlaylistController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(long id, PlaylistIndexModel Playlist)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var playlist = _mapper.Map<Playlist>(Playlist);
+                    await _playlistServices.UpdatePlaylist(id,playlist);
+                    return RedirectToAction("Edit", "Playlist", new { id, Area = UserRolesConstant.Admin });
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError(string.Empty, ex.Message.ToString());
+                return View(Playlist);
             }
+            return View(Playlist);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTrack(long id, TrackViewModel trackView)
+        {
+            try
+            {
+                trackView.Id = 0;
+                if (ModelState.IsValid)
+                {
+                    var track = _mapper.Map<Track>(trackView);
+                    await _tracksServices.AddTrack(track);
+                    return RedirectToAction("Edit", "Playlist", new { id = id, Area = UserRolesConstant.Admin });
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message.ToString());
+                return View($"/Admin/Playlist/Edit/{id}" ,trackView);
+            }
+            return View($"/Admin/Playlist/Edit/{id}", trackView);
         }
 
         // GET: PlaylistController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult AddTrack(long id)
         {
             return View();
         }
 
-        // POST: PlaylistController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public JsonResult IsFrequencyRequried(string Frequency, string Schedule)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            bool isRequried = true;
+            return  Json(isRequried);
         }
     }
 }

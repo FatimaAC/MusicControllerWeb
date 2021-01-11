@@ -1,14 +1,16 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace MusicController.DTO.ViewModel
+namespace MusicController.Common.EntityHelper
 {
-    public class AuditableEntityViewModel : BaseIdViewModel
+    public abstract class AuditableEntity : BaseId
     {
-        public string ApprovedBy { get; set; }
-        public DateTime? ApprovedAt { get; set; }
+        [MaxLength(450)]
         public string CreatedBy { get; set; }
         public DateTime? CreatedAt { get; set; }
+        [MaxLength(450)] 
         public string UpdatedBy { get; set; }
+
         public DateTime? UpdatedAt { get; set; }
     }
 

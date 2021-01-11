@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicController.Common.EntityHelper;
+using System;
 
 namespace MusicController.Entites.Models
 {
@@ -6,8 +7,8 @@ namespace MusicController.Entites.Models
     {
         public long PlaylistId { get; set; }
         public string TrackURL { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         public Playlist Playlist { get; set; }
     }
 }

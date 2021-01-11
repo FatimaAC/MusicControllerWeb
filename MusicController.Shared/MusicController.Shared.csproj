@@ -17,8 +17,4 @@
     <ProjectReference Include="..\MusicController.Repository\MusicController.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="FileServices\" />
-  </ItemGroup>
-
 </Project>

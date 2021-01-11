@@ -1,12 +1,47 @@
-﻿namespace MusicController.DTO.ViewModel
+﻿using MusicController.Common.EntityHelper;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
+namespace MusicController.DTO.ViewModel
 {
-    public class PlaylistViewModel : AuditableEntityViewModel
+    public class PlaylistViewModel : AuditableEntity
     {
+        public PlaylistViewModel()
+        {
+            Playlists = new List<PlaylistIndexModel>();
+            PlaylistsCreateModel = new PlaylistIndexModel();
+        }
+        public List<PlaylistIndexModel> Playlists { get; set; }
+        public PlaylistIndexModel PlaylistsCreateModel { get; set; }
+    }
+    public class PlaylistIndexModel 
+    {
+        [Key]
+        public long Id { get; set; }
+        [Required]
         public long OutletId { get; set; }
-        public int Name { get; set; }
+        [Required]
+        [Display(Name = "Playlist Name:")]
+        public string Name { get; set; }
+        [Required]
+        [Display(Name = "Schedule")]
         public string Schedule { get; set; }
-        public byte Frequency { get; set; }
-        public virtual OutletCreateViewModel Outlet { get; set; }
-        public virtual TrackViewModel Track { get; set; }
+        public string Frequency { get; set; }
+        public OutletCreateViewModel Outlet { get; set; }
+        public List<TrackViewModel> Tracks { get; set; }
+    }
+
+    
+    public class PlaylistwithTrackViewModel : BaseId
+    {
+        public PlaylistwithTrackViewModel()
+        {
+            Playlist = new PlaylistIndexModel();
+            AddTrack = new TrackViewModel();
+        }
+        public PlaylistIndexModel Playlist { get; set; }
+        public PlaylistIndexModel EditPlaylist { get; set; }
+        public TrackViewModel AddTrack { get; set; }
     }
 }

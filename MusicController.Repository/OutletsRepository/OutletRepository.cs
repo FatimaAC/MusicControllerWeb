@@ -29,7 +29,7 @@ namespace MusicController.Repository.OutletsRepository
                                     Name = s.Name,
                                     LogoUrl = s.ImageUrl,
                                     TotalDevices = s.Devices.Count(),
-                                    TotalPalylist = s.Playlist.Count(),
+                                    TotalPlaylists = s.Playlist.Count(),
                                 }).ToListAsync();
 
             return outlets;

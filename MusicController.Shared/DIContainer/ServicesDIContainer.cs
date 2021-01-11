@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using MusicController.BL.DevicesServices;
 using MusicController.BL.FileServices;
 using MusicController.BL.OutletServices;
+using MusicController.BL.PlaylistsServices;
+using MusicController.BL.TrackServices;
+using MusicController.Identity.IdentityRolesManagement;
 using MusicController.Identity.IdentityUserManagement;
 using MusicController.Identity.UserService;
 using MusicController.Shared.ExtensionMethod;
@@ -26,10 +29,13 @@ namespace MusicController.Shared.DIContainer
             });
             services.AddScoped<CustomUrlHelper>();
             services.AddScoped<IApplicationUserServices, ApplicationUserServices>();
+            services.AddScoped<IIdentityRoleServices, IdentityRoleServices>();
             services.AddScoped<IOutletService, OutletService>();
             services.AddScoped<IDevicesServices, DevicesServices>();
             services.AddScoped<IFileServices, FileServices>();
+            services.AddScoped<IPlaylistServices, PlaylistServices>();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<ITracksServices, TracksServices>();
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MusicController.DTO.ViewModel
+namespace MusicController.Common.EntityHelper
 {
-    public abstract class BaseIdViewModel
+    public abstract class BaseId
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

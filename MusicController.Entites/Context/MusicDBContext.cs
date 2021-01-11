@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MusicController.Common.EntityHelper;
 using MusicController.Entites.EntityConfigration;
 using MusicController.Entites.Models;
 using MusicController.Entites.SeedData;

@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MusicController.Common.Constants;
 using MusicController.DTO.ViewModel;
+using MusicController.Identity.IdentityRolesManagement;
 using MusicController.Identity.IdentityUserManagement;
+using MusicController.Identity.IdentityUserRoleManagement;
 using MusicController.Shared.Constant;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -15,11 +19,13 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
     public class AspNetUserRoleController : Controller
     {
         private readonly IApplicationUserServices _applicationUserServices;
+        private readonly IIdentityRoleServices _identityRoleServices;
         private readonly IMapper _mapper;
 
-        public AspNetUserRoleController(IApplicationUserServices applicationUserServices, IMapper mapper)
+        public AspNetUserRoleController(IApplicationUserServices applicationUserServices, IMapper mapper , IIdentityRoleServices identityRoleServices)
         {
             _applicationUserServices = applicationUserServices;
+            _identityRoleServices = identityRoleServices;
             _mapper = mapper;
         }
         public async Task<IActionResult> Index()
@@ -38,6 +44,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
                 return NotFound();
             }
             var applicationUsers = await _applicationUserServices.GetById(id);
+            ViewBag.Roles= new SelectList(await _identityRoleServices.GetAllRoles(), "Name", "Name");
             var booksVM = new UserViewModel();
             booksVM = _mapper.Map<UserViewModel>(applicationUsers);
             return View(booksVM);
@@ -58,10 +65,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                var applicationUser = _mapper.Map<UserViewModel>(userViewModel);
-                await _applicationUserServices.AuthorizedUser(id, userViewModel.IsAuthorized, userId);
+                await _applicationUserServices.AuthorizedUser(id, userViewModel.IsAuthorized, userViewModel.Role);
                 return RedirectToAction("Index");
             }
             return View(userViewModel);
