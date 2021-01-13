@@ -1,11 +1,12 @@
-﻿@model   TrackViewModel
+﻿@model TrackViewModel
 @{
     ViewData["Title"] = "Edit";
 }
-
-<div class="container row">
-    <div class="col-sm-6 border p-5">
-        <h4>Add Track</h4><br />
+<div class="row card-body">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-6 border p-5 white-color">
+        <h4 class="text-center">Add Track</h4><br />
         <form asp-action="Edit" asp-route-id="@Model.Id">
             <div asp-validation-summary="ModelOnly" class="text-danger">
             </div>
@@ -25,9 +26,11 @@
                 <input asp-for="EndTime" class="form-control" placeholder="Enter password">
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
-            <br />
-            <button type="submit" class="btn btn-primary">Change</button>
+            <button type="submit" class="btn btn-outline-success">Change</button>
         </form>
+        <div>
+            <br />
+            <a asp-action="Index">Back to List</a>
+        </div>
     </div>
 </div>
-

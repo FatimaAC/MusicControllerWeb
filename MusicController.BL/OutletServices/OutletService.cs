@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using MusicController.Common.Constants;
 using MusicController.Common.HelperClasses;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
@@ -8,7 +6,6 @@ using MusicController.Repository.UnitofWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace MusicController.BL.OutletServices
@@ -24,7 +21,7 @@ namespace MusicController.BL.OutletServices
         }
         public async Task AddOutlet(Outlet outlet)
         {
-              
+
             //var passwordandSalt =  outlet.Password.EncryptPassword();
             //outlet.Password = passwordandSalt.Item1;
             //outlet.Salt = passwordandSalt.Item2;
@@ -106,6 +103,6 @@ namespace MusicController.BL.OutletServices
             _unitofWork.Complete();
         }
 
-        
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using MusicController.Common.EntityHelper;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
 namespace MusicController.DTO.ViewModel
 {
@@ -15,7 +14,7 @@ namespace MusicController.DTO.ViewModel
         public List<PlaylistIndexModel> Playlists { get; set; }
         public PlaylistIndexModel PlaylistsCreateModel { get; set; }
     }
-    public class PlaylistIndexModel 
+    public class PlaylistIndexModel
     {
         [Key]
         public long Id { get; set; }
@@ -32,7 +31,7 @@ namespace MusicController.DTO.ViewModel
         public List<TrackViewModel> Tracks { get; set; }
     }
 
-    
+
     public class PlaylistwithTrackViewModel : BaseId
     {
         public PlaylistwithTrackViewModel()

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MusicController.Common.Constants
+﻿namespace MusicController.Common.Constants
 {
     public static class DeviceConstant
     {
@@ -10,7 +6,7 @@ namespace MusicController.Common.Constants
         public const int MaxStatusMessageLength = 256;
         public const int MaxApprovedByLength = 450;
         public const int MaxDeviceIdLength = 16;
-        
+
 
     }
 }

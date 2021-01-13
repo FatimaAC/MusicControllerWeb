@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MusicController.Entites.Context;
 using MusicController.Identity.IdentityContext;
-using MusicController.Identity.Model;
 using MusicController.Shared;
 using MusicController.Shared.DIContainer;
+using MusicController.Shared.Identity;
 
 namespace MusicControllerWeb
 {
@@ -40,17 +42,25 @@ namespace MusicControllerWeb
             services.RespositoryContainer();
             services.ServicesContainer();
             services.MapperContainer();
+            services.IdentityContainer();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest)
+    .AddRazorPagesOptions(options =>
+    {
+        options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+    });
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddRoles<IdentityRole>()
-               .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
             services.AddControllersWithViews().AddRazorRuntimeCompilation().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env ,MusicDBContext musicDBContext ,ApplicationDbContext applicationDbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MusicDBContext musicDBContext, ApplicationDbContext applicationDbContext)
         {
             if (env.IsDevelopment())
             {

@@ -13,7 +13,7 @@ namespace MusicController.Identity.IdentityUserManagement
         private readonly UserManager<ApplicationUser> _UserManager;
         private readonly ICurrentUserService _currentUserService;
 
-        public ApplicationUserServices(UserManager<ApplicationUser> userManager , ICurrentUserService currentUserService)
+        public ApplicationUserServices(UserManager<ApplicationUser> userManager, ICurrentUserService currentUserService)
         {
             _UserManager = userManager;
             _currentUserService = currentUserService;
@@ -75,7 +75,7 @@ namespace MusicController.Identity.IdentityUserManagement
             user.ApprovedBy = _currentUserService.UserId;
             user.IsAuthorized = isAuthroized;
             await _UserManager.UpdateAsync(user);
-            await _UserManager.AddToRoleAsync(user ,role);
+            await _UserManager.AddToRoleAsync(user, role);
         }
     }
 }

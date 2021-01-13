@@ -3,7 +3,6 @@ using MusicController.Identity.UserService;
 using MusicController.Repository.UnitofWork;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicController.BL.TrackServices
@@ -22,7 +21,7 @@ namespace MusicController.BL.TrackServices
 
         public async Task AddTrack(Track track)
         {
-           await _unitofWork.TrackRepository.AddAsync(track);
+            await _unitofWork.TrackRepository.AddAsync(track);
             _unitofWork.Complete();
         }
 
@@ -39,7 +38,7 @@ namespace MusicController.BL.TrackServices
 
         public async Task<Track> GetTrack(long id)
         {
-            var track =await _unitofWork.TrackRepository.GetAsync(id);
+            var track = await _unitofWork.TrackRepository.GetAsync(id);
             return track;
         }
 

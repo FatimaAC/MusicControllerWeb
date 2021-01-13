@@ -13,9 +13,9 @@ namespace MusicController.Entites.EntityConfigration
             builder.Property(e => e.StartTime).IsRequired(true);
             builder.Property(e => e.EndTime).IsRequired(true);
 
-        builder.HasOne(s => s.Playlist)
-          .WithMany(g => g.Tracks)
-          .HasForeignKey(s => s.PlaylistId).IsRequired(true);
+            builder.HasOne(s => s.Playlist)
+              .WithMany(g => g.Tracks)
+              .HasForeignKey(s => s.PlaylistId).IsRequired(true);
         }
     }
 }

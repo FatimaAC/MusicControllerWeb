@@ -11,35 +11,53 @@
             </div>
         </div>
         <div class="p-2">
-                <a asp-action="Create" asp-controller="Playlist" asp-route-id="@ViewBag.OutletId" class="btn btn-primary float-right ">+ Add Playlist</a>
+            <a asp-action="Create" asp-controller="Playlist" asp-route-id="@ViewBag.OutletId" class="btn btn-outline-primary float-right ">+ Add Playlist</a>
         </div>
     </div>
     <br>
     <div class="list-group" id="myList">
-        @foreach (var playlist in Model.Playlists)
+        @if (!Model.Playlists.Any())
         {
             <a href="#" class="list-group-item text-body text-decoration-none">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <h4>@playlist.Name</h4>
-                    </div>
-                    <div class="col-sm-7 align-content-center h-100">
-                        @if (playlist.Tracks?.Any() == true)
-                        {
-                            var count = 1;
-                            @foreach (var item in playlist.Tracks)
-                            {
-                                <small>Track @count - @item.StartTime to @item.EndTime</small><br />
-                                count = count + 1;
-                            }
-                        }
-                        <small class="text-success">@playlist.Frequency @*Plays every Week on Monday*@</small>
-                    </div>
-                    <div class="col-sm-3 align-content-end">
-                        <button class="btn btn-outline-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Playlist" , new { id = playlist.Id })'"> Edit </button>
-                    </div>
-                </div>
+                <p> No Playlist Found.Create one to see</p>
             </a>
+        }
+        else
+        {
+
+            @foreach (var playlist in Model.Playlists)
+            {
+                <a href="#" class="list-group-item text-body text-decoration-none">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <h4>@playlist.Name</h4>
+                        </div>
+                        <div class="col-sm-7 align-content-center h-100">
+                            @if (playlist.Tracks?.Any() == true)
+                            {
+                                var count = 1;
+                                @foreach (var item in playlist.Tracks)
+                                {
+                                    <small>Track @count - @item.StartTime to @item.EndTime</small><br />
+                                    count = count + 1;
+                                }
+                            }
+                            <small class="text-success">@playlist.Frequency @*Plays every Week on Monday*@</small>
+                        </div>
+                        <div class="col-sm-3 align-content-end">
+                            <div class="form-inline">
+
+                                <button class="btn btn-outline-primary btn-sm m-1" onclick="location.href='@Url.Action("Edit", "Playlist", new { id = playlist.Id })'"> Edit </button>
+
+                                <form asp-action="Delete" asp-controller="playlist" asp-route-id="@playlist.Id">
+                                    <input type="hidden" name="OutletId" value="@ViewBag.OutletId" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
         }
     </div>
 </div>

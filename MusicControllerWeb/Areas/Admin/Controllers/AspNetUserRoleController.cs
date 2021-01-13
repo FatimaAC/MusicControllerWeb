@@ -6,10 +6,7 @@ using MusicController.Common.Constants;
 using MusicController.DTO.ViewModel;
 using MusicController.Identity.IdentityRolesManagement;
 using MusicController.Identity.IdentityUserManagement;
-using MusicController.Identity.IdentityUserRoleManagement;
-using MusicController.Shared.Constant;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers
@@ -22,7 +19,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         private readonly IIdentityRoleServices _identityRoleServices;
         private readonly IMapper _mapper;
 
-        public AspNetUserRoleController(IApplicationUserServices applicationUserServices, IMapper mapper , IIdentityRoleServices identityRoleServices)
+        public AspNetUserRoleController(IApplicationUserServices applicationUserServices, IMapper mapper, IIdentityRoleServices identityRoleServices)
         {
             _applicationUserServices = applicationUserServices;
             _identityRoleServices = identityRoleServices;
@@ -31,8 +28,8 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationUsers = await _applicationUserServices.GetAll();
-            var booksVM = new List<UserViewModel>();
-            booksVM = _mapper.Map<List<UserViewModel>>(applicationUsers);
+            //var booksVM = new List<UserViewModel>();
+            var booksVM = _mapper.Map<List<UserViewModel>>(applicationUsers);
             return View(booksVM);
         }
 
@@ -44,9 +41,8 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
                 return NotFound();
             }
             var applicationUsers = await _applicationUserServices.GetById(id);
-            ViewBag.Roles= new SelectList(await _identityRoleServices.GetAllRoles(), "Name", "Name");
-            var booksVM = new UserViewModel();
-            booksVM = _mapper.Map<UserViewModel>(applicationUsers);
+            ViewBag.Roles = new SelectList(await _identityRoleServices.GetAllRoles(), "Name", "Name");
+            var booksVM = _mapper.Map<UserViewModel>(applicationUsers);
             return View(booksVM);
         }
 

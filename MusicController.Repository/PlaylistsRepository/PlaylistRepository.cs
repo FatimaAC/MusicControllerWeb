@@ -2,10 +2,8 @@
 using MusicController.Entites.Context;
 using MusicController.Entites.Models;
 using MusicController.Repository.GenericRepository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicController.Repository.PlaylistsRepository
@@ -27,7 +25,7 @@ namespace MusicController.Repository.PlaylistsRepository
             return playlists;
         }
 
-        public async Task<Playlist> GetAllPlaylistswithTrack(long playlistid)
+        public async Task<Playlist> GetPlaylistswithTrack(long playlistid)
         {
             var playlists = await _musicDbContext.Playlists
                             .Include(e => e.Tracks)
@@ -35,5 +33,6 @@ namespace MusicController.Repository.PlaylistsRepository
                             .FirstOrDefaultAsync();
             return playlists;
         }
+
     }
 }

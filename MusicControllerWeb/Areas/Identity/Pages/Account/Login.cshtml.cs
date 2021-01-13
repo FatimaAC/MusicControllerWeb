@@ -81,6 +81,7 @@ namespace MusicControllerWeb.Areas.Identity.Pages.Account
                 if (user != null && !user.IsAuthorized)
                 {
                     ViewData["AuthroizedEmail"] = "Waiting for Authorization";
+                    ModelState.AddModelError(string.Empty, "Waiting for Authorization");
                     return Page();
                 }
                 // This doesn't count login failures towards account lockout

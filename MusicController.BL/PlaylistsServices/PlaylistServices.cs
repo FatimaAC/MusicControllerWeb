@@ -3,7 +3,6 @@ using MusicController.Repository.UnitofWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicController.BL.PlaylistsServices
@@ -24,14 +23,14 @@ namespace MusicController.BL.PlaylistsServices
 
         public async Task DeletePlaylist(long id)
         {
-            var playlist = await GetPlaylist(id);
+            var playlist = await GetPlaylistswithTrack(id);
             _unitofWork.PlaylistRepository.Remove(playlist);
             _unitofWork.Complete();
         }
 
-       public async Task<Playlist> GetAllPlaylistswithTrack(long playlistId)
+        public async Task<Playlist> GetPlaylistswithTrack(long playlistId)
         {
-            var playlist = await _unitofWork.PlaylistRepository.GetAllPlaylistswithTrack(playlistId);
+            var playlist = await _unitofWork.PlaylistRepository.GetPlaylistswithTrack(playlistId);
             return playlist;
         }
         public async Task<List<Playlist>> GetAllPlaylists()
@@ -46,14 +45,14 @@ namespace MusicController.BL.PlaylistsServices
 
         public async Task<Playlist> GetPlaylist(long id)
         {
-            var playlist =await _unitofWork.PlaylistRepository.GetAsync(id);
+            var playlist = await _unitofWork.PlaylistRepository.GetAsync(id);
             return playlist;
         }
 
         public async Task UpdatePlaylist(long id, Playlist playlist)
         {
             var Editplaylist = await GetPlaylist(id);
-            if (Editplaylist==null)
+            if (Editplaylist == null)
             {
                 throw new Exception("Record Not found");
             }
@@ -61,7 +60,7 @@ namespace MusicController.BL.PlaylistsServices
             Editplaylist.OutletId = playlist.OutletId;
             Editplaylist.Schedule = playlist.Schedule;
             Editplaylist.Frequency = playlist.Frequency;
-             _unitofWork.PlaylistRepository.UpdateEntity(Editplaylist);
+            _unitofWork.PlaylistRepository.UpdateEntity(Editplaylist);
             _unitofWork.Complete();
         }
     }

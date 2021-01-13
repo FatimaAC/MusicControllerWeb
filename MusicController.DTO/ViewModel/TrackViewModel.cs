@@ -7,7 +7,7 @@ namespace MusicController.DTO.ViewModel
     public class TrackViewModel : BaseId
     {
         public long PlaylistId { get; set; }
-        [Display(Name="Track Link:")]
+        [Display(Name = "Track Link:")]
         [Required]
         public string TrackURL { get; set; }
         [Required]

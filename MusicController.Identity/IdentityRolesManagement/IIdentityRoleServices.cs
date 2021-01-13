@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MusicController.Identity.IdentityRolesManagement
 {
-   public interface IIdentityRoleServices 
+    public interface IIdentityRoleServices
     {
         Task<List<IdentityRole>> GetAllRoles();
     }

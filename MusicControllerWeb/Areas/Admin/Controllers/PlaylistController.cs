@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusicController.BL.PlaylistsServices;
 using MusicController.BL.TrackServices;
 using MusicController.Common.Constants;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
-using MusicController.Shared.Constant;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,7 +19,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         private readonly IPlaylistServices _playlistServices;
         private readonly ITracksServices _tracksServices;
         private readonly IMapper _mapper;
-        public PlaylistController(IPlaylistServices playlistServices, IMapper mapper , ITracksServices tracksServices)
+        public PlaylistController(IPlaylistServices playlistServices, IMapper mapper, ITracksServices tracksServices)
         {
             _playlistServices = playlistServices;
             _mapper = mapper;
@@ -78,7 +76,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         // GET: PlaylistController/Edit/5
         public async Task<ActionResult> Edit(long id)
         {
-            var playlist = await _playlistServices.GetAllPlaylistswithTrack(id);
+            var playlist = await _playlistServices.GetPlaylistswithTrack(id);
             if (playlist == null)
             {
                 return NotFound();
@@ -99,7 +97,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     var playlist = _mapper.Map<Playlist>(Playlist);
-                    await _playlistServices.UpdatePlaylist(id,playlist);
+                    await _playlistServices.UpdatePlaylist(id, playlist);
                     return RedirectToAction("Edit", "Playlist", new { id, Area = UserRolesConstant.Admin });
                 }
             }
@@ -127,7 +125,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message.ToString());
-                return View($"/Admin/Playlist/Edit/{id}" ,trackView);
+                return View($"/Admin/Playlist/Edit/{id}", trackView);
             }
             return View($"/Admin/Playlist/Edit/{id}", trackView);
         }
@@ -138,10 +136,13 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             return View();
         }
 
-        public JsonResult IsFrequencyRequried(string Frequency, string Schedule)
+        [HttpPost]
+        public async Task<IActionResult> Delete(long id, long OutletId)
         {
-            bool isRequried = true;
-            return  Json(isRequried);
+            await _playlistServices.DeletePlaylist(id);
+            return RedirectToAction("Index", "Playlist", new { id = OutletId, Area = UserRolesConstant.Admin });
+
         }
+
     }
 }

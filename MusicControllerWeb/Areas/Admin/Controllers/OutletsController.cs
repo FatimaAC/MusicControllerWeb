@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MusicController.BL.DevicesServices;
 using MusicController.BL.FileServices;
 using MusicController.BL.OutletServices;
 using MusicController.Common.Constants;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
-using MusicController.Shared.Constant;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -43,7 +41,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         // POST: Admin/Outlets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,ImageUrl,Description ,File")] OutletCreateViewModel outletViewModel)

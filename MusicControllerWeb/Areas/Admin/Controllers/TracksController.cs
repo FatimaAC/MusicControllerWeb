@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MusicController.BL.DevicesServices;
 using MusicController.BL.TrackServices;
 using MusicController.Common.Constants;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers
 {
     [Area(UserRolesConstant.Admin)]
-    [Authorize(Roles = UserRolesConstant.Dj)]
+    [Authorize(Roles = UserRolesConstant.AdminorDJ)]
     public class TracksController : Controller
     {
 
@@ -33,7 +30,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             return View(tracViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(long id ,TrackViewModel trackViewModel)
+        public async Task<IActionResult> Edit(long id, TrackViewModel trackViewModel)
         {
             try
             {
@@ -49,11 +46,11 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
                 ModelState.AddModelError(string.Empty, ex.Message.ToString());
                 return View(trackViewModel);
             }
-           
+
             return View(trackViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(long id ,long playlistId)
+        public async Task<IActionResult> Delete(long id, long playlistId)
         {
             await _TracksServices.DeleteTrack(id);
             return RedirectToAction("Edit", "Playlist", new { id = playlistId, Area = UserRolesConstant.Admin });

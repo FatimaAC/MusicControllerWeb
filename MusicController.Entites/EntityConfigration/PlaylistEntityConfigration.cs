@@ -11,9 +11,9 @@ namespace MusicController.Entites.EntityConfigration
         {
             builder.Property(e => e.Name).HasMaxLength(PlaylistConstant.MaxNameLength).IsRequired(true);
             builder.Property(e => e.Schedule).HasMaxLength(PlaylistConstant.MaxScheduleLength).IsRequired(true);
-        builder.HasOne(s => s.Outlet)
-          .WithMany(g => g.Playlist)
-          .HasForeignKey(s => s.OutletId).IsRequired(true);
+            builder.HasOne(s => s.Outlet)
+              .WithMany(g => g.Playlist)
+              .HasForeignKey(s => s.OutletId).IsRequired(true);
         }
     }
 }

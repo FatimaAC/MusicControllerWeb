@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace MusicController.Common.HelperClasses
 {
     public static class PasswordHelper
     {
-        public static Tuple<string,byte[]> EncryptPassword(this string password)
+        public static Tuple<string, byte[]> EncryptPassword(this string password)
         {
-           byte[] salt = new byte[128 / 8];
+            byte[] salt = new byte[128 / 8];
             using (var rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(salt);

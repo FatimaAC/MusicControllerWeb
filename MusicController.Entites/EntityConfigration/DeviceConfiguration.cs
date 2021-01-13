@@ -13,7 +13,7 @@ namespace MusicController.Entites.EntityConfigration
             builder.Property(e => e.ApprovedBy).HasMaxLength(DeviceConstant.MaxApprovedByLength);
             builder.Property(e => e.StatusMessage).HasMaxLength(DeviceConstant.MaxStatusMessageLength);
             builder.Property(e => e.DeviceDetail).HasMaxLength(DeviceConstant.MaxDeviceDetailLength);
-            
+
             builder.HasOne(s => s.Outlet)
             .WithMany(g => g.Devices)
             .HasForeignKey(s => s.OutletId);

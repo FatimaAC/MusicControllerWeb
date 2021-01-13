@@ -3,9 +3,11 @@
 @{
     ViewData["Title"] = "Create";
 }
-<div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6 border p-5">
+<div class="row card-body">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-6 border p-5 white-color">
+        <h4 class="text-center">Add Outlet</h4>
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger">
             </div>
@@ -20,7 +22,7 @@
                 <span asp-validation-for="File" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />
+                <input type="submit" value="Create" class="btn btn-outline-success" />
             </div>
         </form>
         <div>
