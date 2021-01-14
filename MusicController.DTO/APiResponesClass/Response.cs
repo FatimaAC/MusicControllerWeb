@@ -1,9 +1,11 @@
 ﻿using MusicController.Common.Enumerration;
+using Newtonsoft.Json;
 
 namespace MusicController.DTO.APiResponesClass
 {
     public class Response<T>
     {
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; set; }
         public T Data { get; set; }
         public StatusApiEnum StatusCode { get; set; }

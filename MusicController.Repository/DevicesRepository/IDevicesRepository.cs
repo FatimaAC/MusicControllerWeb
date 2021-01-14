@@ -8,5 +8,6 @@ namespace MusicController.Repository.DeviceRepository
     public interface IDevicesRepository : IGenericRepository<Device>
     {
         Task<IEnumerable<Device>> GetDeviceWithOutlets();
+        Task<Device> GetOutletWithDevice(string deviceId, long outletId);
     }
 }

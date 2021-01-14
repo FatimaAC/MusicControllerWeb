@@ -43,19 +43,10 @@ namespace MusicControllerWeb
             services.ServicesContainer();
             services.MapperContainer();
             services.IdentityContainer();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest)
-    .AddRazorPagesOptions(options =>
-    {
-        options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-    });
-
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = $"/Identity/Account/Login";
-                options.LogoutPath = $"/Identity/Account/Logout";
-                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-            });
-            services.AddControllersWithViews().AddRazorRuntimeCompilation().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.IdentityCookieSetting();
+            services.AddControllersWithViews()
+                    .AddRazorRuntimeCompilation()
+                    .SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddRazorPages();
         }
 

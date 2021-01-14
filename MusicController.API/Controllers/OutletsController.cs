@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicController.BL.OutletServices;
 using MusicController.DTO.APiResponesClass;
-using MusicController.DTO.DTOS;
+using MusicController.DTOModel.DTOS;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,10 +20,11 @@ namespace MusicController.API.Controllers
             _outletService = outletService;
             _mapper = mapper;
         }
-
+      //  [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetOutles()
         {
+            throw new System.Exception("this is only test");
             var outlets = await _outletService.GetAllOutlets();
             var outletDTO = _mapper.Map<List<OutletNameDTO>>(outlets);
             var response = new Response<List<OutletNameDTO>>(outletDTO);

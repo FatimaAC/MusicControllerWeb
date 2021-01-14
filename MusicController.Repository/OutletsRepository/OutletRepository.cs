@@ -34,6 +34,7 @@ namespace MusicController.Repository.OutletsRepository
 
             return outlets;
         }
+        
         public Task<IEnumerable<Outlet>> GetOutletByAdmin()
         {
             throw new NotImplementedException();

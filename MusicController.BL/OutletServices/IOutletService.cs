@@ -1,4 +1,5 @@
-﻿using MusicController.DTO.ViewModel;
+﻿using MusicController.DTO.RequestModel;
+using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,5 +17,6 @@ namespace MusicController.BL.OutletServices
         Task UpdatePasswordOutlet(long id, string Password);
         Task<Outlet> GetOutlet(long id);
         Task DeleteOutlet(long id);
+        Task<bool> ValidateOutletandDevice(LoginRequest loginRequest);
     }
 }

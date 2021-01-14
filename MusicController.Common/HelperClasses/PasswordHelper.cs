@@ -19,19 +19,20 @@ namespace MusicController.Common.HelperClasses
                 salt: salt,
                 prf: KeyDerivationPrf.HMACSHA1,
                 iterationCount: 10000,
-                numBytesRequested: 256 / 8));
+                numBytesRequested: 256 / 8
+                ));
             return Tuple.Create(hashed, salt);
         }
-        private static bool VerifyPassword(string enteredPassword, byte[] salt, string storedPassword)
+        public static bool VerifyPassword(this byte[] salt,  string LoginPassword , string OutletPassword)
         {
             string encryptedPassw = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: enteredPassword,
+                password: LoginPassword,
                 salt: salt,
                 prf: KeyDerivationPrf.HMACSHA1,
                 iterationCount: 10000,
                 numBytesRequested: 256 / 8
             ));
-            return encryptedPassw == storedPassword;
+            return encryptedPassw == OutletPassword;
         }
     }
 }

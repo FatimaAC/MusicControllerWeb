@@ -20,6 +20,10 @@ namespace MusicController.BL.DevicesServices
 
         public async Task AddDevice(Device device)
         {
+            if (await _unitofWork.DeviceRepository.AnyAsync(e=>e.DeviceId==device.DeviceId))
+            {
+                throw new Exception("Device is already Assigned");
+            }
             await _unitofWork.DeviceRepository.AddAsync(device);
             _unitofWork.Complete();
         }

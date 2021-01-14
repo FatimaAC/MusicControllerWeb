@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MusicController.Common.HelperClasses;
+using MusicController.DTO.RequestModel;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using MusicController.Repository.UnitofWork;
@@ -103,6 +104,32 @@ namespace MusicController.BL.OutletServices
             _unitofWork.Complete();
         }
 
+
+        public async Task<bool> ValidateOutletandDevice(LoginRequest loginRequest)
+        {
+            var outletwithDevice =await _unitofWork.DeviceRepository.GetOutletWithDevice(loginRequest.DeviceId, loginRequest.OutletId);
+            if (outletwithDevice == null)
+            {
+                throw new Exception("Outlet Not found");
+            }
+            if (outletwithDevice.Outlet == null)
+            {
+                throw new Exception("No device Register yet");
+            }
+            if (!outletwithDevice.IsApproved)
+            {
+                throw new Exception("Waiting for Authorization");
+            }
+            var outlet = outletwithDevice.Outlet;
+            var verifyPassword = outlet.Salt.VerifyPassword(loginRequest.Password, outlet.Password);
+            if (!verifyPassword)
+            {
+                throw new Exception("Password do not Match");
+            }
+            
+            var PlayListWithTrack = _unitofWork.PlaylistRepository.FindAllAsync(e => e.OutletId == loginRequest.OutletId);
+            return true;
+        }
 
     }
 }

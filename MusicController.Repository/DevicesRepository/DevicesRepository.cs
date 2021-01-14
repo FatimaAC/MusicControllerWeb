@@ -3,6 +3,7 @@ using MusicController.Entites.Context;
 using MusicController.Entites.Models;
 using MusicController.Repository.GenericRepository;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicController.Repository.DeviceRepository
@@ -20,6 +21,15 @@ namespace MusicController.Repository.DeviceRepository
         {
             var outlets = await _musicDbContext.Device.Include(e => e.Outlet).ToListAsync();
             return outlets;
+        }
+        public async Task<Device> GetOutletWithDevice(string deviceId , long outletId)
+        {
+            var outletwithDevices = await _musicDbContext.Device
+                                    .Include(e => e.Outlet)
+                                    .Where(e => e.DeviceId == deviceId && e.Outlet.Id == outletId)
+                                     .FirstOrDefaultAsync();
+
+            return outletwithDevices;
         }
     }
 }

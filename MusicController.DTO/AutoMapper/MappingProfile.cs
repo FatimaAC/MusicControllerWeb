@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using MusicController.DTO.DTOS;
+using MusicController.DTO.RequestModel;
 using MusicController.DTO.ViewModel;
+using MusicController.DTOModel.DTOS;
 using MusicController.Entites.Models;
 using MusicController.Identity.Model;
 
@@ -20,9 +21,11 @@ namespace MusicController.DTOs.AutoMapper
             CreateMap<OutletPasswordsViewModel, Outlet>().ReverseMap()
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password)).
                 ForMember(dest => dest.ConfirmPassword, opt => opt.MapFrom(src => src.Password));
-
             //api dto 
             CreateMap<Outlet, OutletNameDTO>().ReverseMap();
+
+            //api request
+            CreateMap<Device, DevicesRequest>().ReverseMap();
         }
     }
 }
