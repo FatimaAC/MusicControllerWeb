@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MusicController.Entites.Migrations
 {
-    public partial class NewData : Migration
+    public partial class bltables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,8 +20,7 @@ namespace MusicController.Entites.Migrations
                     Name = table.Column<string>(maxLength: 60, nullable: false),
                     Description = table.Column<string>(maxLength: 128, nullable: true),
                     ImageUrl = table.Column<string>(maxLength: 256, nullable: false),
-                    Password = table.Column<string>(maxLength: 256, nullable: false, defaultValue: "tzKstRjR2pcrrmES5pp6I0GM+Ipq4CPQLfrSpyy+kqY="),
-                    Salt = table.Column<byte[]>(nullable: false, defaultValue: new byte[] { 254, 232, 178, 252, 185, 218, 129, 193, 118, 110, 173, 241, 81, 158, 88, 218 })
+                    Password = table.Column<string>(maxLength: 256, nullable: false, defaultValue: "$2a$11$Ht1s1BsqNTRka6yYLWeKPuUtZHx6tQIfPOtqqwslC36o18LwVEIOO")
                 },
                 constraints: table =>
                 {
@@ -105,27 +104,33 @@ namespace MusicController.Entites.Migrations
 
             migrationBuilder.InsertData(
                 table: "Outlets",
-                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "ImageUrl", "Name", "Password", "Salt", "UpdatedAt", "UpdatedBy" },
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "ImageUrl", "Name", "UpdatedAt", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1L, null, null, null, "Images/Baladna.png", "Baladna", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 16L, null, null, null, "Images/SMAT.png", "SMAT", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 15L, null, null, null, "Images/Sazeli Logo.png", "Sazeli Logo", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 14L, null, null, null, "Images/Remman Cafe.png", "Remman Cafe", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 12L, null, null, null, "Images/Orient Pearl.png", "Orient Pearl", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 11L, null, null, null, "Images/Mokarabia.png", "Mokarabia", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 10L, null, null, null, "Images/Meatsmith.png", "Meatsmith", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 17L, null, null, null, "Images/USTA.png", "USTA", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 9L, null, null, null, "Images/Maia.png", "Maia", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 7L, null, null, null, "Images/Karaki.png", "Karaki", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 6L, null, null, null, "Images/Jwala.png", "Jwala", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 5L, null, null, null, "Images/Gahwetna.png", "Gahwetna", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 4L, null, null, null, "Images/Debs w Remman.png", "Debs w Remman", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 3L, null, null, null, "Images/Build It Burger.png", "Build It Burger", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 2L, null, null, null, "Images/Basta.png", "Basta", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 8L, null, null, null, "Images/La Casa.png", "La Casa", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null },
-                    { 18L, null, null, null, "Images/USTA.png", "USTA Remove", "m/68YrUbnbRIbiXqJdgTypKZMqE4LzZil09L9bT6Ajs=", new byte[] { 74, 207, 202, 38, 163, 145, 35, 100, 20, 111, 253, 51, 1, 147, 26, 54 }, null, null }
+                    { 1L, null, null, null, "Images/Baladna.png", "Baladna", null, null },
+                    { 15L, null, null, null, "Images/SMAT.png", "SMAT", null, null },
+                    { 14L, null, null, null, "Images/Sazeli Logo.png", "Sazeli Logo", null, null },
+                    { 13L, null, null, null, "Images/Remman Cafe.png", "Remman Cafe", null, null },
+                    { 12L, null, null, null, "Images/Orient Pearl.png", "Orient Pearl", null, null },
+                    { 11L, null, null, null, "Images/Mokarabia.png", "Mokarabia", null, null },
+                    { 10L, null, null, null, "Images/Meatsmith.png", "Meatsmith", null, null },
+                    { 16L, null, null, null, "Images/USTA.png", "USTA", null, null },
+                    { 9L, null, null, null, "Images/Maia.png", "Maia", null, null },
+                    { 7L, null, null, null, "Images/Karaki.png", "Karaki", null, null },
+                    { 6L, null, null, null, "Images/Jwala.png", "Jwala", null, null },
+                    { 5L, null, null, null, "Images/Gahwetna.png", "Gahwetna", null, null },
+                    { 4L, null, null, null, "Images/Debs w Remman.png", "Debs w Remman", null, null },
+                    { 3L, null, null, null, "Images/Build It Burger.png", "Build It Burger", null, null },
+                    { 2L, null, null, null, "Images/Basta.png", "Basta", null, null },
+                    { 8L, null, null, null, "Images/La Casa.png", "La Casa", null, null },
+                    { 17L, null, null, null, "Images/USTA.png", "USTA Remove", null, null }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Device_DeviceId",
+                table: "Device",
+                column: "DeviceId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Device_OutletId",

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusicController.BL.DevicesServices;
 using MusicController.BL.OutletServices;
+using MusicController.Common.Enumerration;
+using MusicController.DTO.APiResponesClass;
 using MusicController.DTO.RequestModel;
 using MusicController.Entites.Models;
 using System;
@@ -28,13 +30,14 @@ namespace MusicController.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PostDevice([FromBody] DevicesRequest devicesRequest)
         {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                var device = _mapper.Map<Device>(devicesRequest);
-                await _devicesServices.AddDevice(device);
-                return NoContent();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var device = _mapper.Map<Device>(devicesRequest);
+            await _devicesServices.RegisterDevice(device , devicesRequest.Password);
+            var response = new Response<string>("Device added successfully", StatusApiEnum.Success);
+            return Ok(response);
         }
     }
 }

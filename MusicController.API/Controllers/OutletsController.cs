@@ -21,14 +21,14 @@ namespace MusicController.API.Controllers
             _mapper = mapper;
         }
       //  [AllowAnonymous]
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetOutles()
+        public async Task<Response<List<OutletNameDTO>>> GetOutles()
         {
-            throw new System.Exception("this is only test");
             var outlets = await _outletService.GetAllOutlets();
             var outletDTO = _mapper.Map<List<OutletNameDTO>>(outlets);
             var response = new Response<List<OutletNameDTO>>(outletDTO);
-            return Ok(response);
+            return response;
         }
     }
 }

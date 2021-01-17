@@ -10,14 +10,14 @@ using MusicController.Identity.IdentityContext;
 namespace MusicController.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210103113043_Added tables and customized identity")]
-    partial class Addedtablesandcustomizedidentity
+    [Migration("20210116123748_Identity Customized and ApplicationToken")]
+    partial class IdentityCustomizedandApplicationToken
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.10")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -51,14 +51,14 @@ namespace MusicController.Identity.Migrations
                         new
                         {
                             Id = "12bf9f07-c559-4544-9b6f-080e2a1d6549",
-                            ConcurrencyStamp = "42e6f6d2-9bf8-41f7-b94d-5cbc53773a87",
+                            ConcurrencyStamp = "1f0ad56f-6e19-4e76-b1fa-a2e2923b66df",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "f410b8f9-c76f-49ac-a674-c2a6994eabda",
-                            ConcurrencyStamp = "209a8d2f-3ac9-450d-807d-7cb5b3bf563a",
+                            ConcurrencyStamp = "f6c1c8b8-a327-41bb-8858-5a2eb390a03f",
                             Name = "DJ",
                             NormalizedName = "DJ"
                         });
@@ -115,12 +115,10 @@ namespace MusicController.Identity.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -159,7 +157,7 @@ namespace MusicController.Identity.Migrations
                         new
                         {
                             UserId = "f410b8f9-c76f-49ac-a674-c2a6994eabda",
-                            RoleId = "12bf9f07-c559-4544-9b6f-080e2a1d6549"
+                            RoleId = "f410b8f9-c76f-49ac-a674-c2a6994eabda"
                         });
                 });
 
@@ -169,12 +167,10 @@ namespace MusicController.Identity.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -261,16 +257,16 @@ namespace MusicController.Identity.Migrations
                         {
                             Id = "12bf9f07-c559-4544-9b6f-080e2a1d6549",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9f59cdab-8f24-48e0-babd-7582a9784f37",
+                            ConcurrencyStamp = "b2dc6a36-44d4-41d7-b9c4-ab492c3c4747",
                             Email = "admin@musiccontoller.com",
                             EmailConfirmed = true,
                             IsAuthorized = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@MUSICCONTOLLER.COM",
                             NormalizedUserName = "ADMIN@MUSICCONTOLLER.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJvGP5PU5Cj0hDR1Uyy2G/zzVcCjZeG6UrGH7LzEzGpxE0EZU45A4iHv1/en3YqD/g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBPhC5ZBElEF1NGFWf2OetCejR935IB+39TyJ+syVZxUd+QR0cYPz64dMEYnQ24WAA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e2443f1e-1319-410a-8303-d9e347037397",
+                            SecurityStamp = "a65f7618-9992-4d22-a905-1fa58130f121",
                             TwoFactorEnabled = false,
                             UserName = "admin@musiccontoller.com"
                         },
@@ -278,19 +274,58 @@ namespace MusicController.Identity.Migrations
                         {
                             Id = "f410b8f9-c76f-49ac-a674-c2a6994eabda",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cd039500-bee2-4e3f-80e8-2ae40e203a57",
+                            ConcurrencyStamp = "db668773-9658-4016-9fe4-97df7901de14",
                             Email = "dj@musiccontoller.com",
                             EmailConfirmed = true,
                             IsAuthorized = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "DJ@MUSICCONTOLLER.COM",
                             NormalizedUserName = "DJ@MUSICCONTOLLER.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPIpVf5fzVS4RAkvgZlxewGjnj+2L5qP5cug3jPUl2p8RkSUjonawrQPX2TfPwu2gw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI5m/UUNiCBRbsOKYsU66yRk260q6Z5WhQZRzzo7cwLDSfgGrirfhopF0eiLuqd9CQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d301296f-111e-448c-9cc0-7a96ccd00a20",
+                            SecurityStamp = "20694211-3145-4120-9a24-969c1144b34d",
                             TwoFactorEnabled = false,
                             UserName = "dj@musiccontoller.com"
                         });
+                });
+
+            modelBuilder.Entity("MusicController.Identity.Models.RefreshToken", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeviceId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("OutletId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReplacedByToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RevokedByIp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

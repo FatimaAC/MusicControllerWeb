@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MusicController.Identity.Migrations
 {
-    public partial class Addedtablesandcustomizedidentity : Migration
+    public partial class IdentityCustomizedandApplicationToken : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,6 +55,27 @@ namespace MusicController.Identity.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Token = table.Column<string>(nullable: true),
+                    Expires = table.Column<DateTime>(nullable: false),
+                    OutletId = table.Column<long>(nullable: false),
+                    DeviceId = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    CreatedByIp = table.Column<string>(nullable: true),
+                    Revoked = table.Column<DateTime>(nullable: true),
+                    RevokedByIp = table.Column<string>(nullable: true),
+                    ReplacedByToken = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -100,8 +121,8 @@ namespace MusicController.Identity.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -145,8 +166,8 @@ namespace MusicController.Identity.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -165,8 +186,8 @@ namespace MusicController.Identity.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", "42e6f6d2-9bf8-41f7-b94d-5cbc53773a87", "Admin", "ADMIN" },
-                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", "209a8d2f-3ac9-450d-807d-7cb5b3bf563a", "DJ", "DJ" }
+                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", "1f0ad56f-6e19-4e76-b1fa-a2e2923b66df", "Admin", "ADMIN" },
+                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", "f6c1c8b8-a327-41bb-8858-5a2eb390a03f", "DJ", "DJ" }
                 });
 
             migrationBuilder.InsertData(
@@ -174,8 +195,8 @@ namespace MusicController.Identity.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ApprovedBy", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsAuthorized", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", 0, null, "9f59cdab-8f24-48e0-babd-7582a9784f37", "admin@musiccontoller.com", true, true, false, null, "ADMIN@MUSICCONTOLLER.COM", "ADMIN@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAEJvGP5PU5Cj0hDR1Uyy2G/zzVcCjZeG6UrGH7LzEzGpxE0EZU45A4iHv1/en3YqD/g==", null, false, "e2443f1e-1319-410a-8303-d9e347037397", false, "admin@musiccontoller.com" },
-                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", 0, null, "cd039500-bee2-4e3f-80e8-2ae40e203a57", "dj@musiccontoller.com", true, true, false, null, "DJ@MUSICCONTOLLER.COM", "DJ@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAEPIpVf5fzVS4RAkvgZlxewGjnj+2L5qP5cug3jPUl2p8RkSUjonawrQPX2TfPwu2gw==", null, false, "d301296f-111e-448c-9cc0-7a96ccd00a20", false, "dj@musiccontoller.com" }
+                    { "12bf9f07-c559-4544-9b6f-080e2a1d6549", 0, null, "b2dc6a36-44d4-41d7-b9c4-ab492c3c4747", "admin@musiccontoller.com", true, true, false, null, "ADMIN@MUSICCONTOLLER.COM", "ADMIN@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAEBPhC5ZBElEF1NGFWf2OetCejR935IB+39TyJ+syVZxUd+QR0cYPz64dMEYnQ24WAA==", null, false, "a65f7618-9992-4d22-a905-1fa58130f121", false, "admin@musiccontoller.com" },
+                    { "f410b8f9-c76f-49ac-a674-c2a6994eabda", 0, null, "db668773-9658-4016-9fe4-97df7901de14", "dj@musiccontoller.com", true, true, false, null, "DJ@MUSICCONTOLLER.COM", "DJ@MUSICCONTOLLER.COM", "AQAAAAEAACcQAAAAEI5m/UUNiCBRbsOKYsU66yRk260q6Z5WhQZRzzo7cwLDSfgGrirfhopF0eiLuqd9CQ==", null, false, "20694211-3145-4120-9a24-969c1144b34d", false, "dj@musiccontoller.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -186,7 +207,7 @@ namespace MusicController.Identity.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "f410b8f9-c76f-49ac-a674-c2a6994eabda", "12bf9f07-c559-4544-9b6f-080e2a1d6549" });
+                values: new object[] { "f410b8f9-c76f-49ac-a674-c2a6994eabda", "f410b8f9-c76f-49ac-a674-c2a6994eabda" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -249,6 +270,9 @@ namespace MusicController.Identity.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

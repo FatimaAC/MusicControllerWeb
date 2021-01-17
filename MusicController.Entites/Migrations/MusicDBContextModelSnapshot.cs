@@ -15,7 +15,7 @@ namespace MusicController.Entites.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -101,13 +101,7 @@ namespace MusicController.Entites.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256)
-                        .HasDefaultValue("vBSh2uUo67DpUFJ2456El/9dAXt//TQqXt2HDbG1IIo=");
-
-                    b.Property<byte[]>("Salt")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("varbinary(max)")
-                        .HasDefaultValue(new byte[] { 232, 63, 103, 199, 159, 32, 175, 186, 224, 8, 133, 205, 135, 54, 128, 61 });
+                        .HasDefaultValue("$2a$11$Ht1s1BsqNTRka6yYLWeKPuUtZHx6tQIfPOtqqwslC36o18LwVEIOO");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -125,137 +119,103 @@ namespace MusicController.Entites.Migrations
                         {
                             Id = 1L,
                             ImageUrl = "Images/Baladna.png",
-                            Name = "Baladna",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Baladna"
                         },
                         new
                         {
                             Id = 2L,
                             ImageUrl = "Images/Basta.png",
-                            Name = "Basta",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Basta"
                         },
                         new
                         {
                             Id = 3L,
                             ImageUrl = "Images/Build It Burger.png",
-                            Name = "Build It Burger",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Build It Burger"
                         },
                         new
                         {
                             Id = 4L,
                             ImageUrl = "Images/Debs w Remman.png",
-                            Name = "Debs w Remman",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Debs w Remman"
                         },
                         new
                         {
                             Id = 5L,
                             ImageUrl = "Images/Gahwetna.png",
-                            Name = "Gahwetna",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Gahwetna"
                         },
                         new
                         {
                             Id = 6L,
                             ImageUrl = "Images/Jwala.png",
-                            Name = "Jwala",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Jwala"
                         },
                         new
                         {
                             Id = 7L,
                             ImageUrl = "Images/Karaki.png",
-                            Name = "Karaki",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Karaki"
                         },
                         new
                         {
                             Id = 8L,
                             ImageUrl = "Images/La Casa.png",
-                            Name = "La Casa",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "La Casa"
                         },
                         new
                         {
                             Id = 9L,
                             ImageUrl = "Images/Maia.png",
-                            Name = "Maia",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Maia"
                         },
                         new
                         {
                             Id = 10L,
                             ImageUrl = "Images/Meatsmith.png",
-                            Name = "Meatsmith",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Meatsmith"
                         },
                         new
                         {
                             Id = 11L,
                             ImageUrl = "Images/Mokarabia.png",
-                            Name = "Mokarabia",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Mokarabia"
                         },
                         new
                         {
                             Id = 12L,
                             ImageUrl = "Images/Orient Pearl.png",
-                            Name = "Orient Pearl",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "Orient Pearl"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            ImageUrl = "Images/Remman Cafe.png",
+                            Name = "Remman Cafe"
                         },
                         new
                         {
                             Id = 14L,
-                            ImageUrl = "Images/Remman Cafe.png",
-                            Name = "Remman Cafe",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            ImageUrl = "Images/Sazeli Logo.png",
+                            Name = "Sazeli Logo"
                         },
                         new
                         {
                             Id = 15L,
-                            ImageUrl = "Images/Sazeli Logo.png",
-                            Name = "Sazeli Logo",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            ImageUrl = "Images/SMAT.png",
+                            Name = "SMAT"
                         },
                         new
                         {
                             Id = 16L,
-                            ImageUrl = "Images/SMAT.png",
-                            Name = "SMAT",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            ImageUrl = "Images/USTA.png",
+                            Name = "USTA"
                         },
                         new
                         {
                             Id = 17L,
                             ImageUrl = "Images/USTA.png",
-                            Name = "USTA",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
-                        },
-                        new
-                        {
-                            Id = 18L,
-                            ImageUrl = "Images/USTA.png",
-                            Name = "USTA Remove",
-                            Password = "1dk3nZEwnRqtA9Wj+fXaKbj1iN2OFKJk/H8q8pPGAzQ=",
-                            Salt = new byte[] { 71, 71, 135, 18, 46, 19, 138, 27, 132, 129, 223, 116, 108, 205, 198, 56 }
+                            Name = "USTA Remove"
                         });
                 });
 

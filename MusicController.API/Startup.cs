@@ -1,13 +1,19 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using MusicController.Common.Constants;
+using MusicController.Shared.CrosSetting;
 using MusicController.Shared.DIContainer;
 using MusicController.Shared.ExpectionHelper;
 using MusicController.Shared.Identity;
-using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Text;
+
 namespace MusicController.API
 {
     public class Startup
@@ -21,6 +27,7 @@ namespace MusicController.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
             services.DBContainer(Configuration);
             services.RespositoryContainer();
@@ -28,7 +35,7 @@ namespace MusicController.API
             services.MapperContainer();
             services.AddSwaggerGen();
             services.IdentityContainer();
-            services.TokenContainer();
+           services.TokenContainer();
             services.UseApiValidationHandler();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,11 +45,15 @@ namespace MusicController.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.CorsContainer();
             app.UseApiExceptionHandler(logger);
-            app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
+            // global cors policy
             app.SwaggerRouting();
+            app.UseEndpoints(x => x.MapControllers());
+
         }
     }
 }

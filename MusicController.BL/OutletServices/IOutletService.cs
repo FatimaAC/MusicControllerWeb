@@ -17,6 +17,6 @@ namespace MusicController.BL.OutletServices
         Task UpdatePasswordOutlet(long id, string Password);
         Task<Outlet> GetOutlet(long id);
         Task DeleteOutlet(long id);
-        Task<bool> ValidateOutletandDevice(LoginRequest loginRequest);
+        Task ValidateOutletandDevice(LoginRequest loginRequest);
     }
 }

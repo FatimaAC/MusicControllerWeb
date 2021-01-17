@@ -97,15 +97,15 @@ namespace MusicController.BL.OutletServices
             {
                 throw new Exception("Id not Found");
             }
-            var passwordandSalt = outlet.Password.EncryptPassword();
-            outlet.Password = passwordandSalt.Item1;
-            outlet.Salt = passwordandSalt.Item2;
+             outlet.Password = PasswordHelper.EncryptPassword(Password);
+            //outlet.Password = passwordandSalt.Item1;
+            //outlet.Salt = passwordandSalt.Item2;
             _unitofWork.OutletRepository.UpdateEntity(outlet);
             _unitofWork.Complete();
         }
 
 
-        public async Task<bool> ValidateOutletandDevice(LoginRequest loginRequest)
+        public async Task ValidateOutletandDevice(LoginRequest loginRequest)
         {
             var outletwithDevice =await _unitofWork.DeviceRepository.GetOutletWithDevice(loginRequest.DeviceId, loginRequest.OutletId);
             if (outletwithDevice == null)
@@ -121,14 +121,12 @@ namespace MusicController.BL.OutletServices
                 throw new Exception("Waiting for Authorization");
             }
             var outlet = outletwithDevice.Outlet;
-            var verifyPassword = outlet.Salt.VerifyPassword(loginRequest.Password, outlet.Password);
+            var verifyPassword = PasswordHelper.VerifyPassword(loginRequest.Password,outlet.Password);
             if (!verifyPassword)
             {
-                throw new Exception("Password do not Match");
+                throw new Exception("Password do not match");
             }
-            
             var PlayListWithTrack = _unitofWork.PlaylistRepository.FindAllAsync(e => e.OutletId == loginRequest.OutletId);
-            return true;
         }
 
     }

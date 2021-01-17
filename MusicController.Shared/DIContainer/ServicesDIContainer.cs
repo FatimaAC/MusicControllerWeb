@@ -10,6 +10,7 @@ using MusicController.BL.PlaylistsServices;
 using MusicController.BL.TrackServices;
 using MusicController.Identity.IdentityRolesManagement;
 using MusicController.Identity.IdentityUserManagement;
+using MusicController.Identity.Jwt;
 using MusicController.Identity.UserService;
 using MusicController.Shared.ExtensionMethod;
 
@@ -36,6 +37,8 @@ namespace MusicController.Shared.DIContainer
             services.AddScoped<IPlaylistServices, PlaylistServices>();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddScoped<ITracksServices, TracksServices>();
+            services.AddScoped<ITokenServices, TokenServices>();
+            
         }
     }
 }

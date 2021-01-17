@@ -1,69 +1,126 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using MusicController.Common.Constants;
 using MusicController.Identity.Constant;
+using MusicController.Identity.IdentityContext;
 using MusicController.Identity.Model;
+using MusicController.Identity.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace MusicController.Identity.Jwt
 {
-    public static class TokenService
+    public  class TokenServices : ITokenServices
     {
-        private const double EXPIREDays = 7;
-        private const string Secret = "marcy9d8534b48w951b9287d492b256x";
-        public static string CreateToken(long outletId, string deviceId)
+       
+        private readonly ApplicationDbContext _applicationDbContext;
+        public TokenServices(ApplicationDbContext applicationDbContext)
         {
+            _applicationDbContext = applicationDbContext;
+        }
+        public AuthenticateResponse Authenticate(long outletId ,string deviceId, string ipAddress)
+        {
+           
+            var jwtToken = GenerateJwtToken(outletId , deviceId, ipAddress);
+            var refreshToken = GenerateRefreshToken(ipAddress);
+            refreshToken.OutletId = outletId;
+            refreshToken.DeviceId = deviceId;
+            AddRefreshToken(refreshToken);
+            return new AuthenticateResponse(jwtToken, refreshToken.Token);
+        }
 
+        public AuthenticateResponse RefreshToken(string token, string ipAddress)
+        {
+            var refreshToken = GetRefreshToken(token);
+            // replace old refresh token with a new one and save
+            var newRefreshToken = GenerateRefreshToken(ipAddress);
+            refreshToken.Revoked = DateTime.UtcNow;
+            refreshToken.RevokedByIp = ipAddress;
+            refreshToken.ReplacedByToken = newRefreshToken.Token;
+            _applicationDbContext.Update(refreshToken);
+            // generate new jwt
+            var jwtToken = GenerateJwtToken(refreshToken.OutletId ,refreshToken.DeviceId ,ipAddress);
+
+            return new AuthenticateResponse(jwtToken, newRefreshToken.Token);
+        }
+
+        public bool RevokeToken(string token, string ipAddress)
+        {
+            var refreshToken = GetRefreshToken(token);
+            // revoke token and save
+            refreshToken.Revoked = DateTime.UtcNow;
+            refreshToken.RevokedByIp = ipAddress;
+            UpdateRefreshToken(refreshToken);
+            return true;
+        }
+
+        // helper methods
+        private string GenerateJwtToken(long outletId, string deviceId, string ipAddress)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Secret);
+            var key = Encoding.ASCII.GetBytes(JwtConstant.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, outletId.ToString()),
-                    new Claim("DeviceId", deviceId),
+                    new Claim("DeviceId", deviceId.ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddDays(EXPIREDays),
+                Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
 
-        public static string GenerateRefreshToken()
+        private RefreshToken GenerateRefreshToken(string ipAddress)
         {
-            var randomNumber = new byte[32];
-            using (var rng = RandomNumberGenerator.Create())
+            using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
             {
-                rng.GetBytes(randomNumber);
-                return Convert.ToBase64String(randomNumber);
+                var randomBytes = new byte[64];
+                rngCryptoServiceProvider.GetBytes(randomBytes);
+                return new RefreshToken
+                {
+                    Token = Convert.ToBase64String(randomBytes),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    Created = DateTime.UtcNow,
+                    CreatedByIp = ipAddress
+                };
             }
         }
-        public static ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+
+        private void AddRefreshToken(RefreshToken applicationToken)
         {
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
-                ValidateIssuer = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("the server key used to sign the JWT token is here, use more than 16 chars")),
-                ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken securityToken;
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
-            var jwtSecurityToken = securityToken as JwtSecurityToken;
-            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                throw new SecurityTokenException("Invalid token");
-
-            return principal;
+            _applicationDbContext.Add(applicationToken);
+            _applicationDbContext.SaveChanges();
+        }
+        private void UpdateRefreshToken(RefreshToken applicationToken)
+        {
+            _applicationDbContext.Entry(applicationToken).State = EntityState.Modified;
+            _applicationDbContext.SaveChanges();
         }
 
+        private RefreshToken GetRefreshToken(string token)
+        {
+            var refreshToken = _applicationDbContext.RefreshTokens.FirstOrDefault(e => e.Token == token);
+            if (refreshToken==null)
+            {
+                throw new Exception("No refresh Token Found");
+            }
+            if (!refreshToken.IsActive)
+            {
+                throw new Exception("Token expire");
+            }
+              
+            return refreshToken;
 
+        }
 
     }
 }

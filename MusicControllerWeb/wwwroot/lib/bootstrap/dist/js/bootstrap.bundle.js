@@ -5006,7 +5006,7 @@
       } else if (callback) {
         callback();
       }
-    } ----------------------------------------------------------------------
+    }
     ;
 
     _proto._adjustDialog = function _adjustDialog() {

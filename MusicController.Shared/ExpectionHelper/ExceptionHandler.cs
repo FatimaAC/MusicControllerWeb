@@ -51,7 +51,6 @@ namespace MusicController.Shared.ExpectionHelper
             {
                 options.InvalidModelStateResponseFactory = (context) =>
                 {
-                    
                     var errorDetails = new ErrorDetails
                     {
                         StatusCode = 400

@@ -12,5 +12,6 @@ namespace MusicController.BL.DevicesServices
         Task<Device> GetDevice(long id);
         Task DeleteDevice(long id);
         Task ApproveDevice(long id);
+        Task RegisterDevice(Device device, string password);
     }
 }

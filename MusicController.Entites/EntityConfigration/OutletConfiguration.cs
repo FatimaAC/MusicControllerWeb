@@ -10,12 +10,10 @@ namespace MusicController.Entites.EntityConfigration
     {
         public void Configure(EntityTypeBuilder<Outlet> builder)
         {
-            var passwordandSalt = OutletConstant.DefaultPassword.EncryptPassword();
             builder.Property(e => e.Name).HasMaxLength(OutletConstant.MaxNameLength).IsRequired(true);
             builder.Property(e => e.Description).HasMaxLength(OutletConstant.MaxDescriptionLength);
             builder.Property(e => e.ImageUrl).HasMaxLength(OutletConstant.MaxImageUrlLength).IsRequired(true);
-            builder.Property(e => e.Password).HasMaxLength(OutletConstant.MaxPasswordLength).IsRequired(true).HasDefaultValue(passwordandSalt.Item1);
-            builder.Property(e => e.Salt).IsRequired(true).HasDefaultValue(passwordandSalt.Item2);
+            builder.Property(e => e.Password).HasMaxLength(OutletConstant.MaxPasswordLength).IsRequired(true).HasDefaultValue(PasswordHelper.EncryptPassword(OutletConstant.DefaultPassword));
         }
     }
 }

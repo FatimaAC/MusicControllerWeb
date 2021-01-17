@@ -13,5 +13,9 @@ namespace MusicController.DTO.RequestModel
         public long OutletId { get; set; }
         [Required(ErrorMessage = "Please select DeviceId")]
         public string DeviceId { get; set; }
+        [Required]
+            public string Password { get; set; }
+        [Required]
+        public string DeviceDetail { get; set; }
     }
 }

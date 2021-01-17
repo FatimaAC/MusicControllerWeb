@@ -1,4 +1,5 @@
-﻿using MusicController.Entites.Models;
+﻿using MusicController.Common.HelperClasses;
+using MusicController.Entites.Models;
 using MusicController.Identity.UserService;
 using MusicController.Repository.UnitofWork;
 using System;
@@ -20,7 +21,8 @@ namespace MusicController.BL.DevicesServices
 
         public async Task AddDevice(Device device)
         {
-            if (await _unitofWork.DeviceRepository.AnyAsync(e=>e.DeviceId==device.DeviceId))
+
+            if (await _unitofWork.DeviceRepository.AnyAsync(e => e.DeviceId == device.DeviceId))
             {
                 throw new Exception("Device is already Assigned");
             }
@@ -28,6 +30,17 @@ namespace MusicController.BL.DevicesServices
             _unitofWork.Complete();
         }
 
+        public async Task RegisterDevice(Device device , string password)
+        {
+            var outletPassword =await _unitofWork.OutletRepository.GetAsync(device.OutletId);
+            var verifyPassword = PasswordHelper.VerifyPassword(password, outletPassword.Password);
+            if (!verifyPassword)
+            {
+                throw new Exception("Password do not Match");
+            }
+            await AddDevice(device);
+        }
+    
         public async Task DeleteDevice(long id)
         {
             var device = await _unitofWork.DeviceRepository.GetAsync(id);

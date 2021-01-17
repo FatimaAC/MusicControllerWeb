@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusicController.BL.OutletServices;
+using MusicController.DTO.APiResponesClass;
+using MusicController.DTO.DTOModel;
 using MusicController.DTO.RequestModel;
 using MusicController.Identity.Jwt;
+using MusicController.Identity.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MusicController.API.Controllers
@@ -16,49 +21,70 @@ namespace MusicController.API.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly IOutletService _outletService;
-        public AccountsController(IOutletService outletService)
+        private readonly ITokenServices _tokenServices;
+        private readonly IMapper _mapper;
+        public AccountsController(IOutletService outletService, ITokenServices tokenServices, IMapper mapper)
         {
             _outletService = outletService;
+            _tokenServices = tokenServices;
+            _mapper = mapper;
         }
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> Authenticate(LoginRequest loginRequest)
+        public async Task<Response<AuthenticateResponse>> Authenticate(LoginRequest loginRequest)
         {
-            try
-            {
-                string token = string.Empty;
-                var Isverify = await _outletService.ValidateOutletandDevice(loginRequest);
-                if (Isverify)
-                {
-                    token = TokenService.CreateToken(loginRequest.OutletId, loginRequest.DeviceId);
-                }
-                return Ok(token);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            await _outletService.ValidateOutletandDevice(loginRequest);
+            var token = _tokenServices.Authenticate(loginRequest.OutletId, loginRequest.DeviceId, IpAddress());
+            SetTokenCookie(token.RefreshToken);
+            var respone = new Response<AuthenticateResponse>(token);
+            return respone;
         }
 
         [AllowAnonymous]
-        [HttpPost("refresh-token")]
-        public IActionResult RefreshToken(string token, string refreshToken)
+        [HttpPost("RefreshToken")]
+        public Response<AuthenticateResponse> RefreshToken()
         {
-            var principal = TokenService.GetPrincipalFromExpiredToken(token);
-            var username = principal.Identity.Name;
-            //var savedRefreshToken = TokenService.GetRefreshToken(username); //retrieve the refresh token from a data store
-            //if (savedRefreshToken != refreshToken)
-            //    throw new SecurityTokenException("Invalid refresh token");
+            var refreshToken = _tokenServices.RefreshToken(Request.Cookies["refreshToken"] ,IpAddress());
+            SetTokenCookie(refreshToken.RefreshToken);
+            var respone = new Response<AuthenticateResponse>(refreshToken);
+            return respone;
+        }
 
-            var newJwtToken = TokenService.CreateToken(1 ,2+"");
-            var newRefreshToken = TokenService.GenerateRefreshToken();
+        [HttpPost("RevokeToken")]
+        public IActionResult RevokeToken([FromBody] RevokeTokenRequest model)
+        {
+            // accept token from request body or cookie
+            var token = model.Token ?? Request.Cookies["refreshToken"];
 
-            return new ObjectResult(new
+            if (string.IsNullOrEmpty(token))
+                return BadRequest(new { message = "Token is required" });
+
+            var response = _tokenServices.RevokeToken(token, IpAddress());
+
+            if (!response)
+                return NotFound(new { message = "Token not found" });
+
+            return Ok(new { message = "Token revoked" });
+        }
+
+        //helper Method
+        private void SetTokenCookie(string token)
+        {
+            var cookieOptions = new CookieOptions
             {
-                token = newJwtToken,
-                refreshToken = newRefreshToken
-            });
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(14)
+            };
+            Response.Cookies.Append("refreshToken", token, cookieOptions);
+        }
+
+        private string IpAddress()
+        {
+            if (Request.Headers.ContainsKey("X-Forwarded-For"))
+                return Request.Headers["X-Forwarded-For"];
+            else
+                return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
         }
     }
 }
