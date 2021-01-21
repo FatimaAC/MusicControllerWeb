@@ -37,6 +37,7 @@ namespace MusicController.API
             services.IdentityContainer();
            services.TokenContainer();
             services.UseApiValidationHandler();
+            services.AddHttpsRedirection(options => options.HttpsPort = 44344);
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env , ILoggerFactory logger)
@@ -45,11 +46,13 @@ namespace MusicController.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseHttpsRedirection();
             app.CorsContainer();
             app.UseApiExceptionHandler(logger);
             app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseHttpsRedirection();
             // global cors policy
             app.SwaggerRouting();
             app.UseEndpoints(x => x.MapControllers());

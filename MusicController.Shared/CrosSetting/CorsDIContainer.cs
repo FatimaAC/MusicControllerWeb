@@ -5,23 +5,26 @@ namespace MusicController.Shared.CrosSetting
 {
     public static class CorsDIContainer
     {
+        public static void CorsContainer(this ServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                    });
+            });
+
+        }
+
         public static void CorsContainer(this IApplicationBuilder app)
         {
-           // services.AddCors(options =>
-           //{
-           //    options.AddDefaultPolicy(
-           //        builder =>
-           //        {
-           //            builder.WithOrigins("http://localhost:5000").AllowAnyHeader().AllowAnyMethod();
-           //        });
-           //});
-
-            app.UseCors(x => x
-                .SetIsOriginAllowed(origin => true)
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
-
+            app.UseCors("AllowAll");
         }
 
     }

@@ -20,8 +20,7 @@ namespace MusicController.API.Controllers
             _outletService = outletService;
             _mapper = mapper;
         }
-      //  [AllowAnonymous]
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<Response<List<OutletNameDTO>>> GetOutles()
         {

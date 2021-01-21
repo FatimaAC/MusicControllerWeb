@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MusicController.Common.HelperClasses;
 using MusicController.DTO.DTOModel;
 using MusicController.DTO.RequestModel;
 using MusicController.DTO.ViewModel;
@@ -14,7 +15,13 @@ namespace MusicController.DTOs.AutoMapper
         public MappingProfile()
         {
             CreateMap<ApplicationUser, UserViewModel>().ReverseMap();
-            CreateMap<TrackViewModel, Track>().ReverseMap();
+            CreateMap<Track, TrackViewModel>()
+                .ForMember(dest => dest.FormatedStartTime, opt => opt.MapFrom(src => TimeSpanHelper.ShortTimeTo12HourFormat(src.StartTime))).
+                ForMember(dest => dest.FormatedEndTime, opt => opt.MapFrom(src => TimeSpanHelper.ShortTimeTo12HourFormat(src.EndTime)));
+
+            CreateMap<TrackViewModel, Track>()
+               .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => TimeSpanHelper.ShortTimeTo24HourFormat(src.FormatedStartTime))).
+               ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => TimeSpanHelper.ShortTimeTo24HourFormat(src.FormatedEndTime)));
             CreateMap<Outlet, OutletCreateViewModel>().ReverseMap();
 
             CreateMap<Playlist, PlaylistViewModel>().ReverseMap();

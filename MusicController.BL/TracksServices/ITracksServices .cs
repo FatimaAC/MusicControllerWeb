@@ -6,7 +6,7 @@ namespace MusicController.BL.TrackServices
 {
     public interface ITracksServices
     {
-        Task<List<Device>> GetAllTracks();
+        Task<List<Track>> GetTracksByPlaylist(long playlistId);
         Task AddTrack(Track track);
         Task UpdateTrack(long id, Track track);
         Task<Track> GetTrack(long id);

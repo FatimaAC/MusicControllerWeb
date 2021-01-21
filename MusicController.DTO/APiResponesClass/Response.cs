@@ -5,11 +5,11 @@ namespace MusicController.DTO.APiResponesClass
 {
     public class Response<T>
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+     
         public string Message { get; set; }
         public T Data { get; set; }
         public StatusApiEnum StatusCode { get; set; }
-
+        
         public Response(T data)
         {
             Message = Message;

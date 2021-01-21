@@ -2,12 +2,15 @@
 @{
     ViewData["Title"] = "Edit";
 }
+@section styles{
+    <link href="~/css/jquery.timepicker.min.css" rel="stylesheet" />
+}
 <div class="row card-body">
     <div class="col-sm-3">
     </div>
     <div class="col-sm-6 border p-5 white-color">
         <h4 class="text-center">Add Track</h4><br />
-        <form asp-action="Edit" asp-route-id="@Model.Id">
+        <form asp-action="Edit" onsubmit="return onAddTrackSubmitClick(this)" asp-route-id="@Model.Id">
             <div asp-validation-summary="ModelOnly" class="text-danger">
             </div>
             <input asp-for="PlaylistId" value="@Model.PlaylistId" type="hidden" />
@@ -17,16 +20,18 @@
                 <span asp-validation-for="TrackURL" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartTime"></label>
-                <input asp-for="StartTime" class="form-control" placeholder="Enter password">
-                <span asp-validation-for="StartTime" class="text-danger"></span>
+                <label asp-for="FormatedStartTime"></label>
+                <input asp-for="FormatedStartTime" class="form-control timepicker" placeholder="Enter password">
+                <span asp-validation-for="FormatedStartTime" class="text-danger"></span>
+                <span id="ErrstartTime" class="text-danger" style="display:none;">Start time must be less then End time.</span>
             </div>
             <div class="form-group">
-                <label asp-for="EndTime"></label>
-                <input asp-for="EndTime" class="form-control" placeholder="Enter password">
-                <span asp-validation-for="EndTime" class="text-danger"></span>
+                <label asp-for="FormatedEndTime"></label>
+                <input asp-for="FormatedEndTime" class="form-control timepicker" placeholder="Enter password">
+                <span asp-validation-for="FormatedEndTime" class="text-danger"></span>
+                <span id="ErrEndTime" class="text-danger" style="display:none;">End time must be greater then Start time.</span>
             </div>
-            <button type="submit" class="btn btn-outline-success">Change</button>
+            <button type="submit" class="btn btn-outline-success">Update</button>
         </form>
         <div>
             <br />
@@ -34,3 +39,8 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.timepicker.min.js"></script>
+    <script src="~/js/Views/Playlit/Tracks.js"></script>
+}

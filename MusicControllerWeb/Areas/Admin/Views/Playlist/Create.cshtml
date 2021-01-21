@@ -2,6 +2,16 @@
 @{
     ViewData["Title"] = "Create";
 }
+@section styles{
+    <link href="~/css/jquery.timepicker.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker-standalone.css" rel="stylesheet" />
+   <style>
+       button.ui-datepicker-current {
+        display: none !important;
+       }
+       </style> 
+}
+
 <div class="container row mt-3 card-body">
     <div class="col-sm-1"></div>
     <div class="col-sm-10 border p-5">
@@ -22,7 +32,6 @@
                     <option value="@Schedule.Daily">Daily</option>
                     <option value="@Schedule.AlternativeDay">Alternate Days</option>
                     <option value="@Schedule.Weekly">Weekly</option>
-                    <option value="@Schedule.Monthly">Monthly</option>
                     <option value="@Schedule.Yearly">Yearly</option>
                 </select>
                 <span asp-validation-for="Schedule" class="text-danger"></span>
@@ -49,61 +58,27 @@
                     <option>Saturday</option>
                     <option>Sunday</option>
                 </select>
+                <span id="errevenOrday" class="text-danger" style="display:none;">Please select Frequency</span>
             </div>
-
             <div class="form-group" id="specificDates" style="display:none;">
                 <label for="sel2">Which Date?</label>
-                <input type="date" asp-for="Frequency" class="form-control" id="specificDate">
+                <input asp-for="Frequency" class="form-control date-picker" id="specificDate">
+                <span id="errevenOrday" class="text-danger" style="display:none;">Please select Frequency</span>
             </div><br />
-
             <button type="submit" class="btn btn-success">Create playlist</button>
         </form>
     </div>
 </div>
-
 @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-        // todo: dailt no frequncy
-        $("#schedule").change(function () {
-            switch (this.value) {
-                case "@Schedule.Daily":
-                    $("#specificDates").hide();
-                    $("#weekdays").hide();
-                    $("#evenOrdays").hide();
-                    $("#weekday").prop('required', false);
-                    break;
-                case "@Schedule.AlternativeDay":
-                    $("#specificDates").hide();
-                    $("#weekdays").hide();
-                    $("#evenOrdays").show();
-                    $("#evenOrday").prop('required', true);
-                    break;
-                case "@Schedule.Monthly":
-                    $("#specificDates").hide();
-                    $("#weekdays").hide();
-                    $("#evenOrdays").hide();
-                    $("#evenOrday").prop('required', false);
-                    break;
-                case "@Schedule.Weekly":
-                    $("#specificDates").hide();
-                    $("weekday").prop('required', true);
-                    $("#weekdays").show();
-                    $("#evenOrdays").hide();
-                    break;
-                default:
-            }
-        });
 
-        function onSubmitClick(item) {
-            console.log(item);
-            var schedule = item.schedule.value
-            debugger;
-            if (item.schedule.value == "@Schedule.AlternativeDay" && item.evenOrday.value=="" ) {
-                $("#errevenOrday").show();
-                return false;
-            }
-            return true;
-        }
-</script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/jquery.timepicker.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.13.0/moment.min.js"></script>
+    <script src="~/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        var scheduleValues = "";
+    </script>
+    <script src="~/js/Views/Playlit/Playlist.js"></script>
 }

@@ -22,7 +22,7 @@ namespace MusicController.Shared.ExpectionHelper
             {
                 appError.Run(async context =>
                 {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
                     context.Response.ContentType = "application/json";
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     //if any exception then report it and log it
@@ -31,7 +31,7 @@ namespace MusicController.Shared.ExpectionHelper
                         //Technical Exception for troubleshooting
                         var logger = loggerFactory.CreateLogger("GlobalException");
                         logger.LogError($"Something went wrong: {contextFeature.Error}");
-
+                        
                         //Business exception - exit gracefully
                         await context.Response.WriteAsync(new ErrorDetails()
                         {

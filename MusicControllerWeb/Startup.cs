@@ -44,7 +44,11 @@ namespace MusicControllerWeb
             services.MapperContainer();
             services.IdentityContainer();
             services.IdentityCookieSetting();
-            services.AddControllersWithViews()
+            services.AddMvc()
+                 .AddRazorOptions(options =>
+                  {
+                      options.ViewLocationFormats.Add("/{0}.cshtml");
+                  })
                     .AddRazorRuntimeCompilation()
                     .SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddRazorPages();

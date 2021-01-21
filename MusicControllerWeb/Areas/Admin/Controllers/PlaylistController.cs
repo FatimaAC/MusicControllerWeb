@@ -25,7 +25,6 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             _mapper = mapper;
             _tracksServices = tracksServices;
         }
-        // GET: PlaylistController
         public async Task<ActionResult> Index(long id)
         {
             if (id <= 0)
@@ -41,7 +40,6 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             return View(playlistViewModel);
         }
 
-        // GET: PlaylistController/Create
         public ActionResult Create(long id)
         {
             PlaylistIndexModel playlist = new PlaylistIndexModel()
@@ -50,7 +48,6 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             };
             return View(playlist);
         }
-
         // POST: PlaylistController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -72,20 +69,16 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             }
             return View(playlist);
         }
-
         // GET: PlaylistController/Edit/5
         public async Task<ActionResult> Edit(long id)
         {
-            var playlist = await _playlistServices.GetPlaylistswithTrack(id);
+            var playlist = await _playlistServices.GetPlaylist(id);
             if (playlist == null)
             {
                 return NotFound();
             }
-            PlaylistwithTrackViewModel playlistwithTrackViewModel = new PlaylistwithTrackViewModel()
-            {
-                Playlist = _mapper.Map<PlaylistIndexModel>(playlist)
-            };
-            return View(playlistwithTrackViewModel);
+            var PlaylistViewModel = _mapper.Map<PlaylistIndexModel>(playlist);
+            return View(PlaylistViewModel);
         }
 
         [HttpPost]
@@ -98,7 +91,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
                 {
                     var playlist = _mapper.Map<Playlist>(Playlist);
                     await _playlistServices.UpdatePlaylist(id, playlist);
-                    return RedirectToAction("Edit", "Playlist", new { id, Area = UserRolesConstant.Admin });
+                    return RedirectToAction("Index", "Playlist", new { id = playlist.OutletId, Area = UserRolesConstant.Admin });
                 }
             }
             catch (Exception ex)
@@ -109,26 +102,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             return View(Playlist);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddTrack(long id, TrackViewModel trackView)
-        {
-            try
-            {
-                trackView.Id = 0;
-                if (ModelState.IsValid)
-                {
-                    var track = _mapper.Map<Track>(trackView);
-                    await _tracksServices.AddTrack(track);
-                    return RedirectToAction("Edit", "Playlist", new { id = id, Area = UserRolesConstant.Admin });
-                }
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError(string.Empty, ex.Message.ToString());
-                return View($"/Admin/Playlist/Edit/{id}", trackView);
-            }
-            return View($"/Admin/Playlist/Edit/{id}", trackView);
-        }
+       
 
         // GET: PlaylistController/Delete/5
         public ActionResult AddTrack(long id)

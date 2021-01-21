@@ -5,9 +5,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MusicController.BL.DevicesServices;
 using MusicController.BL.OutletServices;
 using MusicController.Common.Constants;
+using MusicController.DTO.APiResponesClass;
 using MusicController.DTO.ViewModel;
+using MusicController.DTOModel.DTOS;
 using MusicController.Entites.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers

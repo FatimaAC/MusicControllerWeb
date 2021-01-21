@@ -13,8 +13,9 @@ namespace MusicController.API
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                 {
+                     webBuilder.UseUrls("https://*:44344");
+                     webBuilder.UseStartup<Startup>();
+                 });
     }
 }

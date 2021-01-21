@@ -18,9 +18,9 @@
         </div>
 
         <div class="form-label-group">
-            <input type="password" asp-for="Input.Password" class="form-control" placeholder="Password" required>
-            <label asp-for="Input.Password" for="inputPassword"></label>
+            <input  asp-for="Input.Password" class="form-control" placeholder="Password" required>
             <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <label asp-for="Input.Password"></label>
         </div>
         <div class="custom-control custom-checkbox mb-3">
             <input asp-for="Input.RememberMe" type="checkbox" class="custom-control-input" id="customCheck1">

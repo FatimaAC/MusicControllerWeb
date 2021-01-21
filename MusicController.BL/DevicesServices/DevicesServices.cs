@@ -58,6 +58,12 @@ namespace MusicController.BL.DevicesServices
             return devices.ToList();
         }
 
+        public async Task<List<Device>> GetDevicesByOutlet(long outletId)
+        {
+            var devices = await _unitofWork.DeviceRepository.FindAllAsync(e=>e.OutletId== outletId);
+            return devices.ToList();
+        }
+
         public async Task<Device> GetDevice(long id)
         {
             var devices = await _unitofWork.DeviceRepository.GetAsync(id);

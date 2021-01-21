@@ -1,4 +1,6 @@
-﻿using MusicController.Entites.Models;
+﻿using MusicController.Common.Enumerration;
+using MusicController.DTO.ViewModel;
+using MusicController.Entites.Models;
 using MusicController.Repository.UnitofWork;
 using System;
 using System.Collections.Generic;
@@ -33,10 +35,6 @@ namespace MusicController.BL.PlaylistsServices
             var playlist = await _unitofWork.PlaylistRepository.GetPlaylistswithTrack(playlistId);
             return playlist;
         }
-        public async Task<List<Playlist>> GetAllPlaylists()
-        {
-            throw new NotImplementedException();
-        }
         public async Task<List<Playlist>> GetAllPlaylistswithTrackByOutlet(long id)
         {
             var playlistbyOutlet = await _unitofWork.PlaylistRepository.GetAllPlaylistswithTrackByOutlet(id);
@@ -63,5 +61,72 @@ namespace MusicController.BL.PlaylistsServices
             _unitofWork.PlaylistRepository.UpdateEntity(Editplaylist);
             _unitofWork.Complete();
         }
+
+        public async Task<List<WeeklyScheduleList>> WeeklyScheduleList(long outletId)
+        {
+            var playlists = await _unitofWork.PlaylistRepository.FindAllAsync(e => e.OutletId == outletId);
+            List<WeeklyScheduleList> weeklyScheduleLists = new List<WeeklyScheduleList>();
+            if (playlists.Any())
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    var datetime = DateTime.Now.AddDays(i);
+                    var dayandMonth = datetime.Day + "/" + datetime.Month.ToString("d2");
+                    var dayName = datetime.DayOfWeek.ToString();
+                    if (playlists.Any(e => e.Schedule == Schedule.Yearly.ToString() && e.Frequency == dayandMonth))
+                    {
+                        var yearlyPlaylist = playlists.Where(e => e.Schedule == Schedule.Yearly.ToString() && e.Frequency == dayandMonth).FirstOrDefault();
+                        var weeklyDate = PapolateData(yearlyPlaylist, datetime);
+                        weeklyScheduleLists.Add(weeklyDate);
+                    }
+                    else if (playlists.Any(e => e.Schedule == Schedule.Weekly.ToString() && e.Frequency == dayName))
+                    {
+                        var WeeklyPlaylist = playlists.Where(e => e.Schedule == Schedule.Weekly.ToString() && e.Frequency == dayName).FirstOrDefault();
+                        var weeklyDate = PapolateData(WeeklyPlaylist, datetime);
+                        weeklyScheduleLists.Add(weeklyDate);
+                    }
+                    else if (playlists.Any(e => e.Schedule == Schedule.AlternativeDay.ToString()))
+                    {
+                        int totalDays =(int)(datetime- new DateTime(datetime.Year, 1, 1 ,00,00,00)).TotalDays+1;
+                        var AlternativeDayPlaylist = playlists.Where(e => e.Schedule == Schedule.AlternativeDay.ToString()).FirstOrDefault();
+                        if (totalDays % 2 == 0 && AlternativeDayPlaylist.Frequency == "Even Days")
+                        {
+                            var AlternativeDayDate = PapolateData(AlternativeDayPlaylist, datetime);
+                            weeklyScheduleLists.Add(AlternativeDayDate);
+                        }
+                        else if (totalDays % 2 != 0 && AlternativeDayPlaylist.Frequency == "Odd Days")
+                        {
+                            var AlternativeDayDate = PapolateData(AlternativeDayPlaylist, datetime);
+                            weeklyScheduleLists.Add(AlternativeDayDate);
+                        }
+                        else if(playlists.Any(e => e.Schedule == Schedule.Daily.ToString()))
+                        {
+                            var DailyPlaylist = playlists.Where(e => e.Schedule == Schedule.Daily.ToString()).FirstOrDefault();
+                            var DailyDate = PapolateData(DailyPlaylist, datetime);
+                            weeklyScheduleLists.Add(DailyDate);
+                        }
+                    }
+                    else if (playlists.Any(e => e.Schedule == Schedule.Daily.ToString()))
+                    {
+                        var DailyPlaylist = playlists.Where(e => e.Schedule == Schedule.Daily.ToString()).FirstOrDefault();
+                        var DailyDate = PapolateData(DailyPlaylist, datetime);
+                        weeklyScheduleLists.Add(DailyDate);
+                    }
+                }
+            }
+            return weeklyScheduleLists.ToList();
+        }
+
+        private WeeklyScheduleList PapolateData( Playlist playlist ,DateTime date)
+        {
+            var WeeklyScheduleList = new WeeklyScheduleList()
+            {
+                Date = date.Date,
+                Schedule = playlist.Schedule,
+                Name = playlist.Name
+            };
+            return WeeklyScheduleList;
+        }
+
     }
 }

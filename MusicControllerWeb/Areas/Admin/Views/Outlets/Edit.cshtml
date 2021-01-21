@@ -1,116 +1,36 @@
-﻿@model MusicController.DTO.ViewModel.OutletManageViewModel
-
+﻿@model OutletCreateViewModel
 @{
     ViewData["Title"] = "Edit";
 }
 <div class="white-color">
     <div class="container row">
+        <!--  ManageOutlet Component-->
         <div class="col-sm-6 border p-5">
             <h4 class="text-center">Edit Outlet</h4><br />
             <form asp-action="Edit" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger">
                 </div>
-                <input asp-for="Outlet.Id" id="Id" type="hidden" />
-                <input asp-for="Outlet.ImageUrl" id="ImageUrl" type="hidden" />
+                <input asp-for="Id" id="Id" type="hidden" />
+                <input asp-for="ImageUrl" id="ImageUrl" type="hidden" />
                 <div class="form-group">
-                    <label asp-for="Outlet.Name"></label>
-                    <input asp-for="Outlet.Name" id="Name" class="form-control" placeholder="Enter name">
-                    <span asp-validation-for="Outlet.Name" class="text-danger"></span>
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" id="Name" class="form-control" placeholder="Enter name">
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Outlet.File"></label><br />
-                    <input asp-for="Outlet.File" class="" id="File" placeholder="Choose logo">
-                    <span asp-validation-for="Outlet.File" class="text-danger"></span>
+                    <label asp-for="File"></label><br />
+                    <input asp-for="File" class="" id="File" placeholder="Choose logo">
+                    <span asp-validation-for="File" class="text-danger"></span>
                 </div><br />
                 <button type="submit" class="btn btn-outline-success">Save</button>
             </form>
         </div>
-        <div class="col-sm-6 border p-5">
-            <h4 class="text-center">Change Password</h4><br />
-            <form asp-action="ManagePassword" asp-route-id="@Model.OutletPasswords.Id">
-                <div asp-validation-summary="ModelOnly" class="text-danger">
-                </div>
-                <input asp-for="OutletPasswords.Id" type="hidden" />
-                <div class="form-group">
-                    <label asp-for="OutletPasswords.Password"></label>
-                    <input asp-for="OutletPasswords.Password" class="form-control" placeholder="***********">
-                    <span asp-validation-for="OutletPasswords.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OutletPasswords.ConfirmPassword"></label>
-                    <input asp-for="OutletPasswords.ConfirmPassword" class="form-control" placeholder="**********">
-                    <span asp-validation-for="OutletPasswords.ConfirmPassword" class="text-danger"></span>
-                </div><br />
-                <button type="submit" class="btn btn-outline-success">Change</button>
-            </form>
-        </div>
+
+        <!--  ManageOutlet Component-->
+        @await Component.InvokeAsync("ManageOutletPassword", new { OutletId = Model.Id })
     </div>
-    <div class="container row">
-        <div class="col-sm-12 border p-5">
-            <h4 class="text-center">Devices</h4><br />
-            <table class="table">
-                <thead class="table-dark">
-                    <tr>
-                        <th>@Html.DisplayNameFor(model => model.Devices.FirstOrDefault().DeviceId)</th>
-                        <th>@Html.DisplayNameFor(model => model.Devices.FirstOrDefault().DeviceDetail)</th>
-                        <th>@Html.DisplayNameFor(model => model.Devices.FirstOrDefault().StatusMessage)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!Model.Devices.Any())
-                    {
-                        <tr>
-                            <td colspan="4">
-                                <p class="text-center text-danger">No Device Register yet </p>
-                            </td>
-                        </tr>
-                    }
-                    else
-                    {
-                        @foreach (var item in Model.Devices)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DeviceId)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DeviceDetail)
-                                </td>
-                                <td>
-                                    @if (item.IsApproved)
-                                    {
-                                        @Html.DisplayFor(modelItem => item.StatusMessage)
-                                    }
-                                    else
-                                    {
-                                        <small class="text-primary">Waiting Approval</small>
-                                    }
-                                </td>
-                                <td>
-                                    <div class="form-inline">
-                                        @if (!item.IsApproved)
-                                        {
-                                            <form asp-action="ApproveDevice" asp-controller="Devices" asp-route-id="@item.Id">
-                                                <input type="hidden" asp-for="@item.Id" name="Id" />
-                                                <input type="hidden" asp-for="@item.OutletId" name="OutletId" />
-                                                <button class="btn btn-primary btn-sm"> Approve </button>
-                                            </form>
-                                        }
-                                        <form asp-action="Delete" asp-controller="Devices" asp-route-id="@item.Id">
-                                            <input type="hidden" asp-for="@item.Id" name="Id" />
-                                            <input type="hidden" asp-for="@item.OutletId" name="OutletId" />
-                                            <button class="btn btn-danger btn-sm"> Remove </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <!--  Device List Component-->
+    @await Component.InvokeAsync("OutletDevices", new { OutletId = Model.Id })
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

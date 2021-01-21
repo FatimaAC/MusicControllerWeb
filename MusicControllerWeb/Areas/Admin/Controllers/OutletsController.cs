@@ -76,80 +76,75 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            try
-            {
-                var manageOutlet = await _outletService.ManageOutletsWithDevicesandPassword(id.Value);
-                if (manageOutlet == null)
-                {
-                    return NotFound();
-                }
-                return View(manageOutlet);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, OutletCreateViewModel Outlet)
-        {
-            var outletViewModel = Outlet;
-            if (id != outletViewModel.Id)
-            {
-                return NotFound();
-            }
-            if (string.IsNullOrEmpty(outletViewModel.ImageUrl) && (outletViewModel.File == null || outletViewModel.File.Length <= 0))
-            {
-                ModelState.AddModelError("", "Outlet logo requried");
-            }
-            if (ModelState.IsValid)
-            {
-                if (string.IsNullOrEmpty(outletViewModel.ImageUrl) && outletViewModel.File != null && outletViewModel.File.Length > 0)
-                {
-                    outletViewModel.ImageUrl = await _fileServices.SaveFile(outletViewModel.File);
-                }
-                var outlet = _mapper.Map<Outlet>(outletViewModel);
-                await _outletService.UpdateOutlet(id, outlet);
-                return RedirectToAction(nameof(Index));
-            }
-            var manageOutlet = await _outletService.ManageOutletsWithDevicesandPassword(id);
-            return View(manageOutlet);
-        }
-
-        // GET: Admin/Outlets/Delete/5
-        public async Task<IActionResult> Schedule(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var outlet = await _outletService.GetOutlet(id.Value);
+
             if (outlet == null)
             {
                 return NotFound();
             }
-            var outletiewModel = _mapper.Map<List<OutletCreateViewModel>>(outlet);
-            return View(outletiewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ManagePassword(long id, OutletPasswordsViewModel OutletPasswords)
-        {
-            if (id <= 0)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
-            {
-                await _outletService.UpdatePasswordOutlet(id, OutletPasswords.Password);
-                return RedirectToAction(nameof(Index));
-            }
-            var manageOutlet = await _outletService.ManageOutletsWithDevicesandPassword(id);
-            return View("Edit", manageOutlet);
-        }
-
+            var outletViewModel = _mapper.Map<OutletCreateViewModel>(outlet);
+            return View(outletViewModel);
     }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(long id, OutletCreateViewModel Outlet)
+    {
+        var outletViewModel = Outlet;
+        if (id != outletViewModel.Id)
+        {
+            return NotFound();
+        }
+        if (string.IsNullOrEmpty(outletViewModel.ImageUrl) && (outletViewModel.File == null || outletViewModel.File.Length <= 0))
+        {
+            ModelState.AddModelError("", "Outlet logo requried");
+        }
+        if (ModelState.IsValid)
+        {
+            if (string.IsNullOrEmpty(outletViewModel.ImageUrl) && outletViewModel.File != null && outletViewModel.File.Length > 0)
+            {
+                outletViewModel.ImageUrl = await _fileServices.SaveFile(outletViewModel.File);
+            }
+            var outlet = _mapper.Map<Outlet>(outletViewModel);
+            await _outletService.UpdateOutlet(id, outlet);
+            return RedirectToAction(nameof(Index));
+        }
+        var manageOutlet = await _outletService.ManageOutletsWithDevicesandPassword(id);
+        return View(manageOutlet);
+    }
+
+    // GET: Admin/Outlets/Delete/5
+    public async Task<IActionResult> Schedule(long? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var outlet = await _outletService.GetOutlet(id.Value);
+        if (outlet == null)
+        {
+            return NotFound();
+        }
+        var outletiewModel = _mapper.Map<List<OutletCreateViewModel>>(outlet);
+        return View(outletiewModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ManagePassword(long id, OutletPasswordsViewModel OutletPasswords)
+    {
+        if (id <= 0)
+        {
+            return NotFound();
+        }
+        if (ModelState.IsValid)
+        {
+            await _outletService.UpdatePasswordOutlet(id, OutletPasswords.Password);
+            return RedirectToAction(nameof(Index));
+        }
+        var manageOutlet = await _outletService.ManageOutletsWithDevicesandPassword(id);
+        return View("Edit", manageOutlet);
+    }
+
+}
 }

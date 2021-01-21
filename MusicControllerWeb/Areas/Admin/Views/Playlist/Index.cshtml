@@ -19,12 +19,11 @@
         @if (!Model.Playlists.Any())
         {
             <a href="#" class="list-group-item text-body text-decoration-none">
-                <p> No Playlist Found.Create one to see</p>
+                <p> No Playlist Found</p>
             </a>
         }
         else
         {
-
             @foreach (var playlist in Model.Playlists)
             {
                 <a href="#" class="list-group-item text-body text-decoration-none">
@@ -38,17 +37,25 @@
                                 var count = 1;
                                 @foreach (var item in playlist.Tracks)
                                 {
-                                    <small>Track @count - @item.StartTime to @item.EndTime</small><br />
+                                    <small>Track @count - @item.FormatedStartTime to @item.FormatedStartTime</small><br />
                                     count = count + 1;
                                 }
                             }
-                            <small class="text-success">@playlist.Frequency @*Plays every Week on Monday*@</small>
+                            <small class="text-success">
+                                @if (string.IsNullOrEmpty(@playlist.Frequency))
+                                {
+                                    @playlist.Schedule
+                                }
+                                else
+                                {
+                                    @playlist.Frequency
+                                }
+                            </small>
                         </div>
                         <div class="col-sm-3 align-content-end">
                             <div class="form-inline">
 
                                 <button class="btn btn-outline-primary btn-sm m-1" onclick="location.href='@Url.Action("Edit", "Playlist", new { id = playlist.Id })'"> Edit </button>
-
                                 <form asp-action="Delete" asp-controller="playlist" asp-route-id="@playlist.Id">
                                     <input type="hidden" name="OutletId" value="@ViewBag.OutletId" />
                                     <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
@@ -60,4 +67,10 @@
             }
         }
     </div>
+    @*    schudle list  *@
+    @if (Model.Playlists.Any())
+    {
+        @await Component.InvokeAsync("WeeklyScheduleList", new { outletId = Model.Playlists.FirstOrDefault().OutletId })
+    }
 </div>
+

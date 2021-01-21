@@ -3,6 +3,7 @@ using MusicController.Identity.UserService;
 using MusicController.Repository.UnitofWork;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicController.BL.TrackServices
@@ -10,13 +11,14 @@ namespace MusicController.BL.TrackServices
     public class TracksServices : ITracksServices
     {
         private readonly IUnitofWork _unitofWork;
-        public TracksServices(IUnitofWork unitofWork, ICurrentUserService currentUserService)
+        public TracksServices(IUnitofWork unitofWork)
         {
             _unitofWork = unitofWork;
         }
-        public Task<List<Device>> GetAllTracks()
+        public async Task<List<Track>> GetTracksByPlaylist(long playlistId)
         {
-            throw new NotImplementedException();
+            var track = await _unitofWork.TrackRepository.FindAllAsync(e => e.PlaylistId == playlistId);
+            return track.ToList();
         }
 
         public async Task AddTrack(Track track)

@@ -1,0 +1,29 @@
+﻿@using MusicController.DTO.ViewModel;
+@model TrackViewModel
+<div class="col-sm-6 border p-5">
+    <h4>Add Track</h4><br />
+    <form asp-action="AddTrack" onsubmit="return onAddTrackSubmitClick(this)" asp-controller="Tracks" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+        </div>
+        <input asp-for="PlaylistId" type="hidden" />
+        <div class="form-group">
+            <label asp-for="TrackURL"></label>
+            <input asp-for="TrackURL" placeholder="Enter Track Url" class="form-control">
+            <span asp-validation-for="TrackURL" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FormatedStartTime"></label>
+            <input asp-for="FormatedStartTime" class="form-control timepicker" placeholder="Enter Start Time">
+            <span asp-validation-for="FormatedStartTime" class="text-danger"></span>
+            <span id="ErrstartTime" class="text-danger" style="display:none;">Start time must be less then End time.</span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FormatedEndTime"></label>
+            <input asp-for="FormatedEndTime" class="form-control timepicker" placeholder="Enter End Time">
+            <span asp-validation-for="FormatedEndTime" class="text-danger"></span>
+            <span id="ErrEndTime" class="text-danger" style="display:none;">End time must be greater then Start time.</span>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Add Track</button>
+    </form>
+</div>
