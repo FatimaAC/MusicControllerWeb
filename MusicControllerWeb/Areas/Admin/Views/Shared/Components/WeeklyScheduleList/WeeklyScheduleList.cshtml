@@ -13,7 +13,7 @@
             if (isFirstElement)
             {
                 <div class="col-md-2 col-sm-6 p-5 border border-success bg-white">
-                    <span class="text-success"> @item.Date.ToShortDateString() </span><br /><br />
+                    <span class="text-success"> @item.Date.ToShortTimeString() </span><br /><br />
                                                                         <h5 class="text-success"> @item.Name  </h5>
                     <h6 class="text-success">(@item.Schedule)</h6>
                 </div>
@@ -22,10 +22,9 @@
             else
             {
                 <div class="col-md-2 col-sm-6 p-5 border bg-light">
-                    <span>@item.Date.ToShortDateString()</span><br /><br />
+                    <span>@item.Date.ToShortTimeString()</span><br /><br />
                     <h5> @item.Name </h5>
                     <h6>(@item.Schedule) </h6>
-
                 </div>
             }
         }

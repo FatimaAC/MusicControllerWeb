@@ -27,8 +27,8 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTrack(TrackViewModel trackView)
         {
-                trackView.StartTime = TimeSpanHelper.ShortTimeTo24HourFormat(trackView.FormatedStartTime);
-                trackView.EndTime = TimeSpanHelper.ShortTimeTo24HourFormat(trackView.FormatedEndTime);
+                trackView.StartTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedStartTime);
+                trackView.EndTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedEndTime);
                 if (trackView.StartTime>= trackView.EndTime)
                 {
                     ModelState.AddModelError(string.Empty, "End time cannot be equal or less then start time");
@@ -45,24 +45,21 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(long id)
         {
+            ViewBag.OutletId = TempData.Peek("OutletId");
             var track = await _tracksServices.GetTrack(id);
             var tracViewModel = _mapper.Map<TrackViewModel>(track);
-            //tracViewModel.FormatedStartTime = TimeSpanHelper.ShortTimeTo12HourFormat(tracViewModel.StartTime);
-            //tracViewModel.FormatedEndTime = TimeSpanHelper.ShortTimeTo12HourFormat(tracViewModel.EndTime);
             return View(tracViewModel);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(long id, TrackViewModel trackViewModel)
         {
-            //trackViewModel.StartTime = TimeSpanHelper.ShortTimeTo24HourFormat(trackViewModel.FormatedStartTime);
-            //trackViewModel.EndTime = TimeSpanHelper.ShortTimeTo24HourFormat(trackViewModel.FormatedEndTime);
-            if (trackViewModel.StartTime >= trackViewModel.EndTime)
+            var track = _mapper.Map<Track>(trackViewModel);
+            if (track.StartTime >= track.EndTime)
             {
                 ModelState.AddModelError(string.Empty, "End time cannot be equal or less then start time");
             }
             if (ModelState.IsValid)
                 {
-                    var track = _mapper.Map<Track>(trackViewModel);
                     await _tracksServices.UpdateTrack(id, track);
                     return RedirectToAction("Edit", "Playlist", new { id = trackViewModel.PlaylistId, Area = UserRolesConstant.Admin });
                 }

@@ -1,10 +1,12 @@
 ﻿using MusicController.Common.Enumerration;
+using MusicController.Common.HelperClasses;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using MusicController.Repository.UnitofWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MusicController.BL.PlaylistsServices
@@ -87,7 +89,7 @@ namespace MusicController.BL.PlaylistsServices
                     }
                     else if (playlists.Any(e => e.Schedule == Schedule.AlternativeDay.ToString()))
                     {
-                        int totalDays =(int)(datetime- new DateTime(datetime.Year, 1, 1 ,00,00,00)).TotalDays+1;
+                        int totalDays =DateTimeHelper.TotalNoofDays(datetime);
                         var AlternativeDayPlaylist = playlists.Where(e => e.Schedule == Schedule.AlternativeDay.ToString()).FirstOrDefault();
                         if (totalDays % 2 == 0 && AlternativeDayPlaylist.Frequency == "Even Days")
                         {
@@ -99,7 +101,7 @@ namespace MusicController.BL.PlaylistsServices
                             var AlternativeDayDate = PapolateData(AlternativeDayPlaylist, datetime);
                             weeklyScheduleLists.Add(AlternativeDayDate);
                         }
-                        else if(playlists.Any(e => e.Schedule == Schedule.Daily.ToString()))
+                        else if (playlists.Any(e => e.Schedule == Schedule.Daily.ToString()))
                         {
                             var DailyPlaylist = playlists.Where(e => e.Schedule == Schedule.Daily.ToString()).FirstOrDefault();
                             var DailyDate = PapolateData(DailyPlaylist, datetime);
@@ -122,7 +124,7 @@ namespace MusicController.BL.PlaylistsServices
             var WeeklyScheduleList = new WeeklyScheduleList()
             {
                 Date = date.Date,
-                Schedule = playlist.Schedule,
+                Schedule = Regex.Replace(playlist.Schedule, "([a-z])([A-Z])", "$1 $2"),
                 Name = playlist.Name
             };
             return WeeklyScheduleList;

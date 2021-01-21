@@ -22,12 +22,11 @@ namespace MusicController.API.Controllers
     {
         private readonly IOutletService _outletService;
         private readonly ITokenServices _tokenServices;
-        private readonly IMapper _mapper;
-        public AccountsController(IOutletService outletService, ITokenServices tokenServices, IMapper mapper)
+        public AccountsController(IOutletService outletService, ITokenServices tokenServices)
         {
             _outletService = outletService;
             _tokenServices = tokenServices;
-            _mapper = mapper;
+           
         }
         [HttpPost]
         [Route("login")]
@@ -42,7 +41,7 @@ namespace MusicController.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("RefreshToken")]
+        [HttpGet("RefreshToken")]
         public Response<AuthenticateResponse> RefreshToken()
         {
             var refreshToken = _tokenServices.RefreshToken(Request.Cookies["refreshToken"] ,IpAddress());
@@ -51,7 +50,7 @@ namespace MusicController.API.Controllers
             return respone;
         }
 
-        [HttpPost("RevokeToken")]
+        [HttpGet("RevokeToken")]
         public IActionResult RevokeToken([FromBody] RevokeTokenRequest model)
         {
             // accept token from request body or cookie

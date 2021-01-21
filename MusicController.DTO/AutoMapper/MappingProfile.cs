@@ -16,12 +16,12 @@ namespace MusicController.DTOs.AutoMapper
         {
             CreateMap<ApplicationUser, UserViewModel>().ReverseMap();
             CreateMap<Track, TrackViewModel>()
-                .ForMember(dest => dest.FormatedStartTime, opt => opt.MapFrom(src => TimeSpanHelper.ShortTimeTo12HourFormat(src.StartTime))).
-                ForMember(dest => dest.FormatedEndTime, opt => opt.MapFrom(src => TimeSpanHelper.ShortTimeTo12HourFormat(src.EndTime)));
+                .ForMember(dest => dest.FormatedStartTime, opt => opt.MapFrom(src => DateTimeHelper.ShortTimeTo12HourFormat(src.StartTime))).
+                ForMember(dest => dest.FormatedEndTime, opt => opt.MapFrom(src => DateTimeHelper.ShortTimeTo12HourFormat(src.EndTime)));
 
             CreateMap<TrackViewModel, Track>()
-               .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => TimeSpanHelper.ShortTimeTo24HourFormat(src.FormatedStartTime))).
-               ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => TimeSpanHelper.ShortTimeTo24HourFormat(src.FormatedEndTime)));
+               .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => DateTimeHelper.ShortTimeTo24HourFormat(src.FormatedStartTime))).
+               ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => DateTimeHelper.ShortTimeTo24HourFormat(src.FormatedEndTime)));
             CreateMap<Outlet, OutletCreateViewModel>().ReverseMap();
 
             CreateMap<Playlist, PlaylistViewModel>().ReverseMap();

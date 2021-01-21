@@ -14,6 +14,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger">
             </div>
             <input asp-for="PlaylistId" value="@Model.PlaylistId" type="hidden" />
+            <input asp-for="PlaylistId" value="@Model.StartTime" type="hidden" />
+            <input asp-for="PlaylistId" value="@Model.EndTime" type="hidden" />
             <div class="form-group">
                 <label asp-for="TrackURL"></label>
                 <input asp-for="TrackURL" class="form-control" placeholder="Enter TrackUrl">
@@ -31,7 +33,7 @@
                 <span asp-validation-for="FormatedEndTime" class="text-danger"></span>
                 <span id="ErrEndTime" class="text-danger" style="display:none;">End time must be greater then Start time.</span>
             </div>
-            <button type="submit" class="btn btn-outline-success">Update</button>
+            <button type="submit" class="btn btn-success">Update</button>
         </form>
         <div>
             <br />
@@ -39,6 +41,7 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/jquery.timepicker.min.js"></script>

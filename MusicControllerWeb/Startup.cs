@@ -37,21 +37,27 @@ namespace MusicControllerWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             // DI containter for services ,databases and automapper
+          
+            
             services.DBContainer(Configuration);
             services.RespositoryContainer();
             services.ServicesContainer();
             services.MapperContainer();
             services.IdentityContainer();
             services.IdentityCookieSetting();
-            services.AddMvc()
-                 .AddRazorOptions(options =>
-                  {
-                      options.ViewLocationFormats.Add("/{0}.cshtml");
-                  })
-                    .AddRazorRuntimeCompilation()
-                    .SetCompatibilityVersion(CompatibilityVersion.Latest);
+            services.AddControllersWithViews()
+                .AddRazorOptions(options =>
+                {
+                    options.ViewLocationFormats.Add("/{0}.cshtml");
+                })
+                   .AddRazorRuntimeCompilation()
+                   .SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddRazorPages();
+            
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +75,7 @@ namespace MusicControllerWeb
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -77,7 +83,6 @@ namespace MusicControllerWeb
 
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 //todo: set Defualt route to the Admin outlets 

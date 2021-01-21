@@ -28,9 +28,9 @@ namespace MusicController.DTO.ViewModel
 
     public class WeeklyScheduleList
     {
-        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
         public string Schedule { get; set; }
         public string Name { get; set; }
+        public List<TrackViewModel> Tracks { get; set; }
     }
 }

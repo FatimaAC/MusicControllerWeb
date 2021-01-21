@@ -21,7 +21,7 @@ namespace MusicController.API.Controllers
             _tracksServices = tracksServices;
         }
         [Authorize]
-        [HttpGet("{outletId}")]
+        [HttpGet("WeeklySchedule/{outletId}")]
         public async Task<Response<List<WeeklyScheduleList>>> GetWeeklyScheduleList([FromRoute] long outletId)
         {
             var weeklyScheduleList = await _tracksServices.WeeklyScheduleList(outletId);

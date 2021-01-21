@@ -34,6 +34,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Outlets" asp-action="Index">Outlet</a>
                         </li>
+                        @if (ViewBag.Show != null && ViewBag.Show)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-action="Index" asp-controller="Playlist" asp-route-id="@ViewBag.OutletId">Playlist</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

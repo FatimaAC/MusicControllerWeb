@@ -1,6 +1,8 @@
 ﻿@model PlaylistIndexModel
 @{
     ViewData["Title"] = "Create";
+    ViewBag.Show = true;
+    ViewBag.OutletId = Model.OutletId;
 }
 @section styles{
     <link href="~/css/jquery.timepicker.min.css" rel="stylesheet" />

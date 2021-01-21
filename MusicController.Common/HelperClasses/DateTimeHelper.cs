@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MusicController.Common.HelperClasses
 {
-   public static class TimeSpanHelper
+   public static class DateTimeHelper
     {
         public static TimeSpan ShortTimeTo24HourFormat(string timeSpan)
         {
@@ -19,6 +19,13 @@ namespace MusicController.Common.HelperClasses
         public static string ShortTimeTo12HourFormat(TimeSpan timeSpan)
         {
             return new DateTime().Add(timeSpan).ToShortTimeString();
+        }
+
+        public static int TotalNoofDays(DateTime currentDate)
+        {
+            var firstDateofYear = new DateTime(DateTime.Now.Year, 1, 1, 00, 00, 00);
+            currentDate = new DateTime(currentDate.Year, currentDate.Month,currentDate.Day, 00, 00, 00);
+            return (int)Math.Abs((currentDate - firstDateofYear).TotalDays) + 1;
         }
     }
 }

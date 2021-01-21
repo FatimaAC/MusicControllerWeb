@@ -27,6 +27,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         }
         public async Task<ActionResult> Index(long id)
         {
+            
             if (id <= 0)
             {
                 return NotFound();
@@ -73,6 +74,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(long id)
         {
             var playlist = await _playlistServices.GetPlaylist(id);
+            
             if (playlist == null)
             {
                 return NotFound();
@@ -101,14 +103,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             }
             return View(Playlist);
         }
-
        
-
-        // GET: PlaylistController/Delete/5
-        public ActionResult AddTrack(long id)
-        {
-            return View();
-        }
 
         [HttpPost]
         public async Task<IActionResult> Delete(long id, long OutletId)

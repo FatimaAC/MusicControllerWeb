@@ -19,9 +19,7 @@ namespace MusicController.Shared.CrosSetting
                         .AllowCredentials();
                     });
             });
-
         }
-
         public static void CorsContainer(this IApplicationBuilder app)
         {
             app.UseCors("AllowAll");

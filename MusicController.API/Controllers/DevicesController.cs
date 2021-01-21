@@ -26,7 +26,7 @@ namespace MusicController.API.Controllers
             _devicesServices = devicesServices;
             _mapper = mapper;
         }
-        [HttpPost]
+        [HttpPost("RegisterDevice")]
         [AllowAnonymous]
         public async Task<IActionResult> PostDevice([FromBody] DevicesRequest devicesRequest)
         {
