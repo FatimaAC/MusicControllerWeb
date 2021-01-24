@@ -18,7 +18,7 @@ namespace MusicController.Common.HelperClasses
 
         public static string ShortTimeTo12HourFormat(TimeSpan timeSpan)
         {
-            return new DateTime().Add(timeSpan).ToShortTimeString();
+            return new DateTime().Add(timeSpan).ToString("hh:mm tt");
         }
 
         public static int TotalNoofDays(DateTime currentDate)

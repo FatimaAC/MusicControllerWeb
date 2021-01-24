@@ -4,16 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MusicController.DTO.ViewModel
 {
-    public class PlaylistViewModel : AuditableEntity
-    {
-        public PlaylistViewModel()
-        {
-            Playlists = new List<PlaylistIndexModel>();
-            PlaylistsCreateModel = new PlaylistIndexModel();
-        }
-        public List<PlaylistIndexModel> Playlists { get; set; }
-        public PlaylistIndexModel PlaylistsCreateModel { get; set; }
-    }
     public class PlaylistIndexModel
     {
         [Key]

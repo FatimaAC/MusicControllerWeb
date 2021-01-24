@@ -17,6 +17,7 @@ namespace MusicController.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DevicesController : ControllerBase
     {
         private readonly IDevicesServices _devicesServices;
@@ -35,8 +36,20 @@ namespace MusicController.API.Controllers
                 return BadRequest(ModelState);
             }
             var device = _mapper.Map<Device>(devicesRequest);
-            await _devicesServices.RegisterDevice(device , devicesRequest.Password);
+            await _devicesServices.RegisterDevice(device, devicesRequest.Password);
             var response = new Response<string>("Device added successfully", StatusApiEnum.Success);
+            return Ok(response);
+        }
+        [HttpPost("DeviceStatus")]
+        public async Task<IActionResult> PostDeviceStatus([FromBody] DeviceStatusRequest deviceStatus)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var device = _mapper.Map<Device>(deviceStatus);
+             await _devicesServices.UpdateDeviceStatus(device);
+            var response = new Response<string>("Device status added successfully", StatusApiEnum.Success);
             return Ok(response);
         }
     }

@@ -25,6 +25,7 @@ namespace MusicController.API.Controllers
         public async Task<Response<List<WeeklyScheduleList>>> GetWeeklyScheduleList([FromRoute] long outletId)
         {
             var weeklyScheduleList = await _tracksServices.WeeklyScheduleList(outletId);
+            var ScheduleList = await _tracksServices.WeeklyScheduleList(outletId);
             var response = new Response<List<WeeklyScheduleList>>(weeklyScheduleList);
             return response;
         }

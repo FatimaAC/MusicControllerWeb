@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MusicController.Common.Enumerration;
+using MusicController.DTO.APiResponesClass;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,13 +33,9 @@ namespace MusicController.Shared.ExpectionHelper
                         //Technical Exception for troubleshooting
                         var logger = loggerFactory.CreateLogger("GlobalException");
                         logger.LogError($"Something went wrong: {contextFeature.Error}");
-                        
+
                         //Business exception - exit gracefully
-                        await context.Response.WriteAsync(new ErrorDetails()
-                        {
-                            StatusCode = context.Response.StatusCode,
-                            Message = contextFeature.Error.Message
-                        }.ToString());
+                        await context.Response.WriteAsync(new Response<string>(contextFeature.Error.Message, StatusApiEnum.Failure).ToString());
                     }
                 });
             });
@@ -53,7 +51,7 @@ namespace MusicController.Shared.ExpectionHelper
                 {
                     var errorDetails = new ErrorDetails
                     {
-                        StatusCode = 400
+                        StatusCode = StatusApiEnum.Failure
                     };
                     foreach (var modelStateKey in context.ModelState.Keys)
                     {
@@ -80,7 +78,7 @@ namespace MusicController.Shared.ExpectionHelper
         {
             ValidationErrors = new List<ValidationError>();
         }
-        public int StatusCode { get; set; }
+        public StatusApiEnum StatusCode { get; set; }
         public string Message { get; set; }
         public List<ValidationError> ValidationErrors { get; set; }
         public override string ToString()

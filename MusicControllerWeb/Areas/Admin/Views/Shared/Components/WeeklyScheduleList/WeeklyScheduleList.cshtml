@@ -13,8 +13,8 @@
             if (isFirstElement)
             {
                 <div class="col-md-2 col-sm-6 p-5 border border-success bg-white">
-                    <span class="text-success"> @item.Date.ToShortTimeString() </span><br /><br />
-                                                                        <h5 class="text-success"> @item.Name  </h5>
+                    <span class="text-success">Today</span><br /><br />
+                    <h5 class="text-success"> @item.Name  </h5>
                     <h6 class="text-success">(@item.Schedule)</h6>
                 </div>
                 isFirstElement = false;
@@ -22,7 +22,7 @@
             else
             {
                 <div class="col-md-2 col-sm-6 p-5 border bg-light">
-                    <span>@item.Date.ToShortTimeString()</span><br /><br />
+                    <span>@Html.DisplayFor(modelItem => item.Date)</span><br /><br />
                     <h5> @item.Name </h5>
                     <h6>(@item.Schedule) </h6>
                 </div>

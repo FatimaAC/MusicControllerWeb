@@ -79,7 +79,7 @@ namespace MusicController.BL.DevicesServices
             var devices = await _unitofWork.DeviceRepository.GetAsync(id);
             if (devices == null)
             {
-                throw new Exception("Id not Found");
+                throw new Exception("Device not Found");
             }
             devices.DeviceId = outlet.DeviceId;
             devices.OutletId = outlet.OutletId;
@@ -87,6 +87,18 @@ namespace MusicController.BL.DevicesServices
             _unitofWork.Complete();
         }
 
+        public async Task UpdateDeviceStatus(Device device)
+        {
+            var UpdateDevice = await _unitofWork.DeviceRepository.SingleOrDefaultAsync(e => e.DeviceId == device.DeviceId);
+            if (UpdateDevice == null)
+            {
+                throw new Exception("Device not Found");
+            }
+            UpdateDevice.StatusMessage = device.StatusMessage;
+            UpdateDevice.StatusPostedAt = device.StatusPostedAt;
+             _unitofWork.DeviceRepository.UpdateEntity(UpdateDevice);
+            _unitofWork.Complete();
+        }
         public async Task ApproveDevice(long id)
         {
             var device = await GetDevice(id);

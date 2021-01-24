@@ -23,14 +23,17 @@ namespace MusicController.DTO.ViewModel
         [Required]
         [Display(Name = "End time:")]
         public string FormatedEndTime { get; set; }
-        public PlaylistViewModel Playlist { get; set; }
+       
     }
 
     public class WeeklyScheduleList
     {
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         public string Schedule { get; set; }
         public string Name { get; set; }
         public List<TrackViewModel> Tracks { get; set; }
+        public List<TrackViewModel> TrackViewModels { get; set; }
     }
 }

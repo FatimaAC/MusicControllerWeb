@@ -107,12 +107,13 @@ namespace MusicController.BL.OutletServices
 
         public async Task ValidateOutletandDevice(LoginRequest loginRequest)
         {
-            var outletwithDevice =await _unitofWork.DeviceRepository.GetOutletWithDevice(loginRequest.DeviceId, loginRequest.OutletId);
-            if (outletwithDevice == null)
+            if (!await _unitofWork.OutletRepository.AnyAsync(e=>e.Id==loginRequest.OutletId))
             {
                 throw new Exception("Outlet Not found");
             }
-            if (outletwithDevice.Outlet == null)
+            var outletwithDevice =await _unitofWork.DeviceRepository.GetOutletWithDevice(loginRequest.DeviceId, loginRequest.OutletId);
+            
+            if (outletwithDevice == null)
             {
                 throw new Exception("No device Register yet");
             }

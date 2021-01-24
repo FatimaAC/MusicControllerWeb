@@ -1,10 +1,13 @@
 ﻿function onAddTrackSubmitClick(item) {
-    var starttime = item.StrartTimeWith.value;
-    var endtime = item.EndTimeWith.value;
-    var beginningTime = moment(starttime, 'h:mma');
-    var endTime = moment(endtime, 'h:mma');
+    var startTime = $("#FormatedStartTime").val() ;
+    var endTime = $("#FormatedEndTime").val();
+    if (startTime==""|| endTime=="") {
+        return false;
+    }
+    var beginningTime = moment(startTime, 'h:mm a');
+    var endingTime = moment(endTime, 'h:mm a');
 
-    if (beginningTime >= endTime) {
+    if (beginningTime >= endingTime) {
         $("#ErrstartTime").show();
         $("#ErrEndTime").show();
         return false;

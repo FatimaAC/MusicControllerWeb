@@ -24,7 +24,6 @@ namespace MusicController.DTOs.AutoMapper
                ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => DateTimeHelper.ShortTimeTo24HourFormat(src.FormatedEndTime)));
             CreateMap<Outlet, OutletCreateViewModel>().ReverseMap();
 
-            CreateMap<Playlist, PlaylistViewModel>().ReverseMap();
             CreateMap<Playlist, PlaylistIndexModel>().ReverseMap();
             CreateMap<Device, DeviceViewModel>().ReverseMap();
             CreateMap<OutletPasswordsViewModel, Outlet>().ReverseMap()
@@ -35,6 +34,7 @@ namespace MusicController.DTOs.AutoMapper
             CreateMap<RefreshToken, RefreshTokenDTO>().ReverseMap();
 
             //api request
+            CreateMap<Device, DevicesRequest>().ReverseMap();
             CreateMap<Device, DevicesRequest>().ReverseMap();
         }
     }

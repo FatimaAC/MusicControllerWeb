@@ -40,6 +40,12 @@
                                 <a class="nav-link text-dark" asp-action="Index" asp-controller="Playlist" asp-route-id="@ViewBag.OutletId">Playlist</a>
                             </li>
                         }
+                        @if (ViewBag.EditPlaylist != null && ViewBag.EditPlaylist)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-action="Edit" asp-controller="Playlist" asp-route-id="@ViewBag.PlaylistId">Update Playlist</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

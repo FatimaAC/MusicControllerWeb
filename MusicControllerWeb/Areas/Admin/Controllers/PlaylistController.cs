@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MusicController.BL.PlaylistsServices;
 using MusicController.BL.TrackServices;
 using MusicController.Common.Constants;
+using MusicController.Common.HelperClasses;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using System;
@@ -34,10 +35,8 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             }
             ViewBag.OutletId = id;
             var playlists = await _playlistServices.GetAllPlaylistswithTrackByOutlet(id);
-            PlaylistViewModel playlistViewModel = new PlaylistViewModel
-            {
-                Playlists = _mapper.Map<List<PlaylistIndexModel>>(playlists)
-            };
+            var playlistViewModel = _mapper.Map<List<PlaylistIndexModel>>(playlists);
+            var test = DateTimeHelper.ShortTimeTo12HourFormat(playlistViewModel[0].Tracks[0].StartTime);
             return View(playlistViewModel);
         }
 

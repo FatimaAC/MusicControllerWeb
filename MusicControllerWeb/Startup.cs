@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ using MusicController.Identity.IdentityContext;
 using MusicController.Shared;
 using MusicController.Shared.DIContainer;
 using MusicController.Shared.Identity;
+using System.Globalization;
 
 namespace MusicControllerWeb
 {
@@ -75,7 +77,6 @@ namespace MusicControllerWeb
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

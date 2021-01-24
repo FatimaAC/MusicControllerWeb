@@ -1,6 +1,8 @@
 ﻿@model TrackViewModel
 @{
     ViewData["Title"] = "Edit";
+    ViewBag.EditPlaylist = true;
+    ViewBag.PlaylistId = Model.PlaylistId;
 }
 @section styles{
     <link href="~/css/jquery.timepicker.min.css" rel="stylesheet" />
@@ -23,13 +25,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="FormatedStartTime"></label>
-                <input asp-for="FormatedStartTime" class="form-control timepicker" placeholder="Enter password">
+                <input asp-for="FormatedStartTime" class="form-control timepicker" placeholder="Enter Start Time">
                 <span asp-validation-for="FormatedStartTime" class="text-danger"></span>
                 <span id="ErrstartTime" class="text-danger" style="display:none;">Start time must be less then End time.</span>
             </div>
             <div class="form-group">
                 <label asp-for="FormatedEndTime"></label>
-                <input asp-for="FormatedEndTime" class="form-control timepicker" placeholder="Enter password">
+                <input asp-for="FormatedEndTime" class="form-control timepicker" placeholder="Enter End Time">
                 <span asp-validation-for="FormatedEndTime" class="text-danger"></span>
                 <span id="ErrEndTime" class="text-danger" style="display:none;">End time must be greater then Start time.</span>
             </div>
@@ -44,6 +46,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script src="https://cdn.jsdelivr.net/momentjs/2.13.0/moment.min.js"></script>
     <script src="~/js/jquery.timepicker.min.js"></script>
     <script src="~/js/Views/Playlit/Tracks.js"></script>
 }

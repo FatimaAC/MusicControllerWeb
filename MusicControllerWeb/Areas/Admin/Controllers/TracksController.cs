@@ -47,8 +47,8 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         {
             ViewBag.OutletId = TempData.Peek("OutletId");
             var track = await _tracksServices.GetTrack(id);
-            var tracViewModel = _mapper.Map<TrackViewModel>(track);
-            return View(tracViewModel);
+            var trackViewModel = _mapper.Map<TrackViewModel>(track);
+            return View(trackViewModel);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(long id, TrackViewModel trackViewModel)
@@ -57,13 +57,14 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             if (track.StartTime >= track.EndTime)
             {
                 ModelState.AddModelError(string.Empty, "End time cannot be equal or less then start time");
+                return View(trackViewModel);
             }
             if (ModelState.IsValid)
                 {
                     await _tracksServices.UpdateTrack(id, track);
                     return RedirectToAction("Edit", "Playlist", new { id = trackViewModel.PlaylistId, Area = UserRolesConstant.Admin });
                 }
-            return RedirectToAction("Edit", "Playlist", new { id = trackViewModel.PlaylistId, Area = UserRolesConstant.Admin });
+            return View(trackViewModel);
         }
 
         [HttpPost]
