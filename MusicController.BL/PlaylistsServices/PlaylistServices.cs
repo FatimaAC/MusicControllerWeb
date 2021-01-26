@@ -59,7 +59,14 @@ namespace MusicController.BL.PlaylistsServices
             Editplaylist.Name = playlist.Name;
             Editplaylist.OutletId = playlist.OutletId;
             Editplaylist.Schedule = playlist.Schedule;
-            Editplaylist.Frequency = playlist.Frequency;
+            if (playlist.Schedule == Schedule.Daily.ToString())
+            {
+                Editplaylist.Frequency = string.Empty;
+            }
+            else
+            {
+                Editplaylist.Frequency = playlist.Frequency;
+            }
             _unitofWork.PlaylistRepository.UpdateEntity(Editplaylist);
             _unitofWork.Complete();
         }
@@ -89,7 +96,7 @@ namespace MusicController.BL.PlaylistsServices
                     }
                     else if (playlists.Any(e => e.Schedule == Schedule.AlternativeDay.ToString()))
                     {
-                        int totalDays =DateTimeHelper.TotalNoofDays(datetime);
+                        int totalDays =DateTimeHelper.TotalNoofDays();
                         var AlternativeDayPlaylist = playlists.Where(e => e.Schedule == Schedule.AlternativeDay.ToString()).FirstOrDefault();
                         if (totalDays % 2 == 0 && AlternativeDayPlaylist.Frequency == "Even Days")
                         {
@@ -118,7 +125,6 @@ namespace MusicController.BL.PlaylistsServices
             }
             return weeklyScheduleLists.ToList();
         }
-
         private WeeklyScheduleList PapolateData( Playlist playlist ,DateTime date)
         {
             var WeeklyScheduleList = new WeeklyScheduleList()

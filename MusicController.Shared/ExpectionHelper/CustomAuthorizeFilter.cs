@@ -22,15 +22,22 @@ namespace MusicController.Shared.ExpectionHelper
         {
             app.UseStatusCodePages(async context =>
             {
-                if (context.HttpContext.Response.StatusCode == 401)
+                context.HttpContext.Response.ContentType = "application/json";
+                switch (context.HttpContext.Response.StatusCode)
                 {
-                    await context.HttpContext.Response.WriteAsync(new Response<string>("Authorization failed.", StatusApiEnum.Failure).ToString());
+                    case 401:
+                        await context.HttpContext.Response.WriteAsync(new Response<string>("Authorization failed.", StatusApiEnum.Failure).ToString());
+                        break;
+                    case 404:
+                        await context.HttpContext.Response.WriteAsync(new Response<string>("Not Found", StatusApiEnum.Failure).ToString());
+                        break;
+                    case 403:
+                        await context.HttpContext.Response.WriteAsync(new Response<string>("Forbiden", StatusApiEnum.Failure).ToString());
+                        break;
+                    default:
+                        break;
                 }
-                else if (context.HttpContext.Response.StatusCode == 404)
-                {
-                    await context.HttpContext.Response.WriteAsync(new Response<string>("Not Found", StatusApiEnum.Failure).ToString());
-                }
-            });
+            }); 
         }
     }
 }

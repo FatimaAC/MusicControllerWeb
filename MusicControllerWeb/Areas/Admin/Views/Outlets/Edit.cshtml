@@ -3,6 +3,8 @@
     ViewData["Title"] = "Edit";
 }
 <div class="white-color">
+    <!--  Device List Component-->
+    @await Component.InvokeAsync("OutletDevices", new { OutletId = Model.Id })
     <div class="container row">
         <!--  ManageOutlet Component-->
         <div class="col-sm-6 border p-5">
@@ -29,8 +31,6 @@
         <!--  ManageOutlet Component-->
         @await Component.InvokeAsync("ManageOutletPassword", new { OutletId = Model.Id })
     </div>
-    <!--  Device List Component-->
-    @await Component.InvokeAsync("OutletDevices", new { OutletId = Model.Id })
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -33,10 +33,8 @@ namespace MusicController.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-            }); 
+            services.AddControllers(
+                    );
             services.DBContainer(Configuration);
             services.RespositoryContainer();
             services.ServicesContainer();

@@ -18,7 +18,7 @@
         <div class="p-2">
             @if (_urlHelper.IsRoleAdmin())
             {
-                <a asp-action="Create" asp-controller="Outlets" class="btn btn-primary float-right">+ Add New Outlet</a>
+                <a asp-action="Create" asp-controller="Outlets" class="btn btn-success float-right">+ Add New Outlet</a>
             }
         </div>
     </div>
@@ -42,7 +42,7 @@
                             @if (_urlHelper.IsRoleAdmin())
                             {
                                 <div>
-                                    <button class="btn btn-primary btn-sm mr-2" onclick="location.href='@Url.Action("Edit", "Outlets", new { id = item.Id })'"> Manage </button>
+                                    <button class="btn btn-warning btn-sm mr-2" onclick="location.href='@Url.Action("Edit", "Outlets", new { id = item.Id })'"> Manage </button>
                                 </div>
                             }
                             @{

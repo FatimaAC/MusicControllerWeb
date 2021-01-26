@@ -33,7 +33,6 @@ namespace MusicController.DTO.ViewModel
         public DateTime Date { get; set; }
         public string Schedule { get; set; }
         public string Name { get; set; }
-        public List<TrackViewModel> Tracks { get; set; }
-        public List<TrackViewModel> TrackViewModels { get; set; }
+        
     }
 }

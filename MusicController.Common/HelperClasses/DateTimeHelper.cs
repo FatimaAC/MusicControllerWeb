@@ -21,11 +21,10 @@ namespace MusicController.Common.HelperClasses
             return new DateTime().Add(timeSpan).ToString("hh:mm tt");
         }
 
-        public static int TotalNoofDays(DateTime currentDate)
+        public static int TotalNoofDays()
         {
             var firstDateofYear = new DateTime(DateTime.Now.Year, 1, 1, 00, 00, 00);
-            currentDate = new DateTime(currentDate.Year, currentDate.Month,currentDate.Day, 00, 00, 00);
-            return (int)Math.Abs((currentDate - firstDateofYear).TotalDays) + 1;
+            return firstDateofYear.DayOfYear;
         }
     }
 }

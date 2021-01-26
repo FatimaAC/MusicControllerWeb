@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MusicController.Common.Enumerration;
@@ -13,6 +14,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MusicController.Shared.ExpectionHelper
 {
@@ -27,16 +29,23 @@ namespace MusicController.Shared.ExpectionHelper
                     context.Response.StatusCode = (int)HttpStatusCode.OK;
                     context.Response.ContentType = "application/json";
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    //if any exception then report it and log it
-                    if (contextFeature != null)
+                    if (contextFeature.Error is UserFriendlyException httpException)
                     {
-                        //Technical Exception for troubleshooting
-                        var logger = loggerFactory.CreateLogger("GlobalException");
-                        logger.LogError($"Something went wrong: {contextFeature.Error}");
-
-                        //Business exception - exit gracefully
-                        await context.Response.WriteAsync(new Response<string>(contextFeature.Error.Message, StatusApiEnum.Failure).ToString());
+                        if (contextFeature != null)
+                        {
+                            //Technical Exception for troubleshooting
+                            var logger = loggerFactory.CreateLogger("GlobalException");
+                            logger.LogError($"Something went wrong: {contextFeature.Error}");
+                            //Business exception - exit gracefully
+                            await context.Response.WriteAsync(new Response<string>(contextFeature.Error.Message, (StatusApiEnum)httpException.StatusCode).ToString());
+                        }
                     }
+                    else
+                    {
+                        await context.Response.WriteAsync(new Response<string>("Something went wrong", StatusApiEnum.Failure).ToString());
+                    }
+                    //if any exception then report it and log it
+
                 });
             });
         }
@@ -87,9 +96,10 @@ namespace MusicController.Shared.ExpectionHelper
         }
     }
 
-    public class ValidationError{
+    public class ValidationError
+    {
         public string Key { get; set; }
         public string ErrorMessage { get; set; }
-}
+    }
 
 }

@@ -12,5 +12,7 @@ namespace MusicController.Identity.UserService
         }
         public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
         public string UserRole => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Role);
+        public string DeviceId => _httpContextAccessor.HttpContext?.User?.FindFirstValue("DeviceId");
+        public string OutletId => _httpContextAccessor.HttpContext?.User?.FindFirstValue("OutletId");
     }
 }

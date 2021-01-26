@@ -4,6 +4,7 @@ using MusicController.DTO.RequestModel;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using MusicController.Repository.UnitofWork;
+using MusicController.Shared.ExpectionHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,6 @@ namespace MusicController.BL.OutletServices
         }
         public async Task AddOutlet(Outlet outlet)
         {
-
-            //var passwordandSalt =  outlet.Password.EncryptPassword();
-            //outlet.Password = passwordandSalt.Item1;
-            //outlet.Salt = passwordandSalt.Item2;
             await _unitofWork.OutletRepository.AddAsync(outlet);
             _unitofWork.Complete();
         }
@@ -35,7 +32,7 @@ namespace MusicController.BL.OutletServices
             var outlet = await _unitofWork.OutletRepository.GetAsync(id);
             if (outlet == null)
             {
-                throw new Exception("Not Found");
+                throw new UserFriendlyException(" Record not found");
             }
             _unitofWork.OutletRepository.Remove(outlet);
             _unitofWork.Complete();
@@ -57,11 +54,10 @@ namespace MusicController.BL.OutletServices
             var outlet = await _unitofWork.OutletRepository.GetAsync(id);
             if (outlet == null)
             {
-                throw new Exception("Id not Found");
+                throw new UserFriendlyException("Record not found", 1);
             }
             return outlet;
         }
-
 
         public async Task<OutletManageViewModel> ManageOutletsWithDevicesandPassword(long id)
         {
@@ -69,7 +65,7 @@ namespace MusicController.BL.OutletServices
             var outlet = await GetOutlet(id);
             if (outlet == null)
             {
-                throw new Exception("Record not found");
+                throw new UserFriendlyException("Record not found" ,1 );
             }
             var devices = await _unitofWork.DeviceRepository.FindAllAsync(e => e.OutletId == outlet.Id);
             outletManageViewModel.Outlet = _mapper.Map<OutletCreateViewModel>(outlet);
@@ -82,7 +78,7 @@ namespace MusicController.BL.OutletServices
             var outletObj = await _unitofWork.OutletRepository.GetAsync(id);
             if (outletObj == null)
             {
-                throw new Exception("Id not Found");
+                throw new UserFriendlyException("Record not found");
             }
             outletObj.Name = outlet.Name;
             outletObj.ImageUrl = outlet.ImageUrl;
@@ -95,7 +91,7 @@ namespace MusicController.BL.OutletServices
             var outlet = await _unitofWork.OutletRepository.GetAsync(id);
             if (outlet == null)
             {
-                throw new Exception("Id not Found");
+                throw new UserFriendlyException("Id not Found");
             }
              outlet.Password = PasswordHelper.EncryptPassword(Password);
             //outlet.Password = passwordandSalt.Item1;
@@ -107,25 +103,25 @@ namespace MusicController.BL.OutletServices
 
         public async Task ValidateOutletandDevice(LoginRequest loginRequest)
         {
-            if (!await _unitofWork.OutletRepository.AnyAsync(e=>e.Id==loginRequest.OutletId))
+            var outlet = await GetOutlet(loginRequest.OutletId);
+            if (outlet==null)
             {
-                throw new Exception("Outlet Not found");
+                throw new UserFriendlyException("Outlet Not found" ,1);
+            }
+            var verifyPassword = PasswordHelper.VerifyPassword(loginRequest.Password, outlet.Password);
+            if (!verifyPassword)
+            {
+                throw new UserFriendlyException("Password do not match", 1);
             }
             var outletwithDevice =await _unitofWork.DeviceRepository.GetOutletWithDevice(loginRequest.DeviceId, loginRequest.OutletId);
             
             if (outletwithDevice == null)
             {
-                throw new Exception("No device Register yet");
+                throw new UserFriendlyException("No device Register yet" ,2);
             }
             if (!outletwithDevice.IsApproved)
             {
-                throw new Exception("Waiting for Authorization");
-            }
-            var outlet = outletwithDevice.Outlet;
-            var verifyPassword = PasswordHelper.VerifyPassword(loginRequest.Password,outlet.Password);
-            if (!verifyPassword)
-            {
-                throw new Exception("Password do not match");
+                throw new UserFriendlyException("Waiting for Authorization" ,3);
             }
             var PlayListWithTrack = _unitofWork.PlaylistRepository.FindAllAsync(e => e.OutletId == loginRequest.OutletId);
         }

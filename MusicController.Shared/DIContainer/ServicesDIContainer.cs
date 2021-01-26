@@ -12,6 +12,7 @@ using MusicController.Identity.IdentityRolesManagement;
 using MusicController.Identity.IdentityUserManagement;
 using MusicController.Identity.Jwt;
 using MusicController.Identity.UserService;
+using MusicController.Shared.ExpectionHelper;
 using MusicController.Shared.ExtensionMethod;
 
 namespace MusicController.Shared.DIContainer

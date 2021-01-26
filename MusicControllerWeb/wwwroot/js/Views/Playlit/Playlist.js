@@ -30,6 +30,12 @@ function populatSchudle(value) {
             $("#evenOrdays").hide();
             break;
         default:
+            $("#specificDates").hide();
+            $("#weekdays").hide();
+            $("#evenOrdays").hide();
+            $("specificDates").prop('required', false);
+            $("weekday").prop('required', false);
+            $("#evenOrday").prop('required', false);
     }
 }
 

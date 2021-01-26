@@ -20,7 +20,13 @@ namespace MusicController.BL.TrackServices
             var track = await _unitofWork.TrackRepository.FindAllAsync(e => e.PlaylistId == playlistId);
             return track.ToList();
         }
-
+        public async Task<List<Track>> GetTracksByOutletId(long outletId)
+        {
+            var playlistId = await _unitofWork.PlaylistRepository.FindAllAsync(e => e.OutletId == outletId);
+            var listOfPlaylistIds = playlistId.Select(e => e.Id).ToList();
+            var tracks = await _unitofWork.TrackRepository.FindAllAsync(e => listOfPlaylistIds.Contains(e.PlaylistId));
+            return tracks.ToList();
+        }
         public async Task AddTrack(Track track)
         {
             await _unitofWork.TrackRepository.AddAsync(track);

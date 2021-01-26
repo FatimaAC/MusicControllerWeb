@@ -69,7 +69,7 @@ namespace MusicController.Identity.Jwt
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, outletId.ToString()),
+                    new Claim("OutletId", outletId.ToString()),
                     new Claim("DeviceId", deviceId.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
