@@ -9,5 +9,6 @@ namespace MusicController.Repository.OutletsRepository
     public interface IOutletRepository : IGenericRepository<Outlet>
     {
         Task<IEnumerable<OutletViewModel>> GetAllWithDevices();
+        Task<Outlet> GetOutletByDevice(string deviceId);
     }
 }

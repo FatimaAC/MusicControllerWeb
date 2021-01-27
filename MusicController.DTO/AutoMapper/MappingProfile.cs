@@ -35,7 +35,7 @@ namespace MusicController.DTOs.AutoMapper
 
             //api request
             CreateMap<Device, DevicesRequest>().ReverseMap();
-            CreateMap<Device, DevicesRequest>().ReverseMap();
+            CreateMap<Device, DeviceStatusRequest>().ReverseMap();
         }
     }
 }

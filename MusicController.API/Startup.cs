@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MusicController.Common.Constants;
+using MusicController.Common.HelperClasses;
 using MusicController.Shared.CrosSetting;
 using MusicController.Shared.DIContainer;
 using MusicController.Shared.ExpectionHelper;
@@ -33,13 +34,14 @@ namespace MusicController.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddControllers(
-                    );
+            services.AddControllers().AddJsonOptions(options =>
+            options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter()
+            ));
             services.DBContainer(Configuration);
             services.RespositoryContainer();
             services.ServicesContainer();
             services.MapperContainer();
-            services.AddSwaggerGen();
+            services.SwaggerContainer();
             services.IdentityContainer();
            services.TokenContainer();
             services.UseApiValidationHandler();

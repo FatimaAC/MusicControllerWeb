@@ -28,8 +28,8 @@ namespace MusicController.Repository.DeviceRepository
                                     .Include(e => e.Outlet)
                                     .Where(e => e.DeviceId == deviceId && e.Outlet.Id == outletId)
                                      .FirstOrDefaultAsync();
-
             return outletwithDevices;
         }
+        
     }
 }

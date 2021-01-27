@@ -9,9 +9,9 @@ namespace MusicController.DTO.RequestModel
 {
   public  class DeviceStatusRequest
     {
+        [JsonIgnore]
         public string DeviceId { get; set; }
         public string StatusMessage { get; set; }
-        [DataType(DataType.Date)]
         public DateTime StatusPostedAt { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace MusicController.DTO.APiResponesClass
         public Response(string message, StatusApiEnum statusCode)
         {
             Message = message;
-            StatusCode = StatusApiEnum.Failure;
+            StatusCode = statusCode;
         }
         public override string ToString()
         {

@@ -21,9 +21,9 @@ namespace MusicController.Common.HelperClasses
             return new DateTime().Add(timeSpan).ToString("hh:mm tt");
         }
 
-        public static int TotalNoofDays()
+        public static int TotalNoofDays(DateTime dateTime)
         {
-            var firstDateofYear = new DateTime(DateTime.Now.Year, 1, 1, 00, 00, 00);
+            var firstDateofYear = new DateTime(dateTime.Year ,dateTime.Month ,dateTime.Day, 00, 00, 00);
             return firstDateofYear.DayOfYear;
         }
     }

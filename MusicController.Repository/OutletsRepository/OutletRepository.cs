@@ -35,9 +35,12 @@ namespace MusicController.Repository.OutletsRepository
             return outlets;
         }
         
-        public Task<IEnumerable<Outlet>> GetOutletByAdmin()
+        public async Task<Outlet> GetOutletByDevice(string deviceId)
         {
-            throw new NotImplementedException();
+            var outlet = await _musicDbContext.Device
+                                .Include(e => e.Outlet)
+                               .Where(e => e.DeviceId == deviceId).Select(e=>e.Outlet).FirstOrDefaultAsync();
+            return outlet;
         }
 
         public Task<IEnumerable<Outlet>> GetOutletByDJ()

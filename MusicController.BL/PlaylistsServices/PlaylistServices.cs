@@ -70,71 +70,108 @@ namespace MusicController.BL.PlaylistsServices
             _unitofWork.PlaylistRepository.UpdateEntity(Editplaylist);
             _unitofWork.Complete();
         }
+        public async Task<WeeklyScheduleList> TodaySchedulePlaylist(long outletId)
+        {
+            var weeklyScheduleLists = await WeeklyScheduleList(outletId);
 
+            return weeklyScheduleLists.FirstOrDefault();
+        }
         public async Task<List<WeeklyScheduleList>> WeeklyScheduleList(long outletId)
         {
             var playlists = await _unitofWork.PlaylistRepository.FindAllAsync(e => e.OutletId == outletId);
             List<WeeklyScheduleList> weeklyScheduleLists = new List<WeeklyScheduleList>();
             if (playlists.Any())
             {
-                for (int i = 0; i < 6; i++)
+                weeklyScheduleLists =await WeeklyScheduleBusinussLogic(playlists);
+            }
+            return weeklyScheduleLists;
+        }
+
+        private async Task<List<WeeklyScheduleList>> WeeklyScheduleBusinussLogic(IEnumerable<Playlist> playlists)
+        {
+            List<WeeklyScheduleList> weeklyScheduleLists = new List<WeeklyScheduleList>();
+            for (int i = 0; i < 6; i++)
+            {
+                var datetime = DateTime.Now.AddDays(i);
+                var dayandMonth = datetime.Day + "/" + datetime.Month.ToString("d2");
+                var dayName = datetime.DayOfWeek.ToString();
+                if (playlists.Any(e => e.Schedule == Schedule.Yearly.ToString() && e.Frequency == dayandMonth))
                 {
-                    var datetime = DateTime.Now.AddDays(i);
-                    var dayandMonth = datetime.Day + "/" + datetime.Month.ToString("d2");
-                    var dayName = datetime.DayOfWeek.ToString();
-                    if (playlists.Any(e => e.Schedule == Schedule.Yearly.ToString() && e.Frequency == dayandMonth))
+                    var yearlyPlaylist = playlists.Where(e => e.Schedule == Schedule.Yearly.ToString() && e.Frequency == dayandMonth).FirstOrDefault();
+                    var weeklyDate = await PapulateData(yearlyPlaylist, datetime);
+                    weeklyScheduleLists.Add(weeklyDate);
+                }
+                else if (playlists.Any(e => e.Schedule == Schedule.Weekly.ToString() && e.Frequency == dayName))
+                {
+                    var WeeklyPlaylist = playlists.Where(e => e.Schedule == Schedule.Weekly.ToString() && e.Frequency == dayName).FirstOrDefault();
+                    var weeklyDate = await PapulateData(WeeklyPlaylist, datetime);
+                    weeklyScheduleLists.Add(weeklyDate);
+                }
+                else if (playlists.Any(e => e.Schedule == Schedule.AlternativeDay.ToString()))
+                {
+                    int totalDays = DateTimeHelper.TotalNoofDays(datetime);
+                    var AlternativeDayPlaylist = playlists.Where(e => e.Schedule == Schedule.AlternativeDay.ToString()).FirstOrDefault();
+                    if (totalDays % 2 == 0 && AlternativeDayPlaylist.Frequency == "Even Days")
                     {
-                        var yearlyPlaylist = playlists.Where(e => e.Schedule == Schedule.Yearly.ToString() && e.Frequency == dayandMonth).FirstOrDefault();
-                        var weeklyDate = PapolateData(yearlyPlaylist, datetime);
-                        weeklyScheduleLists.Add(weeklyDate);
+                        var AlternativeDayDate = await PapulateData(AlternativeDayPlaylist, datetime);
+                        weeklyScheduleLists.Add(AlternativeDayDate);
                     }
-                    else if (playlists.Any(e => e.Schedule == Schedule.Weekly.ToString() && e.Frequency == dayName))
+                    else if (totalDays % 2 != 0 && AlternativeDayPlaylist.Frequency == "Odd Days")
                     {
-                        var WeeklyPlaylist = playlists.Where(e => e.Schedule == Schedule.Weekly.ToString() && e.Frequency == dayName).FirstOrDefault();
-                        var weeklyDate = PapolateData(WeeklyPlaylist, datetime);
-                        weeklyScheduleLists.Add(weeklyDate);
-                    }
-                    else if (playlists.Any(e => e.Schedule == Schedule.AlternativeDay.ToString()))
-                    {
-                        int totalDays =DateTimeHelper.TotalNoofDays();
-                        var AlternativeDayPlaylist = playlists.Where(e => e.Schedule == Schedule.AlternativeDay.ToString()).FirstOrDefault();
-                        if (totalDays % 2 == 0 && AlternativeDayPlaylist.Frequency == "Even Days")
-                        {
-                            var AlternativeDayDate = PapolateData(AlternativeDayPlaylist, datetime);
-                            weeklyScheduleLists.Add(AlternativeDayDate);
-                        }
-                        else if (totalDays % 2 != 0 && AlternativeDayPlaylist.Frequency == "Odd Days")
-                        {
-                            var AlternativeDayDate = PapolateData(AlternativeDayPlaylist, datetime);
-                            weeklyScheduleLists.Add(AlternativeDayDate);
-                        }
-                        else if (playlists.Any(e => e.Schedule == Schedule.Daily.ToString()))
-                        {
-                            var DailyPlaylist = playlists.Where(e => e.Schedule == Schedule.Daily.ToString()).FirstOrDefault();
-                            var DailyDate = PapolateData(DailyPlaylist, datetime);
-                            weeklyScheduleLists.Add(DailyDate);
-                        }
+                        var AlternativeDayDate = await PapulateData(AlternativeDayPlaylist, datetime);
+                        weeklyScheduleLists.Add(AlternativeDayDate);
                     }
                     else if (playlists.Any(e => e.Schedule == Schedule.Daily.ToString()))
                     {
                         var DailyPlaylist = playlists.Where(e => e.Schedule == Schedule.Daily.ToString()).FirstOrDefault();
-                        var DailyDate = PapolateData(DailyPlaylist, datetime);
+                        var DailyDate = await PapulateData(DailyPlaylist, datetime);
                         weeklyScheduleLists.Add(DailyDate);
                     }
+                    else
+                    {
+                        weeklyScheduleLists.Add( await PapulateData(playlists.FirstOrDefault(), datetime));
+                    }
+                }
+                else if (playlists.Any(e => e.Schedule == Schedule.Daily.ToString()))
+                {
+                    var DailyPlaylist = playlists.Where(e => e.Schedule == Schedule.Daily.ToString()).FirstOrDefault();
+                    var DailyDate =await PapulateData(DailyPlaylist, datetime);
+                    weeklyScheduleLists.Add(DailyDate);
+                }
+                else
+                {
+                    weeklyScheduleLists.Add(await PapulateData(playlists.FirstOrDefault(), datetime));
                 }
             }
-            return weeklyScheduleLists.ToList();
+            return weeklyScheduleLists;
         }
-        private WeeklyScheduleList PapolateData( Playlist playlist ,DateTime date)
+        private async Task<WeeklyScheduleList> PapulateData(Playlist playlist, DateTime date)
         {
-            var WeeklyScheduleList = new WeeklyScheduleList()
+            var weeklyScheduleList = new WeeklyScheduleList()
             {
+                PlaylistId = playlist.Id,
                 Date = date.Date,
                 Schedule = Regex.Replace(playlist.Schedule, "([a-z])([A-Z])", "$1 $2"),
                 Name = playlist.Name
             };
-            return WeeklyScheduleList;
+            weeklyScheduleList.Tracks = new List<TrackViewModel>();
+            var track = await _unitofWork.TrackRepository.FindAllAsync(e => e.PlaylistId == playlist.Id);
+            if (track.Any())
+            {
+                foreach (var item in track)
+                {
+                    var trackviewModel = new TrackViewModel()
+                    {
+                        Id = item.Id,
+                        PlaylistId = item.PlaylistId,
+                        StartTime = item.StartTime,
+                        EndTime = item.EndTime,
+                        TrackURL = item.TrackURL
+                    };
+                    weeklyScheduleList.Tracks.Add(trackviewModel);
+                }
+            }
+            return weeklyScheduleList;
         }
-
     }
 }

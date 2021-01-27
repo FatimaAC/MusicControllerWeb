@@ -14,5 +14,6 @@ namespace MusicController.BL.PlaylistsServices
         Task<Playlist> GetPlaylist(long id);
         Task DeletePlaylist(long id);
         Task<List<WeeklyScheduleList>> WeeklyScheduleList(long outletId);
+        Task<WeeklyScheduleList> TodaySchedulePlaylist(long outletId);
     }
 }

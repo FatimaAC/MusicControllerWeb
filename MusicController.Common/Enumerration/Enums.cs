@@ -11,6 +11,10 @@
     {
         Success = 0,
         Failure = 1,
-        Unauthorized = 401
+        NotRegister = 2,
+        RequriedApproval =3,
+        AlreadyAssignedDevice =4 ,
+        Empty = 5,
+        InternalServerError =-1,
     }
 }

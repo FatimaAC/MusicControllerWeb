@@ -33,24 +33,16 @@ namespace MusicController.API.Controllers
             _mapper = mapper;
         }
      
-        [HttpGet("WeeklySchedule")]
-        public async Task<Response<WeeklyScheduleListDTO>> GetWeeklyScheduleList()
+        [HttpGet("TodaySchedulePlaylist")]
+        public async Task<Response<WeeklyScheduleList>> TodaySchedulePlaylist()
         {
             var outletId =Convert.ToInt64(_currentUserService.OutletId);
-            var weeklyscheduleDTO = new WeeklyScheduleListDTO
+            var todayPlaylist = await _playlistServices.TodaySchedulePlaylist(outletId);
+            if (todayPlaylist == null)
             {
-                WeeklyScheduleLists = await _playlistServices.WeeklyScheduleList(outletId)
-            };
-            if (weeklyscheduleDTO.WeeklyScheduleLists?.Any() != true)
-            {
-                return new Response<WeeklyScheduleListDTO>("No Playlist Found" ,StatusApiEnum.Success);
+                return new Response<WeeklyScheduleList>("No playlist found" ,StatusApiEnum.Empty);
             }
-            var tracks = await _tracksServices.GetTracksByOutletId(outletId);
-            if (tracks!=null)
-            {
-                weeklyscheduleDTO.Tracks = _mapper.Map<List<TrackViewModel>>(tracks);
-            }
-            var response = new Response<WeeklyScheduleListDTO>(weeklyscheduleDTO);
+            var response = new Response<WeeklyScheduleList>(todayPlaylist);
             return response;
         }
     }

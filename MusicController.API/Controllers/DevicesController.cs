@@ -8,6 +8,7 @@ using MusicController.Common.Enumerration;
 using MusicController.DTO.APiResponesClass;
 using MusicController.DTO.RequestModel;
 using MusicController.Entites.Models;
+using MusicController.Identity.UserService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,12 @@ namespace MusicController.API.Controllers
     public class DevicesController : ControllerBase
     {
         private readonly IDevicesServices _devicesServices;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
-        public DevicesController(IDevicesServices devicesServices, IMapper mapper)
+        public DevicesController(IDevicesServices devicesServices, ICurrentUserService currentUserService , IMapper mapper)
         {
             _devicesServices = devicesServices;
+            _currentUserService = currentUserService;
             _mapper = mapper;
         }
         [HttpPost("RegisterDevice")]
@@ -42,7 +45,8 @@ namespace MusicController.API.Controllers
         }
         [HttpPost("DeviceStatus")]
         public async Task<IActionResult> PostDeviceStatus([FromBody] DeviceStatusRequest deviceStatus)
-        {
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+            deviceStatus.DeviceId = _currentUserService.DeviceId; 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

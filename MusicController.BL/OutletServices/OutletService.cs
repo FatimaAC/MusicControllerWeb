@@ -111,20 +111,24 @@ namespace MusicController.BL.OutletServices
             var verifyPassword = PasswordHelper.VerifyPassword(loginRequest.Password, outlet.Password);
             if (!verifyPassword)
             {
-                throw new UserFriendlyException("Password do not match", 1);
+                throw new UserFriendlyException("Wrong Password", 1);
             }
             var outletwithDevice =await _unitofWork.DeviceRepository.GetOutletWithDevice(loginRequest.DeviceId, loginRequest.OutletId);
             
             if (outletwithDevice == null)
             {
+                var outletForName = await _unitofWork.OutletRepository.GetOutletByDevice(loginRequest.DeviceId);
+                if (outletForName != null)
+                {
+                    throw new UserFriendlyException($"Wrong Outlet selected, You are trying to log into {outlet.Name} but you are registered to {outletForName.Name}");
+                }
                 throw new UserFriendlyException("No device Register yet" ,2);
             }
             if (!outletwithDevice.IsApproved)
             {
-                throw new UserFriendlyException("Waiting for Authorization" ,3);
+                throw new UserFriendlyException("Waiting for approval", 3);
             }
             var PlayListWithTrack = _unitofWork.PlaylistRepository.FindAllAsync(e => e.OutletId == loginRequest.OutletId);
         }
-
     }
 }

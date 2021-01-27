@@ -12,7 +12,7 @@
     </div>
     <div class="col-sm-6 border p-5 white-color">
         <h4 class="text-center">Add Track</h4><br />
-        <form asp-action="Edit" onsubmit="return onAddTrackSubmitClick(this)" asp-route-id="@Model.Id">
+        <form asp-action="Edit" autocomplete="off" onsubmit="return onAddTrackSubmitClick(this)" asp-route-id="@Model.Id">
             <div asp-validation-summary="ModelOnly" class="text-danger">
             </div>
             <input asp-for="PlaylistId" value="@Model.PlaylistId" type="hidden" />

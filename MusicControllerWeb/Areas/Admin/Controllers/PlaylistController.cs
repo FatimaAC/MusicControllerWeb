@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace MusicControllerWeb.Areas.Admin.Controllers
 {
     [Area(UserRolesConstant.Admin)]
-    [Authorize(Roles = UserRolesConstant.Admin)]
+    [Authorize(Roles = UserRolesConstant.AdminorDJ)]
     public class PlaylistController : Controller
     {
         private readonly IPlaylistServices _playlistServices;
@@ -36,7 +36,6 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             ViewBag.OutletId = id;
             var playlists = await _playlistServices.GetAllPlaylistswithTrackByOutlet(id);
             var playlistViewModel = _mapper.Map<List<PlaylistIndexModel>>(playlists);
-            var test = DateTimeHelper.ShortTimeTo12HourFormat(playlistViewModel[0].Tracks[0].StartTime);
             return View(playlistViewModel);
         }
 

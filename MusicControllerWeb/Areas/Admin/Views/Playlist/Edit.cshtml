@@ -11,7 +11,7 @@
     <div class="container row">
         <div class="col-sm-6 border p-5">
             <h4 class="">Edit Playlist</h4><br />
-            <form asp-action="Edit" onsubmit="return onPlaylistSubmitClick(this);" asp-route-id="@Model.Id">
+            <form asp-action="Edit" autocomplete="off" onsubmit="return onPlaylistSubmitClick(this);" asp-route-id="@Model.Id">
                 <input type="hidden" asp-for="OutletId" />
                 <div class="form-group">
                     <label asp-for="Name" for="name"></label>
