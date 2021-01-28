@@ -6,7 +6,7 @@ namespace MusicController.DTO.ViewModel
     {
         public string Email { get; set; }
         public string Id { get; set; }
-        [Display(Name = "Status")]
+        [Display(Name = "Approved")]
         [Required]
         public bool IsAuthorized { get; set; }
         [Display(Name = "User Role")]

@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MusicController.Common.Constants;
 using MusicController.Identity.Model;
 using MusicController.Identity.UserService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicController.Identity.IdentityUserManagement
@@ -63,10 +65,10 @@ namespace MusicController.Identity.IdentityUserManagement
                 throw new Exception("Id Cannot be n null");
             }
         }
-        public async Task<IList<string>> GetUserRoles(ApplicationUser user)
+        public async Task<List<string>> GetUserRoles(ApplicationUser user)
         {
-            var test = await _UserManager.GetRolesAsync(user);
-            return test;
+            var userRoles = await _UserManager.GetRolesAsync(user);
+            return userRoles.ToList();
         }
         public async Task AuthorizedUser(string id, bool isAuthroized, string role)
         {
@@ -75,6 +77,8 @@ namespace MusicController.Identity.IdentityUserManagement
             user.ApprovedBy = _currentUserService.UserId;
             user.IsAuthorized = isAuthroized;
             await _UserManager.UpdateAsync(user);
+            var userRoles = await GetUserRoles(user);
+            await _UserManager.RemoveFromRolesAsync(user, userRoles);
             await _UserManager.AddToRoleAsync(user, role);
         }
     }

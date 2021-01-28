@@ -5,15 +5,9 @@
 }
 
 <div class="container mt-3">
-    <h2>Outlets</h2>
     <div class="d-flex">
         <div class="p-2 flex-grow-1 mr-1">
-            <div class="input-group">
-                <input class="form-control py-2 border-right-0  " type="search" placeholder="search" id="example-search-input">
-                <span class="input-group-append">
-                    <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
-                </span>
-            </div>
+            <h2>Outlets</h2>
         </div>
         <div class="p-2">
             @if (_urlHelper.IsRoleAdmin())
@@ -61,18 +55,3 @@
         }
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#myList li").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-}
-
-

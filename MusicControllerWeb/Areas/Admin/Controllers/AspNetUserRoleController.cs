@@ -7,6 +7,7 @@ using MusicController.DTO.ViewModel;
 using MusicController.Identity.IdentityRolesManagement;
 using MusicController.Identity.IdentityUserManagement;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers
@@ -25,15 +26,15 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             _identityRoleServices = identityRoleServices;
             _mapper = mapper;
         }
+        // GET: Admin/AspNetUserRole 
         public async Task<IActionResult> Index()
         {
             var applicationUsers = await _applicationUserServices.GetAll();
-            //var booksVM = new List<UserViewModel>();
             var booksVM = _mapper.Map<List<UserViewModel>>(applicationUsers);
             return View(booksVM);
         }
 
-        // GET: Books/Edit/1  
+        // GET: Admin/AspNetUserRole/Edit/1  
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -42,11 +43,13 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             }
             var applicationUsers = await _applicationUserServices.GetById(id);
             ViewBag.Roles = new SelectList(await _identityRoleServices.GetAllRoles(), "Name", "Name");
-            var booksVM = _mapper.Map<UserViewModel>(applicationUsers);
-            return View(booksVM);
+            var userViewModel = _mapper.Map<UserViewModel>(applicationUsers);
+            var userRole = await _applicationUserServices.GetUserRoles(applicationUsers);
+            userViewModel.Role = userRole.FirstOrDefault(); 
+            return View(userViewModel);
         }
 
-        // POST: Books/Edit/1  
+       //Post: Admin/AspNetUserRole/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, UserViewModel userViewModel)

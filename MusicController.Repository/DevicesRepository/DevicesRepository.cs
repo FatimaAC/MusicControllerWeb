@@ -19,7 +19,7 @@ namespace MusicController.Repository.DeviceRepository
 
         public async Task<IEnumerable<Device>> GetDeviceWithOutlets()
         {
-            var outlets = await _musicDbContext.Device.Include(e => e.Outlet).ToListAsync();
+            var outlets = await _musicDbContext.Device.Include(e => e.Outlet).OrderBy(e=>e.Outlet.Name).ToListAsync();
             return outlets;
         }
         public async Task<Device> GetOutletWithDevice(string deviceId , long outletId)

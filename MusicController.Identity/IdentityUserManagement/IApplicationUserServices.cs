@@ -12,7 +12,7 @@ namespace MusicController.Identity.IdentityUserManagement
         Task<ApplicationUser> GetById(string userId);
         Task<string> Delete(string userId);
         Task<ApplicationUser> GetByEmail(string email);
-        Task<IList<string>> GetUserRoles(ApplicationUser user);
+        Task<List<string>> GetUserRoles(ApplicationUser user);
         Task AuthorizedUser(string id, bool isAuthroized, string role);
     }
 }
