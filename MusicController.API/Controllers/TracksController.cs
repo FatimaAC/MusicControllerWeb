@@ -11,6 +11,7 @@ using MusicController.DTO.ViewModel;
 using MusicController.Identity.UserService;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 

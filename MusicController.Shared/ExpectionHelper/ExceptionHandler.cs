@@ -42,7 +42,7 @@ namespace MusicController.Shared.ExpectionHelper
                     }
                     else
                     {
-                        await context.Response.WriteAsync(new Response<string>("Something went wrong", StatusApiEnum.InternalServerError).ToString());
+                        await context.Response.WriteAsync(new Response<string>("Something went wrong").ToString());
                     }
                     //if any exception then report it and log it
 

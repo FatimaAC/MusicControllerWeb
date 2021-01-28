@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MusicController.Common.Enumerration;
 using MusicController.Common.HelperClasses;
 using MusicController.DTO.RequestModel;
 using MusicController.DTO.ViewModel;
@@ -32,7 +33,7 @@ namespace MusicController.BL.OutletServices
             var outlet = await _unitofWork.OutletRepository.GetAsync(id);
             if (outlet == null)
             {
-                throw new UserFriendlyException(" Record not found");
+                throw new UserFriendlyException(" Record not found" , StatusApiEnum.Failure);
             }
             _unitofWork.OutletRepository.Remove(outlet);
             _unitofWork.Complete();
@@ -54,7 +55,7 @@ namespace MusicController.BL.OutletServices
             var outlet = await _unitofWork.OutletRepository.GetAsync(id);
             if (outlet == null)
             {
-                throw new UserFriendlyException("Record not found", 1);
+                throw new UserFriendlyException("Record not found", StatusApiEnum.Failure);
             }
             return outlet;
         }
@@ -65,7 +66,7 @@ namespace MusicController.BL.OutletServices
             var outlet = await GetOutlet(id);
             if (outlet == null)
             {
-                throw new UserFriendlyException("Record not found" ,1 );
+                throw new UserFriendlyException("Record not found" , StatusApiEnum.Failure);
             }
             var devices = await _unitofWork.DeviceRepository.FindAllAsync(e => e.OutletId == outlet.Id);
             outletManageViewModel.Outlet = _mapper.Map<OutletCreateViewModel>(outlet);
@@ -78,7 +79,7 @@ namespace MusicController.BL.OutletServices
             var outletObj = await _unitofWork.OutletRepository.GetAsync(id);
             if (outletObj == null)
             {
-                throw new UserFriendlyException("Record not found");
+                throw new UserFriendlyException("Record not found" , StatusApiEnum.Failure);
             }
             outletObj.Name = outlet.Name;
             outletObj.ImageUrl = outlet.ImageUrl;
@@ -91,7 +92,7 @@ namespace MusicController.BL.OutletServices
             var outlet = await _unitofWork.OutletRepository.GetAsync(id);
             if (outlet == null)
             {
-                throw new UserFriendlyException("Id not Found");
+                throw new UserFriendlyException("Record not Found" , StatusApiEnum.Failure);
             }
              outlet.Password = PasswordHelper.EncryptPassword(Password);
             //outlet.Password = passwordandSalt.Item1;
@@ -106,12 +107,12 @@ namespace MusicController.BL.OutletServices
             var outlet = await GetOutlet(loginRequest.OutletId);
             if (outlet==null)
             {
-                throw new UserFriendlyException("Outlet Not found" ,1);
+                throw new UserFriendlyException("Record Not found" , StatusApiEnum.Failure);
             }
             var verifyPassword = PasswordHelper.VerifyPassword(loginRequest.Password, outlet.Password);
             if (!verifyPassword)
             {
-                throw new UserFriendlyException("Wrong Password", 1);
+                throw new UserFriendlyException("Wrong Password", StatusApiEnum.Failure);
             }
             var outletwithDevice =await _unitofWork.DeviceRepository.GetOutletWithDevice(loginRequest.DeviceId, loginRequest.OutletId);
             
@@ -120,13 +121,13 @@ namespace MusicController.BL.OutletServices
                 var outletForName = await _unitofWork.OutletRepository.GetOutletByDevice(loginRequest.DeviceId);
                 if (outletForName != null)
                 {
-                    throw new UserFriendlyException($"Wrong Outlet selected, You are trying to log into {outlet.Name} but you are registered to {outletForName.Name}");
+                    throw new UserFriendlyException($"Wrong Outlet selected, You are trying to log into {outlet.Name} but you are registered to {outletForName.Name}" , StatusApiEnum.AlreadyAssignedDevice);
                 }
-                throw new UserFriendlyException("No device Register yet" ,2);
+                throw new UserFriendlyException("No device Register yet" , StatusApiEnum.NotRegister);
             }
             if (!outletwithDevice.IsApproved)
             {
-                throw new UserFriendlyException("Waiting for approval", 3);
+                throw new UserFriendlyException("Waiting for approval", StatusApiEnum.RequriedApproval);
             }
             var PlayListWithTrack = _unitofWork.PlaylistRepository.FindAllAsync(e => e.OutletId == loginRequest.OutletId);
         }
