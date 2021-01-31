@@ -1,22 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization.Policy;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.DependencyInjection;
 using MusicController.Common.Enumerration;
 using MusicController.DTO.APiResponesClass;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MusicController.Shared.ExpectionHelper
 {
-    public static class CustomAuthorizeFilter  
+    // customized response for APi in json Format and for other Status Type Error
+    public static class CustomAuthorizeFilter
     {
         public static async Task CustomUnauthorized(this IApplicationBuilder app)
         {
@@ -37,7 +28,7 @@ namespace MusicController.Shared.ExpectionHelper
                     default:
                         break;
                 }
-            }); 
+            });
         }
     }
 }

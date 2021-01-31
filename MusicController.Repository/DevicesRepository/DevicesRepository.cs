@@ -19,10 +19,10 @@ namespace MusicController.Repository.DeviceRepository
 
         public async Task<IEnumerable<Device>> GetDeviceWithOutlets()
         {
-            var outlets = await _musicDbContext.Device.Include(e => e.Outlet).OrderBy(e=>e.Outlet.Name).ToListAsync();
+            var outlets = await _musicDbContext.Device.Include(e => e.Outlet).OrderBy(e => e.Outlet.Name).ToListAsync();
             return outlets;
         }
-        public async Task<Device> GetOutletWithDevice(string deviceId , long outletId)
+        public async Task<Device> GetOutletWithDevice(string deviceId, long outletId)
         {
             var outletwithDevices = await _musicDbContext.Device
                                     .Include(e => e.Outlet)
@@ -30,6 +30,6 @@ namespace MusicController.Repository.DeviceRepository
                                      .FirstOrDefaultAsync();
             return outletwithDevices;
         }
-        
+
     }
 }

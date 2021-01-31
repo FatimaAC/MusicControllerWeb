@@ -1,4 +1,5 @@
-﻿using MusicController.Common.EntityHelper;
+﻿using MusicController.Common.Constants;
+using MusicController.Common.EntityHelper;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,6 +13,7 @@ namespace MusicController.DTO.ViewModel
         public long OutletId { get; set; }
         [Required]
         [Display(Name = "Playlist Name:")]
+        [StringLength(PlaylistConstant.MaxNameLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string Name { get; set; }
         [Required]
         [Display(Name = "Schedule")]

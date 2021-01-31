@@ -22,6 +22,7 @@ namespace MusicController.Repository.PlaylistsRepository
                             .Include(e => e.Tracks)
                             .Where(e => e.OutletId == id)
                             .ToListAsync();
+            // order track by start time
             foreach (var item in playlists)
             {
                 item.Tracks = item.Tracks.OrderBy(e => e.StartTime).ToList();

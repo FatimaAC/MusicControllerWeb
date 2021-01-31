@@ -2,7 +2,7 @@
 
 namespace MusicController.DTOModel.DTOS
 {
-    public class OutletNameDTO : BaseId
+    public class OutletDTO : BaseId
     {
         public string Name { get; set; }
     }

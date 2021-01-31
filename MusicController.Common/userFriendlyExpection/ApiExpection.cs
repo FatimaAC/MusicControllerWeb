@@ -1,10 +1,9 @@
 ﻿using MusicController.Common.Enumerration;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.Shared.ExpectionHelper
 {
+    // Override Expection
     public class UserFriendlyException : Exception
     {
         public StatusApiEnum StatusCode { get; set; }

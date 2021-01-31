@@ -1,9 +1,5 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,24 +10,17 @@ using MusicController.Identity.IdentityContext;
 using MusicController.Shared;
 using MusicController.Shared.DIContainer;
 using MusicController.Shared.Identity;
-using System.Globalization;
 
 namespace MusicControllerWeb
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        private readonly IHostEnvironment HostingEnvironment;
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration , IHostEnvironment hostingEnvironment)
         {
             Configuration = configuration;
-        }
-        // inject appsetting file according to the environment
-        public Startup(IHostEnvironment env)
-        {
-            HostingEnvironment = env;
             var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
+                .SetBasePath(hostingEnvironment.ContentRootPath)
                 .AddJsonFile(Utility.EnvironmentFile(), optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
@@ -41,8 +30,6 @@ namespace MusicControllerWeb
         {
 
             // DI containter for services ,databases and automapper
-          
-            
             services.DBContainer(Configuration);
             services.RespositoryContainer();
             services.ServicesContainer();
@@ -57,9 +44,6 @@ namespace MusicControllerWeb
                    .AddRazorRuntimeCompilation()
                    .SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddRazorPages();
-            
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,14 +58,12 @@ namespace MusicControllerWeb
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/Error/{0}");
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
@@ -93,7 +75,6 @@ namespace MusicControllerWeb
           );
                 endpoints.MapControllerRoute(
                     name: "default",
-                   // pattern: "{controller=Home}/{action=Index}/{id?}"
                    pattern: "{area=Admin}/{controller=Outlets}/{action=Index}/{id?}"
                    );
                 endpoints.MapRazorPages();

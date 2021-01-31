@@ -1,19 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MusicController.BL.DevicesServices;
 using MusicController.BL.OutletServices;
 using MusicController.Common.Constants;
-using MusicController.DTO.APiResponesClass;
 using MusicController.DTO.ViewModel;
-using MusicController.DTOModel.DTOS;
-using MusicController.Entites.Models;
-using Newtonsoft.Json;
-using System;
+using MusicController.Shared.ExtensionMethod;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers
@@ -24,12 +17,11 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
     {
         private readonly IDevicesServices _devicesServices;
         private readonly IMapper _mapper;
-        public DevicesController(IDevicesServices devicesServices, IMapper mapper, IOutletService outletService)
+        public DevicesController(IDevicesServices devicesServices, IMapper mapper)
         {
             _devicesServices = devicesServices;
             _mapper = mapper;
         }
-
         // GET: Admin/Devices
         public async Task<IActionResult> Index()
         {
@@ -68,7 +60,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction("Edit", "Outlets", new { id = devices.OutletId, Area = UserRolesConstant.Admin });
+            return  RedirectToAction("Edit", "Outlets", new { id = devices.OutletId, Area = UserRolesConstant.Admin });
         }
     }
 }

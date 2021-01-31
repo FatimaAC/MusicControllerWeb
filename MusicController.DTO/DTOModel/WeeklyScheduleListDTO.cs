@@ -1,7 +1,5 @@
 ﻿using MusicController.DTO.ViewModel;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MusicController.DTO.DTOModel
 {

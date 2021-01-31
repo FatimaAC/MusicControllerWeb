@@ -1,5 +1,6 @@
 ﻿namespace MusicController.Common.Constants
 {
+    // Max lenght for the ef Fullent APi
     public static class OutletConstant
     {
         public const string DefaultPassword = "Welcome123$";

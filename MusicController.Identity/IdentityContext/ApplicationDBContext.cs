@@ -24,7 +24,7 @@ namespace MusicController.Identity.IdentityContext
             builder.ApplyConfiguration(new ApplicationUserConfigration());
             builder.Seed();
         }
-
+        // running migration from the class library
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

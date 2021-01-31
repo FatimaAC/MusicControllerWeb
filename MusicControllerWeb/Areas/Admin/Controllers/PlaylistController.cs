@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using MusicController.BL.PlaylistsServices;
 using MusicController.BL.TrackServices;
 using MusicController.Common.Constants;
-using MusicController.Common.HelperClasses;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using System;
@@ -28,7 +27,6 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         }
         public async Task<ActionResult> Index(long id)
         {
-            
             if (id <= 0)
             {
                 return NotFound();
@@ -72,7 +70,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(long id)
         {
             var playlist = await _playlistServices.GetPlaylist(id);
-            
+
             if (playlist == null)
             {
                 return NotFound();
@@ -101,14 +99,12 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             }
             return View(Playlist);
         }
-       
 
         [HttpPost]
         public async Task<IActionResult> Delete(long id, long OutletId)
         {
             await _playlistServices.DeletePlaylist(id);
             return RedirectToAction("Index", "Playlist", new { id = OutletId, Area = UserRolesConstant.Admin });
-
         }
 
     }

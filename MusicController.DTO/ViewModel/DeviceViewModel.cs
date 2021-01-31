@@ -23,6 +23,7 @@ namespace MusicController.DTO.ViewModel
 
     public class DeviceDeleteViewModel : BaseId
     {
+        [Required]
         public long OutletId { get; set; }
         public bool ReturnToDevices { get; set; } = false;
     }

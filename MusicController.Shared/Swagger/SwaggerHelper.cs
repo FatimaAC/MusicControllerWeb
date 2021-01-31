@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 
 namespace MusicController.Shared.DIContainer
 {
+    // Add Swagger 
     public static class SwaggerHelper
     {
         public static void SwaggerContainer(this IServiceCollection services)

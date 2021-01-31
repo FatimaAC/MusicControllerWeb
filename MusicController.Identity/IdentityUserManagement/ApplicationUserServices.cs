@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MusicController.Common.Constants;
 using MusicController.Identity.Model;
 using MusicController.Identity.UserService;
 using System;
@@ -22,7 +21,7 @@ namespace MusicController.Identity.IdentityUserManagement
         }
         public async Task<List<ApplicationUser>> GetAll()
         {
-            var x = await _UserManager.Users.ToListAsync();     //_roleManager.Roles().TOListAsync();
+            var x = await _UserManager.Users.ToListAsync();
             return x;
         }
         public async Task<string> Create(ApplicationUser user)
@@ -58,12 +57,8 @@ namespace MusicController.Identity.IdentityUserManagement
             if (result.Succeeded)
             {
                 return "Ok";
-                //  throw new Exception("Id Cannot be n null");
             }
-            else
-            {
-                throw new Exception("Id Cannot be n null");
-            }
+            return string.Empty;
         }
         public async Task<List<string>> GetUserRoles(ApplicationUser user)
         {

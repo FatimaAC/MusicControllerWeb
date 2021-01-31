@@ -13,8 +13,8 @@
         Success = 0,
         Failure = 1,
         NotRegister = 2,
-        RequriedApproval =3,
-        AlreadyAssignedDevice =4,
+        RequriedApproval = 3,
+        AlreadyAssignedDevice = 4,
         Empty = 5
     }
 }

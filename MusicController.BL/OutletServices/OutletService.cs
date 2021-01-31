@@ -6,7 +6,6 @@ using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using MusicController.Repository.UnitofWork;
 using MusicController.Shared.ExpectionHelper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +32,7 @@ namespace MusicController.BL.OutletServices
             var outlet = await _unitofWork.OutletRepository.GetAsync(id);
             if (outlet == null)
             {
-                throw new UserFriendlyException(" Record not found" , StatusApiEnum.Failure);
+                throw new UserFriendlyException(" Record not found", StatusApiEnum.Failure);
             }
             _unitofWork.OutletRepository.Remove(outlet);
             _unitofWork.Complete();
@@ -66,7 +65,7 @@ namespace MusicController.BL.OutletServices
             var outlet = await GetOutlet(id);
             if (outlet == null)
             {
-                throw new UserFriendlyException("Record not found" , StatusApiEnum.Failure);
+                throw new UserFriendlyException("Record not found", StatusApiEnum.Failure);
             }
             var devices = await _unitofWork.DeviceRepository.FindAllAsync(e => e.OutletId == outlet.Id);
             outletManageViewModel.Outlet = _mapper.Map<OutletCreateViewModel>(outlet);
@@ -79,7 +78,7 @@ namespace MusicController.BL.OutletServices
             var outletObj = await _unitofWork.OutletRepository.GetAsync(id);
             if (outletObj == null)
             {
-                throw new UserFriendlyException("Record not found" , StatusApiEnum.Failure);
+                throw new UserFriendlyException("Record not found", StatusApiEnum.Failure);
             }
             outletObj.Name = outlet.Name;
             outletObj.ImageUrl = outlet.ImageUrl;
@@ -92,9 +91,9 @@ namespace MusicController.BL.OutletServices
             var outlet = await _unitofWork.OutletRepository.GetAsync(id);
             if (outlet == null)
             {
-                throw new UserFriendlyException("Record not Found" , StatusApiEnum.Failure);
+                throw new UserFriendlyException("Record not Found", StatusApiEnum.Failure);
             }
-             outlet.Password = PasswordHelper.EncryptPassword(Password);
+            outlet.Password = PasswordHelper.EncryptPassword(Password);
             //outlet.Password = passwordandSalt.Item1;
             //outlet.Salt = passwordandSalt.Item2;
             _unitofWork.OutletRepository.UpdateEntity(outlet);
@@ -105,25 +104,25 @@ namespace MusicController.BL.OutletServices
         public async Task ValidateOutletandDevice(LoginRequest loginRequest)
         {
             var outlet = await GetOutlet(loginRequest.OutletId);
-            if (outlet==null)
+            if (outlet == null)
             {
-                throw new UserFriendlyException("Record Not found" , StatusApiEnum.Failure);
+                throw new UserFriendlyException("Record Not found", StatusApiEnum.Failure);
             }
             var verifyPassword = PasswordHelper.VerifyPassword(loginRequest.Password, outlet.Password);
             if (!verifyPassword)
             {
                 throw new UserFriendlyException("Wrong Password", StatusApiEnum.Failure);
             }
-            var outletwithDevice =await _unitofWork.DeviceRepository.GetOutletWithDevice(loginRequest.DeviceId, loginRequest.OutletId);
-            
+            var outletwithDevice = await _unitofWork.DeviceRepository.GetOutletWithDevice(loginRequest.DeviceId, loginRequest.OutletId);
+
             if (outletwithDevice == null)
             {
                 var outletForName = await _unitofWork.OutletRepository.GetOutletByDevice(loginRequest.DeviceId);
                 if (outletForName != null)
                 {
-                    throw new UserFriendlyException($"Wrong Outlet selected, You are trying to log into {outlet.Name} but you are registered to {outletForName.Name}" , StatusApiEnum.AlreadyAssignedDevice);
+                    throw new UserFriendlyException($"Wrong Outlet selected, You are trying to log into {outlet.Name} but you are registered to {outletForName.Name}", StatusApiEnum.AlreadyAssignedDevice);
                 }
-                throw new UserFriendlyException("No device Register yet" , StatusApiEnum.NotRegister);
+                throw new UserFriendlyException("No device Register yet", StatusApiEnum.NotRegister);
             }
             if (!outletwithDevice.IsApproved)
             {

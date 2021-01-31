@@ -30,10 +30,9 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationUsers = await _applicationUserServices.GetAll();
-            var booksVM = _mapper.Map<List<UserViewModel>>(applicationUsers);
-            return View(booksVM);
+            var userViewModel = _mapper.Map<List<UserViewModel>>(applicationUsers);
+            return View(userViewModel);
         }
-
         // GET: Admin/AspNetUserRole/Edit/1  
         public async Task<IActionResult> Edit(string id)
         {
@@ -44,12 +43,12 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             var applicationUsers = await _applicationUserServices.GetById(id);
             ViewBag.Roles = new SelectList(await _identityRoleServices.GetAllRoles(), "Name", "Name");
             var userViewModel = _mapper.Map<UserViewModel>(applicationUsers);
-            var userRole = await _applicationUserServices.GetUserRoles(applicationUsers);
-            userViewModel.Role = userRole.FirstOrDefault(); 
+            var userRoles = await _applicationUserServices.GetUserRoles(applicationUsers);
+            userViewModel.Role = userRoles.FirstOrDefault();
             return View(userViewModel);
         }
 
-       //Post: Admin/AspNetUserRole/Edit/1
+        //Post: Admin/AspNetUserRole/Edit/1
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, UserViewModel userViewModel)

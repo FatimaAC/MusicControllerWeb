@@ -1,5 +1,6 @@
 ﻿namespace MusicController.Common.Constants
 {
+    //Application Role
     public static class UserRolesConstant
     {
         public const string Admin = "Admin";

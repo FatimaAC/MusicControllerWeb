@@ -4,6 +4,7 @@ using MusicController.Identity.UserService;
 
 namespace MusicController.Shared.ExtensionMethod
 {
+    // Url Helper Class 
     public class CustomUrlHelper
     {
         private readonly IUrlHelper _originalUrlHelper;
@@ -49,22 +50,6 @@ namespace MusicController.Shared.ExtensionMethod
                     break;
             }
             return hasrole;
-        }
-        public string RolebaseOutletUrl(long id)
-        {
-            string url = _originalUrlHelper.Action("Edit", "Outlets", new { id = id, Area = UserRolesConstant.Admin });
-            switch (_currentUserService.UserRole)
-            {
-                case UserRolesConstant.Admin:
-                    url = _originalUrlHelper.Action("Edit", "Outlets", new { id = id, Area = UserRolesConstant.Admin });
-                    break;
-                case UserRolesConstant.Dj:
-                    url = _originalUrlHelper.Action("Schedule", "Outlets", new { id = id, Area = UserRolesConstant.Admin });
-                    break;
-                default:
-                    break;
-            }
-            return url;
         }
     }
 }

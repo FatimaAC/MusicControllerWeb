@@ -2,22 +2,17 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MusicController.Common.Enumerration;
 using MusicController.DTO.APiResponesClass;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MusicController.Shared.ExpectionHelper
 {
+    // Customized Expection Handling for Web APi
     public static class ExceptionHandler
     {
         public static void UseApiExceptionHandler(this IApplicationBuilder app, ILoggerFactory loggerFactory)

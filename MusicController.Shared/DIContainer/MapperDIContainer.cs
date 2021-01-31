@@ -4,6 +4,7 @@ using MusicController.DTOs.AutoMapper;
 
 namespace MusicController.Shared.DIContainer
 {
+    //Mapper Registration to the services for web and api
     public static class MapperDIContainer
     {
         public static void MapperContainer(this IServiceCollection services)

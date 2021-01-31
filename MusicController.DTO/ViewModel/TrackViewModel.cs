@@ -1,19 +1,18 @@
-﻿using MusicController.Common.EntityHelper;
-using MusicController.Common.HelperClasses;
-using MusicControllerWeb.Areas.Admin.Models;
-using MusicControllerWeb.Areas.Admin.Models.DateComparisons.Validations;
+﻿using MusicController.Common.Constants;
+using MusicController.Common.EntityHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MusicController.DTO.ViewModel
 {
-    public class TrackViewModel : BaseId    
+    public class TrackViewModel : BaseId
     {
         [Required]
         public long PlaylistId { get; set; }
         [Display(Name = "Track Link:")]
         [Required]
+        [StringLength(TrackConstant.MaxTrackURLLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
         public string TrackURL { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
@@ -23,8 +22,6 @@ namespace MusicController.DTO.ViewModel
         [Required]
         [Display(Name = "End time:")]
         public string FormatedEndTime { get; set; }
-       
-       
     }
 
     public class WeeklyScheduleList
@@ -36,6 +33,5 @@ namespace MusicController.DTO.ViewModel
         public string Schedule { get; set; }
         public string Name { get; set; }
         public List<TrackViewModel> Tracks { get; set; }
-
     }
 }

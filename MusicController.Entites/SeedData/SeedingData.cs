@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MusicController.Common.Constants;
-using MusicController.Common.HelperClasses;
 using MusicController.Entites.Models;
 
 namespace MusicController.Entites.SeedData

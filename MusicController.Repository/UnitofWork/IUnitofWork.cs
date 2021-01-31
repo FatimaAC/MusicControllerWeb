@@ -12,6 +12,7 @@ namespace MusicController.Repository.UnitofWork
         IOutletRepository OutletRepository { get; }
         IPlaylistRepository PlaylistRepository { get; }
         IGenericRepository<Track> TrackRepository { get; }
+        // save record in database method
         int Complete();
     }
 }

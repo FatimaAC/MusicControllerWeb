@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MusicController.Common.EntityHelper
 {
+    // Ef ID for Auto Increment
     public abstract class BaseId
     {
         [Key]

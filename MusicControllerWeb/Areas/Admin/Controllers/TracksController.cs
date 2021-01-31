@@ -6,7 +6,6 @@ using MusicController.Common.Constants;
 using MusicController.Common.HelperClasses;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
-using System;
 using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers
@@ -27,19 +26,18 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTrack(TrackViewModel trackView)
         {
-                trackView.StartTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedStartTime);
-                trackView.EndTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedEndTime);
-                if (trackView.StartTime>= trackView.EndTime)
-                {
-                    ModelState.AddModelError(string.Empty, "End time cannot be equal or less then start time");
-                }
-                if (ModelState.IsValid)
-                {
-                    var track = _mapper.Map<Track>(trackView);
-                    await _tracksServices.AddTrack(track);
-                  return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
-                }
-
+            trackView.StartTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedStartTime);
+            trackView.EndTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedEndTime);
+            if (trackView.StartTime >= trackView.EndTime)
+            {
+                ModelState.AddModelError(string.Empty, "End time cannot be equal or less then start time");
+            }
+            if (ModelState.IsValid)
+            {
+                var track = _mapper.Map<Track>(trackView);
+                await _tracksServices.AddTrack(track);
+                return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
+            }
             return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
         }
 
@@ -60,10 +58,10 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
                 return View(trackViewModel);
             }
             if (ModelState.IsValid)
-                {
-                    await _tracksServices.UpdateTrack(id, track);
-                    return RedirectToAction("Edit", "Playlist", new { id = trackViewModel.PlaylistId, Area = UserRolesConstant.Admin });
-                }
+            {
+                await _tracksServices.UpdateTrack(id, track);
+                return RedirectToAction("Edit", "Playlist", new { id = trackViewModel.PlaylistId, Area = UserRolesConstant.Admin });
+            }
             return View(trackViewModel);
         }
 

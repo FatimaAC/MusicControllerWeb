@@ -1,17 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusicController.BL.OutletServices;
 using MusicController.DTO.APiResponesClass;
-using MusicController.DTO.DTOModel;
 using MusicController.DTO.RequestModel;
 using MusicController.Identity.Jwt;
 using MusicController.Identity.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MusicController.API.Controllers
@@ -26,7 +21,7 @@ namespace MusicController.API.Controllers
         {
             _outletService = outletService;
             _tokenServices = tokenServices;
-           
+
         }
         [HttpPost]
         [Route("login")]
@@ -44,7 +39,7 @@ namespace MusicController.API.Controllers
         [HttpGet("RefreshToken")]
         public Response<AuthenticateResponse> RefreshToken()
         {
-            var refreshToken = _tokenServices.RefreshToken(Request.Cookies["refreshToken"] ,IpAddress());
+            var refreshToken = _tokenServices.RefreshToken(Request.Cookies["refreshToken"], IpAddress());
             SetTokenCookie(refreshToken.RefreshToken);
             var respone = new Response<AuthenticateResponse>(refreshToken);
             return respone;

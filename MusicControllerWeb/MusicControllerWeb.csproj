@@ -31,8 +31,5 @@
     <ProjectReference Include="..\MusicController.DTO\MusicController.DTO.csproj" />
     <ProjectReference Include="..\MusicController.Shared\MusicController.Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-  </ItemGroup>
 
 </Project>

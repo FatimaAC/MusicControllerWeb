@@ -25,26 +25,37 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @if (!Model.Any())
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @if (item.IsAuthorized)
-                            {
-                                <span class="text-success">Authorized</span>
-                            }
-                            else
-                            {
-                                <span class="text-danger">Unauthorised<span class="text-danger">*</span> </span>
-                            }
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                        <td colspan="3">
+                            <p class="text-center text-danger">No Device Register yet </p>
                         </td>
                     </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @if (item.IsAuthorized)
+                                {
+                                    <span class="text-success">Authorized</span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger">Unauthorised<span class="text-danger">*</span> </span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>

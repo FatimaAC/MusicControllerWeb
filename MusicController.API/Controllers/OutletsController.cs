@@ -22,11 +22,11 @@ namespace MusicController.API.Controllers
         }
         [AllowAnonymous]
         [HttpGet]
-        public async Task<Response<List<OutletNameDTO>>> GetOutles()
+        public async Task<Response<List<OutletDTO>>> GetOutles()
         {
             var outlets = await _outletService.GetAllOutlets();
-            var outletDTO = _mapper.Map<List<OutletNameDTO>>(outlets);
-            var response = new Response<List<OutletNameDTO>>(outletDTO);
+            var outletDTO = _mapper.Map<List<OutletDTO>>(outlets);
+            var response = new Response<List<OutletDTO>>(outletDTO);
             return response;
         }
     }

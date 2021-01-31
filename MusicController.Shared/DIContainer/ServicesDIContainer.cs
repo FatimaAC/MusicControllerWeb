@@ -12,11 +12,11 @@ using MusicController.Identity.IdentityRolesManagement;
 using MusicController.Identity.IdentityUserManagement;
 using MusicController.Identity.Jwt;
 using MusicController.Identity.UserService;
-using MusicController.Shared.ExpectionHelper;
 using MusicController.Shared.ExtensionMethod;
 
 namespace MusicController.Shared.DIContainer
 {
+    // Serivces Reigstraion for Web and APi 
     public static class ServicesDIContainer
     {
         public static void ServicesContainer(this IServiceCollection services)
@@ -39,7 +39,7 @@ namespace MusicController.Shared.DIContainer
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddScoped<ITracksServices, TracksServices>();
             services.AddScoped<ITokenServices, TokenServices>();
-            
+
         }
     }
 }

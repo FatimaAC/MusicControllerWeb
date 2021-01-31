@@ -1,13 +1,9 @@
 ﻿using MusicController.Common.EntityHelper;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Json.Serialization;
 
 namespace MusicController.Identity.Models
 {
-   public class RefreshToken : BaseId
+    public class RefreshToken : BaseId
     {
         public string Token { get; set; }
         public DateTime Expires { get; set; }

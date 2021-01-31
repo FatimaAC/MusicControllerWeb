@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MusicController.BL.DevicesServices;
-using MusicController.BL.OutletServices;
 using MusicController.Common.Enumerration;
 using MusicController.DTO.APiResponesClass;
 using MusicController.DTO.RequestModel;
 using MusicController.Entites.Models;
 using MusicController.Identity.UserService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicController.API.Controllers
@@ -24,7 +19,7 @@ namespace MusicController.API.Controllers
         private readonly IDevicesServices _devicesServices;
         private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
-        public DevicesController(IDevicesServices devicesServices, ICurrentUserService currentUserService , IMapper mapper)
+        public DevicesController(IDevicesServices devicesServices, ICurrentUserService currentUserService, IMapper mapper)
         {
             _devicesServices = devicesServices;
             _currentUserService = currentUserService;
@@ -45,14 +40,14 @@ namespace MusicController.API.Controllers
         }
         [HttpPost("DeviceStatus")]
         public async Task<IActionResult> PostDeviceStatus([FromBody] DeviceStatusRequest deviceStatus)
-        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-            deviceStatus.DeviceId = _currentUserService.DeviceId; 
+        {
+            deviceStatus.DeviceId = _currentUserService.DeviceId;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var device = _mapper.Map<Device>(deviceStatus);
-             await _devicesServices.UpdateDeviceStatus(device);
+            await _devicesServices.UpdateDeviceStatus(device);
             var response = new Response<string>("Device status added successfully", StatusApiEnum.Success);
             return Ok(response);
         }

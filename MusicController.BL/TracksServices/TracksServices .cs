@@ -1,7 +1,5 @@
 ﻿using MusicController.Entites.Models;
-using MusicController.Identity.UserService;
 using MusicController.Repository.UnitofWork;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,11 +53,6 @@ namespace MusicController.BL.TrackServices
             var track = await GetTrack(id);
             _unitofWork.TrackRepository.Remove(track);
             _unitofWork.Complete();
-        }
-
-        public Task ApproveTrack(long id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

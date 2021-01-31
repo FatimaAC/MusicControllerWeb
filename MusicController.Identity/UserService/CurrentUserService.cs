@@ -3,6 +3,7 @@ using System.Security.Claims;
 
 namespace MusicController.Identity.UserService
 {
+    // cookie data 
     public class CurrentUserService : ICurrentUserService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

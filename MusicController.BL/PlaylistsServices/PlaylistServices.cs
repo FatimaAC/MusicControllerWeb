@@ -1,8 +1,10 @@
-﻿using MusicController.Common.Enumerration;
+﻿using AutoMapper;
+using MusicController.Common.Enumerration;
 using MusicController.Common.HelperClasses;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using MusicController.Repository.UnitofWork;
+using MusicController.Shared.ExpectionHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,11 @@ namespace MusicController.BL.PlaylistsServices
     public class PlaylistServices : IPlaylistServices
     {
         private readonly IUnitofWork _unitofWork;
-
-        public PlaylistServices(IUnitofWork unitofWork)
+        private readonly IMapper _mapper;
+        public PlaylistServices(IUnitofWork unitofWork, IMapper mapper)
         {
             _unitofWork = unitofWork;
+            _mapper = mapper;
         }
         public async Task AddPlaylist(Playlist playlist)
         {
@@ -54,7 +57,7 @@ namespace MusicController.BL.PlaylistsServices
             var Editplaylist = await GetPlaylist(id);
             if (Editplaylist == null)
             {
-                throw new Exception("Record Not found");
+                throw new UserFriendlyException("Record Not found", StatusApiEnum.Failure);
             }
             Editplaylist.Name = playlist.Name;
             Editplaylist.OutletId = playlist.OutletId;
@@ -82,7 +85,7 @@ namespace MusicController.BL.PlaylistsServices
             List<WeeklyScheduleList> weeklyScheduleLists = new List<WeeklyScheduleList>();
             if (playlists.Any())
             {
-                weeklyScheduleLists =await WeeklyScheduleBusinussLogic(playlists);
+                weeklyScheduleLists = await WeeklyScheduleBusinussLogic(playlists);
             }
             return weeklyScheduleLists;
         }
@@ -129,13 +132,13 @@ namespace MusicController.BL.PlaylistsServices
                     }
                     else
                     {
-                        weeklyScheduleLists.Add( await PapulateData(playlists.FirstOrDefault(), datetime));
+                        weeklyScheduleLists.Add(await PapulateData(playlists.FirstOrDefault(), datetime));
                     }
                 }
                 else if (playlists.Any(e => e.Schedule == Schedule.Daily.ToString()))
                 {
                     var DailyPlaylist = playlists.Where(e => e.Schedule == Schedule.Daily.ToString()).FirstOrDefault();
-                    var DailyDate =await PapulateData(DailyPlaylist, datetime);
+                    var DailyDate = await PapulateData(DailyPlaylist, datetime);
                     weeklyScheduleLists.Add(DailyDate);
                 }
                 else
@@ -154,23 +157,8 @@ namespace MusicController.BL.PlaylistsServices
                 Schedule = Regex.Replace(playlist.Schedule, "([a-z])([A-Z])", "$1 $2"),
                 Name = playlist.Name
             };
-            weeklyScheduleList.Tracks = new List<TrackViewModel>();
             var track = await _unitofWork.TrackRepository.FindAllAsync(e => e.PlaylistId == playlist.Id);
-            if (track.Any())
-            {
-                foreach (var item in track)
-                {
-                    var trackviewModel = new TrackViewModel()
-                    {
-                        Id = item.Id,
-                        PlaylistId = item.PlaylistId,
-                        StartTime = item.StartTime,
-                        EndTime = item.EndTime,
-                        TrackURL = item.TrackURL
-                    };
-                    weeklyScheduleList.Tracks.Add(trackviewModel);
-                }
-            }
+            weeklyScheduleList.Tracks = _mapper.Map<List<TrackViewModel>>(track);
             return weeklyScheduleList;
         }
     }

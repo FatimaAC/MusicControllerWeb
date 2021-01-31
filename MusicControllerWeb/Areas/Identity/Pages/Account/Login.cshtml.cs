@@ -80,7 +80,7 @@ namespace MusicControllerWeb.Areas.Identity.Pages.Account
                 var user = await _applicationUserServices.GetByEmail(Input.Email);
                 if (user != null && !user.IsAuthorized)
                 {
-                    
+
                     ModelState.AddModelError(string.Empty, "Waiting for Authorization");
                     return Page();
                 }

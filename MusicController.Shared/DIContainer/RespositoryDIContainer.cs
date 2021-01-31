@@ -8,6 +8,7 @@ using MusicController.Repository.UnitofWork;
 
 namespace MusicController.Shared.DIContainer
 {
+    // Repositoty and Unit of work Reigstraion for Web and APi 
     public static class RespositoryDIContainer
     {
         public static void RespositoryContainer(this IServiceCollection services)

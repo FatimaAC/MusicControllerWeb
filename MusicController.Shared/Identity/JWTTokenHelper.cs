@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MusicController.Common.Constants;
@@ -9,6 +7,7 @@ using System.Text;
 
 namespace MusicController.Shared.Identity
 {
+    // Register Token in Web APi
     public static class JWTTokenHelper
     {
         public static void TokenContainer(this IServiceCollection services)

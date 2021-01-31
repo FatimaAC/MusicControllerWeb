@@ -30,7 +30,7 @@ namespace MusicController.DTOs.AutoMapper
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password)).
                 ForMember(dest => dest.ConfirmPassword, opt => opt.MapFrom(src => src.Password));
             //api dto 
-            CreateMap<Outlet, OutletNameDTO>().ReverseMap();
+            CreateMap<Outlet, OutletDTO>().ReverseMap();
             CreateMap<RefreshToken, RefreshTokenDTO>().ReverseMap();
 
             //api request

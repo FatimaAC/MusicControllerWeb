@@ -3,7 +3,6 @@ using MusicController.DTO.ViewModel;
 using MusicController.Entites.Context;
 using MusicController.Entites.Models;
 using MusicController.Repository.GenericRepository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,18 +33,13 @@ namespace MusicController.Repository.OutletsRepository
 
             return outlets;
         }
-        
+
         public async Task<Outlet> GetOutletByDevice(string deviceId)
         {
             var outlet = await _musicDbContext.Device
                                 .Include(e => e.Outlet)
-                               .Where(e => e.DeviceId == deviceId).Select(e=>e.Outlet).FirstOrDefaultAsync();
+                               .Where(e => e.DeviceId == deviceId).Select(e => e.Outlet).FirstOrDefaultAsync();
             return outlet;
-        }
-
-        public Task<IEnumerable<Outlet>> GetOutletByDJ()
-        {
-            throw new NotImplementedException();
         }
     }
 }

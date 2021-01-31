@@ -1,8 +1,9 @@
-﻿using MusicController.Common.HelperClasses;
+﻿using MusicController.Common.Enumerration;
+using MusicController.Common.HelperClasses;
 using MusicController.Entites.Models;
 using MusicController.Identity.UserService;
 using MusicController.Repository.UnitofWork;
-using System;
+using MusicController.Shared.ExpectionHelper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,29 +25,29 @@ namespace MusicController.BL.DevicesServices
 
             if (await _unitofWork.DeviceRepository.AnyAsync(e => e.DeviceId == device.DeviceId))
             {
-                throw new Exception("Device is already Assigned");
+                throw new UserFriendlyException("Device is already Assigned");
             }
             await _unitofWork.DeviceRepository.AddAsync(device);
             _unitofWork.Complete();
         }
 
-        public async Task RegisterDevice(Device device , string password)
+        public async Task RegisterDevice(Device device, string password)
         {
-            var outletPassword =await _unitofWork.OutletRepository.GetAsync(device.OutletId);
+            var outletPassword = await _unitofWork.OutletRepository.GetAsync(device.OutletId);
             var verifyPassword = PasswordHelper.VerifyPassword(password, outletPassword.Password);
             if (!verifyPassword)
             {
-                throw new Exception("Password do not Match");
+                throw new UserFriendlyException("Password do not Match");
             }
             await AddDevice(device);
         }
-    
+
         public async Task DeleteDevice(long id)
         {
             var device = await _unitofWork.DeviceRepository.GetAsync(id);
             if (device == null)
             {
-                throw new Exception("Not Found");
+                throw new UserFriendlyException("Device not Found", StatusApiEnum.Failure);
             }
             _unitofWork.DeviceRepository.Remove(device);
             _unitofWork.Complete();
@@ -60,7 +61,7 @@ namespace MusicController.BL.DevicesServices
 
         public async Task<List<Device>> GetDevicesByOutlet(long outletId)
         {
-            var devices = await _unitofWork.DeviceRepository.FindAllAsync(e=>e.OutletId== outletId);
+            var devices = await _unitofWork.DeviceRepository.FindAllAsync(e => e.OutletId == outletId);
             return devices.ToList();
         }
 
@@ -69,7 +70,7 @@ namespace MusicController.BL.DevicesServices
             var devices = await _unitofWork.DeviceRepository.GetAsync(id);
             if (devices == null)
             {
-                throw new Exception("Id not Found");
+                throw new UserFriendlyException("Device not Found", StatusApiEnum.Failure);
             }
             return devices;
         }
@@ -79,7 +80,7 @@ namespace MusicController.BL.DevicesServices
             var devices = await _unitofWork.DeviceRepository.GetAsync(id);
             if (devices == null)
             {
-                throw new Exception("Device not Found");
+                throw new UserFriendlyException("Device not Found", StatusApiEnum.Failure);
             }
             devices.DeviceId = outlet.DeviceId;
             devices.OutletId = outlet.OutletId;
@@ -92,11 +93,11 @@ namespace MusicController.BL.DevicesServices
             var UpdateDevice = await _unitofWork.DeviceRepository.SingleOrDefaultAsync(e => e.DeviceId == device.DeviceId);
             if (UpdateDevice == null)
             {
-                throw new Exception("Device not Found");
+                throw new UserFriendlyException("Device not Found", StatusApiEnum.Failure);
             }
             UpdateDevice.StatusMessage = device.StatusMessage;
             UpdateDevice.StatusPostedAt = device.StatusPostedAt;
-             _unitofWork.DeviceRepository.UpdateEntity(UpdateDevice);
+            _unitofWork.DeviceRepository.UpdateEntity(UpdateDevice);
             _unitofWork.Complete();
         }
         public async Task ApproveDevice(long id)

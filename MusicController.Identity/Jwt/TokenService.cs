@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MusicController.Common.Constants;
-using MusicController.Identity.Constant;
 using MusicController.Identity.IdentityContext;
 using MusicController.Identity.Model;
 using MusicController.Identity.Models;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -16,18 +13,18 @@ using System.Text;
 
 namespace MusicController.Identity.Jwt
 {
-    public  class TokenServices : ITokenServices
+    public class TokenServices : ITokenServices
     {
-       
+
         private readonly ApplicationDbContext _applicationDbContext;
         public TokenServices(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }
-        public AuthenticateResponse Authenticate(long outletId ,string deviceId, string ipAddress)
+        public AuthenticateResponse Authenticate(long outletId, string deviceId, string ipAddress)
         {
-           
-            var jwtToken = GenerateJwtToken(outletId , deviceId, ipAddress);
+
+            var jwtToken = GenerateJwtToken(outletId, deviceId, ipAddress);
             var refreshToken = GenerateRefreshToken(ipAddress);
             refreshToken.OutletId = outletId;
             refreshToken.DeviceId = deviceId;
@@ -45,7 +42,7 @@ namespace MusicController.Identity.Jwt
             refreshToken.ReplacedByToken = newRefreshToken.Token;
             _applicationDbContext.Update(refreshToken);
             // generate new jwt
-            var jwtToken = GenerateJwtToken(refreshToken.OutletId ,refreshToken.DeviceId ,ipAddress);
+            var jwtToken = GenerateJwtToken(refreshToken.OutletId, refreshToken.DeviceId, ipAddress);
 
             return new AuthenticateResponse(jwtToken, newRefreshToken.Token);
         }
@@ -108,7 +105,7 @@ namespace MusicController.Identity.Jwt
         private RefreshToken GetRefreshToken(string token)
         {
             var refreshToken = _applicationDbContext.RefreshTokens.FirstOrDefault(e => e.Token == token);
-            if (refreshToken==null)
+            if (refreshToken == null)
             {
                 throw new Exception("No refresh Token Found");
             }
@@ -116,7 +113,7 @@ namespace MusicController.Identity.Jwt
             {
                 throw new Exception("Token expire");
             }
-              
+
             return refreshToken;
 
         }

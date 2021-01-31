@@ -12,6 +12,5 @@ namespace MusicController.BL.TrackServices
         Task UpdateTrack(long id, Track track);
         Task<Track> GetTrack(long id);
         Task DeleteTrack(long id);
-        Task ApproveTrack(long id);
     }
 }

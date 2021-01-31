@@ -5,6 +5,7 @@ namespace MusicController.DTO.ViewModel
     public class UserViewModel
     {
         public string Email { get; set; }
+        [Required]
         public string Id { get; set; }
         [Display(Name = "Approved")]
         [Required]

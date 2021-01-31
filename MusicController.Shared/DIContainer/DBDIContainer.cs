@@ -6,6 +6,7 @@ using MusicController.Identity.IdentityContext;
 
 namespace MusicController.Shared.DIContainer
 {
+    // Database Reigstraion for Web and APi 
     public static class DBDIContainer
     {
         public static void DBContainer(this IServiceCollection services, IConfiguration Configuration)
