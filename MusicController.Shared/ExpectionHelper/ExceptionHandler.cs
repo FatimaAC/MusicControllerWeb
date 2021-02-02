@@ -9,13 +9,14 @@ using MusicController.DTO.APiResponesClass;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 
 namespace MusicController.Shared.ExpectionHelper
 {
     // Customized Expection Handling for Web APi
     public static class ExceptionHandler
     {
-        public static void UseApiExceptionHandler(this IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public static void UseApiExceptionHandler(this IApplicationBuilder app, ILogger loggerFactory)
         {
             app.UseExceptionHandler(appError =>
             {
@@ -29,18 +30,19 @@ namespace MusicController.Shared.ExpectionHelper
                         if (contextFeature != null)
                         {
                             //Technical Exception for troubleshooting
-                            var logger = loggerFactory.CreateLogger("GlobalException");
-                            logger.LogError($"Something went wrong: {contextFeature.Error}");
+                           
                             //Business exception - exit gracefully
                             await context.Response.WriteAsync(new Response<string>(contextFeature.Error.Message, (StatusApiEnum)httpException.StatusCode).ToString());
                         }
                     }
                     else
                     {
+                        var sb = new StringBuilder();
+                        sb.AppendLine("GlobalException");
+                        sb.AppendLine($"Something went wrong :{contextFeature.Error}");
+                        loggerFactory.LogError(sb.ToString());
                         await context.Response.WriteAsync(new Response<string>("Something went wrong").ToString());
                     }
-                    //if any exception then report it and log it
-
                 });
             });
         }

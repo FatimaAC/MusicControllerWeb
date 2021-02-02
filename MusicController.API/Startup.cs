@@ -9,6 +9,8 @@ using MusicController.Shared.CrosSetting;
 using MusicController.Shared.DIContainer;
 using MusicController.Shared.ExpectionHelper;
 using MusicController.Shared.Identity;
+using Serilog;
+using System.IO;
 
 namespace MusicController.API
 {
@@ -35,14 +37,16 @@ namespace MusicController.API
             services.IdentityContainer();
             services.TokenContainer();
             services.UseApiValidationHandler();
+            
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSerilogRequestLogging();
             // Customized Authroized Response
             app.CustomUnauthorized();
             // Customized Expection

@@ -17,7 +17,7 @@ namespace MusicController.DTO.RequestModel
         [StringLength(12, ErrorMessage = "The {0} must be at least {2} and at max {1} character long.", MinimumLength = 6)]
         public string Password { get; set; }
         [Required]
-        [StringLength(OutletConstant.MaxNameLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+        [StringLength(DeviceConstant.MaxDeviceDetailLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string DeviceDetail { get; set; }
     }
 }
