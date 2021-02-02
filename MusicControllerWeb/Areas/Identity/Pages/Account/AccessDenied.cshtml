@@ -10,9 +10,11 @@
 </header>
 
 <div class="card-body">
-    <h5 class="card-title text-center">Sign Up</h5>
+    <h5 class="card-title text-center text-danger">@ViewData["Title"]</h5>
     <hr class="my-4">
-    <h6 class="text-danger">@ViewData["Title"]</h6>
+    <h6 class="text-danger"></h6>
     <p class="text-info">You do not have access to this resource.</p>
+    <br />
+    <a class="btn btn-block btn-primary rounded-pill" asp-area="Admin" asp-controller="Outlets" asp-action="Index">Back to home</a>
     <hr class="my-4">
 </div>
