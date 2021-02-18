@@ -31,5 +31,13 @@
     <ProjectReference Include="..\MusicController.DTO\MusicController.DTO.csproj" />
     <ProjectReference Include="..\MusicController.Shared\MusicController.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SharePoint.Client">
+      <HintPath>..\..\..\..\Desktop\Microsoft.SharePoint.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Runtime">
+      <HintPath>..\..\..\..\Desktop\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

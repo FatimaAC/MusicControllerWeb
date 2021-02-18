@@ -7,6 +7,7 @@ using MusicController.BL.DevicesServices;
 using MusicController.BL.FileServices;
 using MusicController.BL.OutletServices;
 using MusicController.BL.PlaylistsServices;
+using MusicController.BL.SharePointFiles;
 using MusicController.BL.TrackServices;
 using MusicController.Identity.IdentityRolesManagement;
 using MusicController.Identity.IdentityUserManagement;
@@ -35,6 +36,7 @@ namespace MusicController.Shared.DIContainer
             services.AddScoped<IOutletService, OutletService>();
             services.AddScoped<IDevicesServices, DevicesServices>();
             services.AddScoped<IFileServices, FileServices>();
+            services.AddScoped<ISharePointFileServices, SharePointFileServices>();
             services.AddScoped<IPlaylistServices, PlaylistServices>();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddScoped<ITracksServices, TracksServices>();

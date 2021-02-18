@@ -3,6 +3,8 @@ using MusicController.Common.EntityHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+
 
 namespace MusicController.DTO.ViewModel
 {
@@ -11,7 +13,6 @@ namespace MusicController.DTO.ViewModel
         [Required]
         public long PlaylistId { get; set; }
         [Display(Name = "Track Link:")]
-        [Required]
         [StringLength(TrackConstant.MaxTrackURLLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
         public string TrackURL { get; set; }
         public TimeSpan StartTime { get; set; }
@@ -22,6 +23,8 @@ namespace MusicController.DTO.ViewModel
         [Required]
         [Display(Name = "End time:")]
         public string FormatedEndTime { get; set; }
+        public IFormFile File { get; set; }
+        public string FileURL { get; set; }
     }
 
     public class WeeklyScheduleList

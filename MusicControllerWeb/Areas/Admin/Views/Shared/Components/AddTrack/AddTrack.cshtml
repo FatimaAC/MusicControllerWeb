@@ -2,15 +2,43 @@
 @model TrackViewModel
 <div class="col-sm-6 border p-5">
     <h4>Add Track</h4><br />
-    <form asp-action="AddTrack"  autocomplete="off"  onsubmit="return onAddTrackSubmitClick(this)" asp-controller="Tracks" method="post">
+    <form asp-action="AddTrack"  autocomplete="off"  onsubmit="return onAddTrackSubmitClick(this)" asp-controller="Tracks" method="post" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger">
         </div>
         <input asp-for="PlaylistId" type="hidden" />
         <div class="form-group">
+                <label asp-for="File" class="control-label"></label>
+                <input asp-for="File" id="file" onchange="readURL(this)" placeholder="Choose logo" class="form-control" />
+                <span asp-validation-for="File" class="text-danger"></span>
+        </div>
+         
+        <!--<div id="showmodal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @{
+                    <div class="modal-header">
+                        <h6 class="modal-title">Choose from Existing Tracks</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>test</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Replicate</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                }
+            </div>--><!-- /.modal-content -->
+           <!--</div>--><!-- /.modal-dialog -->
+              <!--</div>--><!-- /.modal -->
+            <!--<label id='open' data-toggle="modal" data-target="#showmodal">Click here to use Existing Track</label>-->
+
+
+        @*<div class="form-group">
             <label asp-for="TrackURL"></label>
             <input asp-for="TrackURL" placeholder="Enter Track Url" class="form-control">
             <span asp-validation-for="TrackURL" class="text-danger"></span>
-        </div>
+        </div>*@
         <div class="form-group">
             <label asp-for="FormatedStartTime"></label>
             <input asp-for="FormatedStartTime" class="form-control timepicker" placeholder="Enter Start Time">
