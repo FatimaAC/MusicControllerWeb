@@ -13,6 +13,7 @@ using MusicController.Identity.IdentityUserManagement;
 using MusicController.Identity.Jwt;
 using MusicController.Identity.UserService;
 using MusicController.Shared.ExtensionMethod;
+using MusicController.BL.SharePointFiles;
 
 namespace MusicController.Shared.DIContainer
 {
@@ -39,6 +40,7 @@ namespace MusicController.Shared.DIContainer
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddScoped<ITracksServices, TracksServices>();
             services.AddScoped<ITokenServices, TokenServices>();
+            services.AddScoped<ISharePointFileServices, SharePointFileServices>();
 
         }
     }

@@ -7,6 +7,8 @@ using MusicController.Common.HelperClasses;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using System.Threading.Tasks;
+using MusicController.BL.SharePointFiles;
+using System.Linq;
 
 namespace MusicControllerWeb.Areas.Admin.Controllers
 {
@@ -17,10 +19,13 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
 
         private readonly ITracksServices _tracksServices;
         private readonly IMapper _mapper;
-        public TracksController(ITracksServices tracksServices, IMapper mapper)
+        private readonly ISharePointFileServices _SPfileServices;
+        private readonly string[] _validExtensions = { ".mp3", ".mp4", ".wmv", ".mov", ".AVI" };
+        public TracksController(ISharePointFileServices SPFileService, IMapper mapper, ITracksServices tracksServices)
         {
             _tracksServices = tracksServices;
             _mapper = mapper;
+            _SPfileServices = SPFileService;
         }
 
         [HttpPost]
@@ -28,14 +33,25 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         {
             trackView.StartTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedStartTime);
             trackView.EndTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedEndTime);
+            trackView.TrackURL = "http://78.100.122.178:6040/playlists/" + trackView.File.FileName;
+
             if (trackView.StartTime >= trackView.EndTime)
             {
                 ModelState.AddModelError(string.Empty, "End time cannot be equal or less then start time");
+            }
+            if (trackView.File == null || trackView.File.Length <= 0)
+            {
+                ModelState.AddModelError("", "Please upload the file");
+            }
+            if (!_validExtensions.Contains(System.IO.Path.GetExtension(trackView.File.FileName).ToLower()))
+            {
+                ModelState.AddModelError("", "Please upload the valid file");
             }
             if (ModelState.IsValid)
             {
                 var track = _mapper.Map<Track>(trackView);
                 await _tracksServices.AddTrack(track);
+                await _SPfileServices.SaveFile(trackView.File, track.Id);
                 return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
             }
             return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
