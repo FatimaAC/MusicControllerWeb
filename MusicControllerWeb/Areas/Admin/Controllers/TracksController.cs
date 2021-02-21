@@ -9,7 +9,8 @@ using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
 using System.Linq;
 using System.Threading.Tasks;
- 
+using Microsoft.Extensions.Configuration;
+
 namespace MusicControllerWeb.Areas.Admin.Controllers
 {
     [Area(UserRolesConstant.Admin)]
@@ -21,20 +22,24 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         private readonly IMapper _mapper;
         private readonly ISharePointFileServices _SPfileServices;
         private readonly string[] _validExtensions = { ".mp3", ".mp4", ".wmv", ".mov", ".AVI" };
- 
-        public TracksController(ISharePointFileServices SPFileService, IMapper mapper, ITracksServices tracksServices)
+        private readonly IConfiguration _iConfig;
+
+        public TracksController(ISharePointFileServices SPFileService, IMapper mapper, ITracksServices tracksServices, IConfiguration EnvironmentConfig)
         {
             _tracksServices = tracksServices;
             _mapper = mapper;
             _SPfileServices = SPFileService;
+            _iConfig = EnvironmentConfig;
         }
 
         [HttpPost]
+        [RequestFormLimits(MultipartBodyLengthLimit = 1073741824)]
         public async Task<IActionResult> AddTrack(TrackViewModel trackView)
         {
+            string FilePathConn = _iConfig.GetValue<string>("MySettings:ProdServerURL");
             trackView.StartTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedStartTime);
             trackView.EndTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedEndTime);
-            trackView.TrackURL = "http://78.100.122.178:6040/playlists/" + trackView.File.FileName;
+            trackView.TrackURL = FilePathConn + trackView.File.FileName;
 
             if (trackView.StartTime >= trackView.EndTime)
             {
@@ -57,6 +62,11 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
                 //await _tracksServices.UpdateTrack(track.Id, track);
 
                 await _SPfileServices.SaveFile(trackView.File, track.Id);
+
+                trackView.TrackURL = FilePathConn + track.Id + "-" + trackView.File.FileName;
+                var trackUpdate = _mapper.Map<Track>(trackView);
+                await _tracksServices.UpdateTrack(track.Id, trackUpdate);
+
                 return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
             }
             return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
