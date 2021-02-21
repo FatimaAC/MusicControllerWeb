@@ -6,8 +6,8 @@
         <div asp-validation-summary="ModelOnly" class="text-danger">
         </div>
         <input asp-for="PlaylistId" type="hidden" />
-         <div class="form-group">
-                <label asp-for="File" class="control-label"></label>
+        <div class="form-group">
+                 <label asp-for="File" class="control-label"></label>
                 <input asp-for="File" id="file" onchange="readURL(this)" placeholder="Choose logo" class="form-control" />
                 <span asp-validation-for="File" class="text-danger"></span>
         </div>

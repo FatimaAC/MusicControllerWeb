@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MusicController.BL.SharePointFiles;
 using MusicController.BL.TrackServices;
 using MusicController.Common.Constants;
 using MusicController.Common.HelperClasses;
 using MusicController.DTO.ViewModel;
 using MusicController.Entites.Models;
-using System.Threading.Tasks;
-using MusicController.BL.SharePointFiles;
 using System.Linq;
-
+using System.Threading.Tasks;
+ 
 namespace MusicControllerWeb.Areas.Admin.Controllers
 {
     [Area(UserRolesConstant.Admin)]
@@ -21,6 +21,7 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         private readonly IMapper _mapper;
         private readonly ISharePointFileServices _SPfileServices;
         private readonly string[] _validExtensions = { ".mp3", ".mp4", ".wmv", ".mov", ".AVI" };
+ 
         public TracksController(ISharePointFileServices SPFileService, IMapper mapper, ITracksServices tracksServices)
         {
             _tracksServices = tracksServices;
@@ -51,6 +52,10 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
             {
                 var track = _mapper.Map<Track>(trackView);
                 await _tracksServices.AddTrack(track);
+
+                //var trackUpdate = _mapper.Map<Track>(trackView);
+                //await _tracksServices.UpdateTrack(track.Id, track);
+
                 await _SPfileServices.SaveFile(trackView.File, track.Id);
                 return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
             }

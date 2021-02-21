@@ -7,13 +7,13 @@ using MusicController.BL.DevicesServices;
 using MusicController.BL.FileServices;
 using MusicController.BL.OutletServices;
 using MusicController.BL.PlaylistsServices;
+using MusicController.BL.SharePointFiles;
 using MusicController.BL.TrackServices;
 using MusicController.Identity.IdentityRolesManagement;
 using MusicController.Identity.IdentityUserManagement;
 using MusicController.Identity.Jwt;
 using MusicController.Identity.UserService;
 using MusicController.Shared.ExtensionMethod;
-using MusicController.BL.SharePointFiles;
 
 namespace MusicController.Shared.DIContainer
 {

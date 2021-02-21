@@ -12,7 +12,7 @@ namespace MusicController.DTO.ViewModel
         [Required]
         public long PlaylistId { get; set; }
         [Display(Name = "Track Link:")]
-
+ 
         [StringLength(TrackConstant.MaxTrackURLLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
         public string TrackURL { get; set; }
         public TimeSpan StartTime { get; set; }
@@ -23,7 +23,7 @@ namespace MusicController.DTO.ViewModel
         [Required]
         [Display(Name = "End time:")]
         public string FormatedEndTime { get; set; }
-
+ 
         public IFormFile File { get; set; }
         public string FileURL { get; set; }
     }

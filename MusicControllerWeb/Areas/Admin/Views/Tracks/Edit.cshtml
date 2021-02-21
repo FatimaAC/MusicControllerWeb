@@ -12,12 +12,13 @@
     </div>
     <div class="col-sm-6 border p-5 white-color">
         <h4 class="text-center">Add Track</h4><br />
-        <form asp-action="Edit" autocomplete="off" onsubmit="return onAddTrackSubmitClick(this)" asp-route-id="@Model.Id" enctype="multipart/form-data" >
+        <form asp-action="Edit" autocomplete="off" onsubmit="return onAddTrackSubmitClick(this)" asp-route-id="@Model.Id" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger">
             </div>
             <input asp-for="PlaylistId" value="@Model.PlaylistId" type="hidden" />
             <input asp-for="PlaylistId" value="@Model.StartTime" type="hidden" />
             <input asp-for="PlaylistId" value="@Model.EndTime" type="hidden" />
+ 
             <div class="form-group">
                 <label asp-for="File" class="control-label"></label>
                 <input asp-for="File" id="file" onchange="readURL(this)" placeholder="Choose logo" class="form-control" />
