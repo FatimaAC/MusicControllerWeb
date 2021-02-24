@@ -25,6 +25,18 @@ namespace MusicController.BL.TrackServices
             var tracks = await _unitofWork.TrackRepository.FindAllAsync(e => listOfPlaylistIds.Contains(e.PlaylistId));
             return tracks.ToList();
         }
+
+        public async Task<List<Track>> GetAllTrack()
+        {
+            var track = await _unitofWork.TrackRepository.GetAllAsync();
+
+            List<Track> noDups = track.GroupBy(d => new { d.TrackURL })
+                              .Select(d => d.First())
+                              .ToList();
+            return noDups;
+            //return track.Distinct().ToList();
+        }
+
         public async Task AddTrack(Track track)
         {
             await _unitofWork.TrackRepository.AddAsync(track);

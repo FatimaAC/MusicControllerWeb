@@ -13,7 +13,8 @@ namespace MusicController.Shared
 
         public static string EnvironmentFile()
         {
-            string filename = EnvironmentType.Production;
+           // string filename = EnvironmentType.Production;
+            string filename = "appsettings.json"; 
             switch (Env())
             {
                 case "Development":

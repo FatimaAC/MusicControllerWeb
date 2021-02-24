@@ -18,3 +18,13 @@
 $(document).ready(function () {
     $('input.timepicker').timepicker({});
 });
+
+$(document).on("click", "#file", function () {
+    $('#TrackId').prop('disabled', 'disabled');
+
+});
+
+$(document).on("click", "#TrackId", function () {
+    $('#file').prop('disabled', 'disabled');
+
+});
