@@ -47,14 +47,14 @@ namespace MusicControllerWeb
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MusicDBContext musicDBContext, ApplicationDbContext applicationDbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                applicationDbContext.Database.Migrate();
-                musicDBContext.Database.Migrate();
+                // applicationDbContext.Database.Migrate();
+                // musicDBContext.Database.Migrate();
             }
             else
             {

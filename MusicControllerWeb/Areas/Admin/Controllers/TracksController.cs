@@ -37,36 +37,48 @@ namespace MusicControllerWeb.Areas.Admin.Controllers
         public async Task<IActionResult> AddTrack(TrackViewModel trackView)
         {
             string FilePathConn = _iConfig.GetValue<string>("MySettings:ProdServerURL");
+            var Existingtrack = trackView.TrackId;
+
             trackView.StartTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedStartTime);
             trackView.EndTime = DateTimeHelper.ShortTimeTo24HourFormat(trackView.FormatedEndTime);
-            trackView.TrackURL = FilePathConn + trackView.File.FileName;
 
             if (trackView.StartTime >= trackView.EndTime)
             {
                 ModelState.AddModelError(string.Empty, "End time cannot be equal or less then start time");
             }
-            if (trackView.File == null || trackView.File.Length <= 0)
+            if (string.IsNullOrEmpty(trackView.TrackId) && (trackView.File != null || trackView.File.Length > 0))
+            {
+                if (!_validExtensions.Contains(System.IO.Path.GetExtension(trackView.File.FileName).ToLower()))
+                    ModelState.AddModelError("", "Please upload the valid file");
+            }
+            if (string.IsNullOrEmpty(trackView.TrackId) && (trackView.File == null || trackView.File.Length <= 0))
             {
                 ModelState.AddModelError("", "Please upload the file");
             }
-            if (!_validExtensions.Contains(System.IO.Path.GetExtension(trackView.File.FileName).ToLower()))
+            else
             {
-                ModelState.AddModelError("", "Please upload the valid file");
+                if (string.IsNullOrEmpty(trackView.TrackId))
+                    trackView.TrackURL = FilePathConn + trackView.File.FileName;
+                else
+                    trackView.TrackURL = FilePathConn + Existingtrack;
             }
+
             if (ModelState.IsValid)
             {
                 var track = _mapper.Map<Track>(trackView);
                 await _tracksServices.AddTrack(track);
 
-                //var trackUpdate = _mapper.Map<Track>(trackView);
-                //await _tracksServices.UpdateTrack(track.Id, track);
-
-                await _SPfileServices.SaveFile(trackView.File, track.Id);
-
-                trackView.TrackURL = FilePathConn + track.Id + "-" + trackView.File.FileName;
+                if (string.IsNullOrEmpty(trackView.TrackId) && (trackView.File != null || trackView.File.Length > 0))
+                {
+                    await _SPfileServices.SaveFile(trackView.File, track.Id);
+                    trackView.TrackURL = FilePathConn + track.Id + "-" + trackView.File.FileName;
+                }
+                else
+                {
+                    trackView.TrackURL = FilePathConn + Existingtrack;
+                }
                 var trackUpdate = _mapper.Map<Track>(trackView);
                 await _tracksServices.UpdateTrack(track.Id, trackUpdate);
-
                 return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
             }
             return RedirectToAction("Edit", "Playlist", new { id = trackView.PlaylistId, Area = UserRolesConstant.Admin });
