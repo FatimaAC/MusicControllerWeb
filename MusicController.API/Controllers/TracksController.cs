@@ -5,6 +5,7 @@ using MusicController.BL.PlaylistsServices;
 using MusicController.BL.TrackServices;
 using MusicController.Common.Enumerration;
 using MusicController.DTO.APiResponesClass;
+using MusicController.DTO.RequestModel;
 using MusicController.DTO.ViewModel;
 using MusicController.Identity.UserService;
 using System;
@@ -30,7 +31,7 @@ namespace MusicController.API.Controllers
         }
 
         [HttpGet("TodaySchedulePlaylist")]
-        public async Task<Response<WeeklyScheduleList>> TodaySchedulePlaylist()
+        public async Task<Response<WeeklyScheduleList>> TodaySchedulePlaylist(TrackRequest trackStatus)
         {
             var outletId = Convert.ToInt64(_currentUserService.OutletId);
             var todayPlaylist = await _playlistServices.TodaySchedulePlaylist(outletId);

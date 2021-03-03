@@ -5,9 +5,12 @@ using MusicController.BL.PlaylistsServices;
 using MusicController.BL.TrackServices;
 using MusicController.Common.Enumerration;
 using MusicController.DTO.APiResponesClass;
+using MusicController.DTO.RequestModel;
 using MusicController.DTO.ViewModel;
 using MusicController.Identity.UserService;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Controllers
@@ -30,9 +33,19 @@ namespace MusicControllerWeb.Controllers
         }
 
         [HttpGet("TodaySchedulePlaylist")]
-        public async Task<Response<WeeklyScheduleList>> TodaySchedulePlaylist()
+        [AllowAnonymous]
+        public async Task<Response<WeeklyScheduleList>> TodaySchedulePlaylist([FromBody] TrackRequest trackStatus)
         {
-            var outletId = Convert.ToInt64(_currentUserService.OutletId);
+            //TrackRequest trackStatus = new TrackRequest();
+            if (trackStatus.Token == null || trackStatus.SecretString != "alkdjfadskjfladfd847379304KLDJSASLKDJFEREIUFFDVHKSNRKJF")
+            {
+                return new Response<WeeklyScheduleList>("Invalid", StatusApiEnum.Empty);
+            }
+            var handler = new JwtSecurityTokenHandler();
+            var tokenS = handler.ReadToken(trackStatus.Token) as JwtSecurityToken;
+            var deviceId = tokenS.Claims.First(claim => claim.Type == "DeviceId").Value;
+
+            var outletId = Convert.ToInt64(tokenS.Claims.First(claim => claim.Type == "OutletId").Value);
             var todayPlaylist = await _playlistServices.TodaySchedulePlaylist(outletId);
             if (todayPlaylist == null)
             {

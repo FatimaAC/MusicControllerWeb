@@ -3,12 +3,13 @@
 <div class="container row">
     <div class="col-sm-12 border p-5">
         <h4 class="text-center">Devices</h4><br />
-        <table class="table">
-            <thead class="table-dark">
+        <table class="table table-hover">
+            <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.DeviceId)</th>
                     <th>@Html.DisplayNameFor(model => model.DeviceDetail)</th>
                     <th>@Html.DisplayNameFor(model => model.StatusMessage)</th>
+                    <th>@Html.DisplayNameFor(model => model.StatusPostedAt)</th>
                     <th></th>
                 </tr>
             </thead>
@@ -16,7 +17,7 @@
                 @if (!Model.Any())
                 {
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <p class="text-center text-danger">No Device Register yet </p>
                         </td>
                     </tr>
@@ -42,6 +43,7 @@
                                     <small class="text-primary">Waiting Approval</small>
                                 }
                             </td>
+                            <td><small>@Html.DisplayFor(modelItem => item.StatusPostedAt)</small></td>
                             <td>
                                 <div class="form-inline">
                                     @if (!item.IsApproved)

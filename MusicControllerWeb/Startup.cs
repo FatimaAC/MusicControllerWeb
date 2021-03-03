@@ -10,6 +10,13 @@ using MusicController.Identity.IdentityContext;
 using MusicController.Shared;
 using MusicController.Shared.DIContainer;
 using MusicController.Shared.Identity;
+using Microsoft.Extensions.Logging;
+
+using MusicController.Common.HelperClasses;
+using MusicController.Shared.CrosSetting;
+using MusicController.Shared.ExpectionHelper;
+using Serilog;
+using System.IO;
 
 namespace MusicControllerWeb
 {
@@ -28,6 +35,10 @@ namespace MusicControllerWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.CorsContainer();
+            services.AddControllers().AddJsonOptions(options =>
+            options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter()
+            ));
 
             // DI containter for services ,databases and automapper
             services.DBContainer(Configuration);
@@ -44,10 +55,14 @@ namespace MusicControllerWeb
                    .AddRazorRuntimeCompilation()
                    .SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddRazorPages();
+            services.SwaggerContainer();
+
+            services.UseApiValidationHandler();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -61,6 +76,11 @@ namespace MusicControllerWeb
                 app.UseStatusCodePagesWithRedirects("/Error/{0}");
                 app.UseHsts();
             }
+            //app.UseSerilogRequestLogging();
+            // Customized Authroized Response
+            //app.CustomUnauthorized();
+            // Customized Expection
+            app.UseApiExceptionHandler(logger);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

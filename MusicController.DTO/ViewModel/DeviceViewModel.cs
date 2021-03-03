@@ -13,6 +13,7 @@ namespace MusicController.DTO.ViewModel
         public string DeviceDetail { get; set; }
         [Display(Name = "Status Message")]
         public string StatusMessage { get; set; }
+        [Display(Name = "Posted At")]
         public string StatusPostedAt { get; set; }
         public DateTime? RequestedAt { get; set; }
         public bool IsApproved { get; set; }

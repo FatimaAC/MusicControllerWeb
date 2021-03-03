@@ -14,5 +14,7 @@ namespace MusicController.DTO.RequestModel
         public string StatusMessage { get; set; }
         [Required]
         public DateTime StatusPostedAt { get; set; }
+        public string Token { get; set; }
+        public string SecretString { get; set; }
     }
 }

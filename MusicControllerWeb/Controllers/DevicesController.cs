@@ -7,6 +7,8 @@ using MusicController.DTO.APiResponesClass;
 using MusicController.DTO.RequestModel;
 using MusicController.Entites.Models;
 using MusicController.Identity.UserService;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MusicControllerWeb.Controllers
@@ -39,9 +41,17 @@ namespace MusicControllerWeb.Controllers
             return Ok(response);
         }
         [HttpPost("DeviceStatus")]
+        [AllowAnonymous]
         public async Task<IActionResult> PostDeviceStatus([FromBody] DeviceStatusRequest deviceStatus)
         {
-            deviceStatus.DeviceId = _currentUserService.DeviceId;
+            if(deviceStatus.Token == null || deviceStatus.SecretString != "ZLFKJDRkdjlfkdjklfajf83497384kjdfahksj459kfdsank")
+            {
+                return BadRequest();
+            }
+            var handler = new JwtSecurityTokenHandler();
+            var tokenS = handler.ReadToken(deviceStatus.Token) as JwtSecurityToken;
+            deviceStatus.DeviceId = tokenS.Claims.First(claim => claim.Type == "DeviceId").Value;
+            //deviceStatus.DeviceId = _currentUserService.DeviceId;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
