@@ -32,11 +32,10 @@ namespace MusicControllerWeb.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("TodaySchedulePlaylist")]
+        [HttpPost("TodaySchedulePlaylist")]
         [AllowAnonymous]
         public async Task<Response<WeeklyScheduleList>> TodaySchedulePlaylist([FromBody] TrackRequest trackStatus)
         {
-            //TrackRequest trackStatus = new TrackRequest();
             if (trackStatus.Token == null || trackStatus.SecretString != "alkdjfadskjfladfd847379304KLDJSASLKDJFEREIUFFDVHKSNRKJF")
             {
                 return new Response<WeeklyScheduleList>("Invalid", StatusApiEnum.Empty);
